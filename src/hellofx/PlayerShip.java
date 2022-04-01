@@ -9,8 +9,7 @@ public class PlayerShip extends Polygon {
         50.0, 50.0
     };
 
-    private int speedFactor = 0;
-    private boolean shipActivated = false;
+    private int speed = 0;
 
     PlayerShip(int x, int y) {
         super(PlayerShip.shipPoints);
@@ -18,20 +17,11 @@ public class PlayerShip extends Polygon {
         setTranslateY(y);
     }
 
-    public void increaseSpeedFactor() {
-        if (this.shipActivated == false) {
-            this.speedFactor += 1;
-            this.activateShip();
-        } else {
-            this.speedFactor += 1;
-        }
+    public int getSpeed() {
+        return this.speed;
     }
 
-    private void activateShip() {
-        this.shipActivated = true;
-        while (true) {
-            double currentY = getTranslateY();
-            setTranslateY(currentY + (-5 * this.speedFactor));
-        }
+    public void changeSpeed(int speedChange) {
+        this.speed += speedChange;
     }
 }
