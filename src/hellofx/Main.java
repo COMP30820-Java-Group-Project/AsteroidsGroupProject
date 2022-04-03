@@ -32,6 +32,13 @@ public class Main extends Application {
                     break;
                 case DOWN:
                     player.changeSpeed(-1);
+                    break;
+                case LEFT:
+                    player.changeAngle("left");
+                    break;
+                case RIGHT:
+                    player.changeAngle("right");
+                    break;
             }
         });
         AnimationTimer timer = new PlayerShipTimer(player);

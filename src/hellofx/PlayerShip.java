@@ -8,8 +8,8 @@ public class PlayerShip extends Polygon {
         25.0, 0.0,
         50.0, 50.0
     };
-
     private int speed = 0;
+    private double angleFactor = 24.0;
 
     PlayerShip(int x, int y) {
         super(PlayerShip.shipPoints);
@@ -23,5 +23,11 @@ public class PlayerShip extends Polygon {
 
     public void changeSpeed(int speedChange) {
         this.speed += speedChange;
+    }
+
+    public void changeAngle(String direction) {
+        double currentAngle = getRotate();
+        if (direction == "left") setRotate(currentAngle - angleFactor);
+        else if (direction == "right") setRotate(currentAngle + angleFactor);
     }
 }
