@@ -1,12 +1,16 @@
 package hellofx;
 
-import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Polyline;
 
-public class PlayerShip extends Polygon {
+public class PlayerShip extends Polyline {
     private static double[] shipPoints = {
-        0.0, 50.0,
-        25.0, 0.0,
-        50.0, 50.0
+        20.0, 0.0,
+        0.0, 60.0,
+        20.0, 40.0,
+        20.0, 0.0,
+        20.0, 40.0,
+        40.0, 60.0,
+        20.0, 0.0,
     };
     private int speed = 0;
     private double angleFactor = 14.4;
