@@ -1,4 +1,5 @@
 package hellofx;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -33,31 +34,12 @@ public class Main extends Application {
                     player.changeSpeed(-1);
             }
         });
+        AnimationTimer timer = new PlayerShipTimer(player);
+        timer.start();
         primaryStage.setScene(scene);
         primaryStage.show();
+    }        
 
-        Thread shipFlightThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    double newY = player.getTranslateY() + (-0.25 * player.getSpeed());
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            player.setTranslateY(newY);
-                        }
-                    });
-                    try {
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } 
-            }
-        });
-
-        shipFlightThread.start();
-    }
     public static void main(String[] args) {
         launch(args);
     }
