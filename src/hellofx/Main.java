@@ -27,10 +27,10 @@ public class Main extends Application {
         Scene scene = new Scene(createContent());
         scene.setOnKeyPressed(e -> {
             switch(e.getCode()) {
-                case W:
+                case UP:
                     player.changeSpeed(1);
                     break;
-                case S:
+                case DOWN:
                     player.changeSpeed(-1);
             }
         });

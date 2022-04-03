@@ -11,10 +11,6 @@ public class PlayerShipTimer extends AnimationTimer {
 
     @Override
     public void handle(long now) {
-        doHandle();
-    }
-
-    private void doHandle() {
         double newY = player.getTranslateY() + (-0.5 * player.getSpeed());
         player.setTranslateY(newY);
     }
