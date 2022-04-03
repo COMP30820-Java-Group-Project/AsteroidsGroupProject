@@ -9,7 +9,7 @@ public class PlayerShip extends Polygon {
         50.0, 50.0
     };
     private int speed = 0;
-    private double angleFactor = 24.0;
+    private double angleFactor = 14.4;
 
     PlayerShip(int x, int y) {
         super(PlayerShip.shipPoints);

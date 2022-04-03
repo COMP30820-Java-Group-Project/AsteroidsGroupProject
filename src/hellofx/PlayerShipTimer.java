@@ -11,7 +11,13 @@ public class PlayerShipTimer extends AnimationTimer {
 
     @Override
     public void handle(long now) {
-        double newY = player.getTranslateY() + (-0.5 * player.getSpeed());
-        player.setTranslateY(newY);
+        double playerAngle = player.getRotate();
+        int playerSpeed = player.getSpeed();
+        double currentX = player.getTranslateX();
+        double currentY = player.getTranslateY();
+        double currentVelocityX = playerSpeed * Math.sin(Math.toRadians(playerAngle));
+        double currentVelocityY = -playerSpeed * Math.cos(Math.toRadians(playerAngle));
+        player.setTranslateX(currentX + currentVelocityX);
+        player.setTranslateY(currentY + currentVelocityY);
     }
 }
