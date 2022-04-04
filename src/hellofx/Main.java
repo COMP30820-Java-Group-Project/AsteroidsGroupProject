@@ -41,30 +41,29 @@ public class Main extends Application {
             
         @Override
         public void handle(long now) {
-        // call move function initially so that movement is constant
+        // call move method initially so that movement is constant
         player.move();
         scene.setOnKeyPressed(e -> {
             switch(e.getCode()) {
                 case UP:
                     player.changeSpeed(1);
                     break;
-                    // dont think this should be an allowed key
-                // case DOWN:
-                //     player.changeSpeed(-1);
-                //     break;
                 case LEFT:
                     player.changeAngle("left");
                     break;
                 case RIGHT:
                     player.changeAngle("right");
                     break;
-                case DOWN:
-                    Bullet b  = new Bullet(player.getTranslateX(), player.getTranslateY());
+                case SPACE:
+                    Bullet b  = new Bullet(player.getTranslateX(), player.getTranslateY(), player.getRotate());
                     root.getChildren().add(b);
                     bullets.add(b);
                     break;
             }
         });
+        for (Bullet b : bullets) {
+            b.move();
+        }
         }}.start();
         //AnimationTimer timer = new PlayerShipTimer(player);
         //timer.start();

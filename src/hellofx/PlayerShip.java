@@ -25,6 +25,16 @@ public class PlayerShip extends Polyline {
         return this.speed;
     }
 
+    public int getNoseX() {
+        //update
+        return this.speed;
+    }
+
+    public int getNoseY() {
+        //update
+        return this.speed;
+    }
+
     public void changeSpeed(int speedChange) {
         this.speed += speedChange;
     }
