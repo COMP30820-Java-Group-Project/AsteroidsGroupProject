@@ -12,6 +12,7 @@ public class Bullet extends Polyline {
     private double life;
     //private Rectangle size;
     private int speed = 6;
+    long startTime = System.currentTimeMillis();
     public static final int BULLET_WIDTH = 2;
     
 public Bullet(double x1, double y1, double r1) {
@@ -30,8 +31,6 @@ public Bullet(double x1, double y1, double r1) {
 
 
 public void timeout() {
-	// assuming we are using AnimationTimer class
-    // delete after 2 seconds
 }
 
 public void damageable() {
@@ -44,6 +43,17 @@ public int addPoints() {
     // pointsSet() = pointsGet() + 1;
     return 1;
 }
+public void wrap() {
+    //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+     if (this.getTranslateX() + this.getLayoutBounds().getWidth()/2<0)
+     this.setTranslateX(1000+this.getLayoutBounds().getWidth()/2);
+     if (this.getTranslateX() > 1000 + this.getLayoutBounds().getWidth()/2)
+     this.setTranslateX(-this.getLayoutBounds().getWidth()/2);
+     if (this.getTranslateY() + this.getLayoutBounds().getHeight()/2<0)
+     this.setTranslateY(900+this.getLayoutBounds().getWidth()/2);
+     if (this.getTranslateY() > 900 + this.getLayoutBounds().getHeight()/2)
+     this.setTranslateY(-this.getLayoutBounds().getHeight()/2);
+ }
 
 public void move() {
 	double playerAngle = this.getRotate();
@@ -54,6 +64,9 @@ public void move() {
     double currentVelocityY = -bulletSpeed * Math.cos(Math.toRadians(playerAngle));
     this.setTranslateX(currentX + currentVelocityX);
     this.setTranslateY(currentY + currentVelocityY);
+    this.wrap();
+    
+
 }
 
 }

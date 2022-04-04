@@ -23,6 +23,7 @@ public class PlayerShip extends Polyline {
 
     public int getSpeed() {
         return this.speed;
+    
     }
 
      public void wrap() {
@@ -56,6 +57,6 @@ public class PlayerShip extends Polyline {
         double currentVelocityY = -playerSpeed * Math.cos(Math.toRadians(playerAngle));
         this.setTranslateX(currentX + currentVelocityX);
         this.setTranslateY(currentY + currentVelocityY);
-        wrap();
+        this.wrap();
     }
 }

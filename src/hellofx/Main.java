@@ -63,8 +63,18 @@ public class Main extends Application {
                     break;
             }
         });
-        for (Bullet b : bullets) {
+        for (int i = 0; i < bullets.size(); i++) {
+            Bullet b = bullets.get(i);
             b.move();
+            if (System.currentTimeMillis() - b.startTime > 2000){
+                // remove from list
+                bullets.remove(b);
+                // remove from screen
+                root.getChildren().remove(b);
+            }
+                
+          
+
         }
         }}.start();
         //AnimationTimer timer = new PlayerShipTimer(player);
