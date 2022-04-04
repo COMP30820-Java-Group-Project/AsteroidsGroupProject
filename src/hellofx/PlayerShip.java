@@ -40,6 +40,13 @@ public class PlayerShip extends Polyline {
 
     public void changeSpeed(int speedChange) {
         this.speed += speedChange;
+        if (this.getSpeed() < 0) {
+            this.speed = 0;
+        }
+        // setting arbitrary max speed - feel free to change
+        if (this.getSpeed() > 6) {
+            this.speed = 6;
+        }
     }
 
     public void changeAngle(String direction) {

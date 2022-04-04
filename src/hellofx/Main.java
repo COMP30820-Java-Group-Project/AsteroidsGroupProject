@@ -50,6 +50,9 @@ public class Main extends Application {
                 case UP:
                     player.changeSpeed(1);
                     break;
+                case DOWN:
+                    player.changeSpeed(-1);
+                    break;
                 case LEFT:
                     player.changeAngle("left");
                     break;
