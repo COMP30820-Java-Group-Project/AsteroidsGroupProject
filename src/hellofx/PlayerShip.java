@@ -34,4 +34,15 @@ public class PlayerShip extends Polyline {
         if (direction == "left") setRotate(currentAngle - angleFactor);
         else if (direction == "right") setRotate(currentAngle + angleFactor);
     }
+
+    public void move() {
+        double playerAngle = this.getRotate();
+        int playerSpeed = this.getSpeed();
+        double currentX = this.getTranslateX();
+        double currentY = this.getTranslateY();
+        double currentVelocityX = playerSpeed * Math.sin(Math.toRadians(playerAngle));
+        double currentVelocityY = -playerSpeed * Math.cos(Math.toRadians(playerAngle));
+        this.setTranslateX(currentX + currentVelocityX);
+        this.setTranslateY(currentY + currentVelocityY);
+    }
 }
