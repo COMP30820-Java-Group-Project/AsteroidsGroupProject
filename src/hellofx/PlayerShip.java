@@ -25,15 +25,17 @@ public class PlayerShip extends Polyline {
         return this.speed;
     }
 
-    public int getNoseX() {
-        //update
-        return this.speed;
-    }
-
-    public int getNoseY() {
-        //update
-        return this.speed;
-    }
+     public void wrap() {
+        //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+         if (this.getTranslateX() + this.getLayoutBounds().getWidth()/2<0)
+         this.setTranslateX(1000+this.getLayoutBounds().getWidth()/2);
+         if (this.getTranslateX() > 1000 + this.getLayoutBounds().getWidth()/2)
+         this.setTranslateX(-this.getLayoutBounds().getWidth()/2);
+         if (this.getTranslateY() + this.getLayoutBounds().getHeight()/2<0)
+         this.setTranslateY(900+this.getLayoutBounds().getWidth()/2);
+         if (this.getTranslateY() > 900 + this.getLayoutBounds().getHeight()/2)
+         this.setTranslateY(-this.getLayoutBounds().getHeight()/2);
+     }
 
     public void changeSpeed(int speedChange) {
         this.speed += speedChange;
@@ -54,5 +56,6 @@ public class PlayerShip extends Polyline {
         double currentVelocityY = -playerSpeed * Math.cos(Math.toRadians(playerAngle));
         this.setTranslateX(currentX + currentVelocityX);
         this.setTranslateY(currentY + currentVelocityY);
+        wrap();
     }
 }

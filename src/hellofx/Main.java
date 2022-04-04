@@ -30,7 +30,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Pane root = new Pane();
-        root.setPrefSize(1000, 900);
+        final int SCREENWIDTH = 1000;
+        final int SCREENHEIGHT = 900;
+        root.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
         primaryStage.setTitle("Hello Asteroids");
         Scene scene = new Scene(root);
         PlayerShip player = new PlayerShip(900, 600);
