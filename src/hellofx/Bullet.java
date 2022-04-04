@@ -11,7 +11,7 @@ public class Bullet extends Polyline {
     private double x, y, rotate;
     private double life;
     //private Rectangle size;
-    private int speed = 6;
+    private int speed = 8;
     long startTime = System.currentTimeMillis();
     public static final int BULLET_WIDTH = 2;
     
