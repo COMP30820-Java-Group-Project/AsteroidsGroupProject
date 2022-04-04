@@ -5,18 +5,25 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Polyline;
 
 public class Bullet extends Polyline {
-    private double x, y;
+    private static double[] bulletPoints = {
+        2, -2, 2, 2, -2, 2, -2, -2
+    };
+    private double x, y, rotate;
     private double life;
     //private Rectangle size;
+    private int speed = 6;
     public static final int BULLET_WIDTH = 2;
     
-public Bullet(double x1, double y1) {
+public Bullet(double x1, double y1, double r1) {
     // x1 and y1 to be nose position of ship that fired (either alien or space ship)
-    
-    this.x = x1;
-    this.y = y1;
-    this.life = 0;
-    new Polygon(2, -2, 2, 2, -2, 2, -2, -2, this.x, this.y);
+    super(Bullet.bulletPoints);
+    setTranslateX(x1);
+    setTranslateY(y1);
+    setRotate(r1);
+    // this.x = x1;
+    // this.y = y1;
+    // this.life = 0;
+    // new Polygon(2, -2, 2, 2, -2, 2, -2, -2, this.x, this.y);
     //this.damage = d;
     
 }
@@ -39,7 +46,14 @@ public int addPoints() {
 }
 
 public void move() {
-	// should inherit this from a Movable class
+	double playerAngle = this.getRotate();
+    int bulletSpeed = this.speed;
+    double currentX = this.getTranslateX();
+    double currentY = this.getTranslateY();
+    double currentVelocityX = bulletSpeed * Math.sin(Math.toRadians(playerAngle));
+    double currentVelocityY = -bulletSpeed * Math.cos(Math.toRadians(playerAngle));
+    this.setTranslateX(currentX + currentVelocityX);
+    this.setTranslateY(currentY + currentVelocityY);
 }
 
 }
