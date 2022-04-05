@@ -39,32 +39,7 @@ public class Main extends Application {
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
         List<Bullet> bullets = new ArrayList<>();
 
-        // Test bounds code
-        Polyline testBounds = new Polyline();
-
-        // Coordinates
-        double playerMinX = player.getLayoutBounds().getMinX();
-        double playerMaxX = player.getLayoutBounds().getMaxX();
-        double playerMinY = player.getLayoutBounds().getMinY();
-        double playerMaxY = player.getLayoutBounds().getMaxY();
-        double boundsWidth = player.getLayoutBounds().getWidth();
-        double boundsHeight = player.getLayoutBounds().getHeight();
-
-
-        testBounds.getPoints().addAll(new Double[]{
-            playerMinX, playerMinY,
-            playerMinX+boundsWidth, playerMinY,
-            playerMaxX, playerMaxY,
-            playerMinX, playerMinY + boundsHeight,
-            playerMinX, playerMinY,
-        });
-
-        testBounds.setTranslateX(SCREENWIDTH/2);
-        testBounds.setTranslateY(SCREENHEIGHT/2);
-
-
         root.getChildren().add(player);
-        root.getChildren().add(testBounds);
 
         new AnimationTimer() {
             
