@@ -18,15 +18,10 @@ public class Bullet extends Polyline {
 public Bullet(double x1, double y1, double r1) {
     // x1 and y1 to be nose position of ship that fired (either alien or space ship)
     super(Bullet.bulletPoints);
-    setTranslateX(x1);
-    setTranslateY(y1);
-    setRotate(r1);
-    // this.x = x1;
-    // this.y = y1;
-    // this.life = 0;
-    // new Polygon(2, -2, 2, 2, -2, 2, -2, -2, this.x, this.y);
-    //this.damage = d;
-    
+    this.setTranslateX(x1);
+    this.setTranslateY(y1);
+    this.setRotate(r1);
+
 }
 
 
@@ -43,6 +38,7 @@ public int addPoints() {
     // pointsSet() = pointsGet() + 1;
     return 1;
 }
+// method updates coordinates if either goes off screen
 public void wrap() {
     //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
      if (this.getTranslateX() + this.getLayoutBounds().getWidth()/2<0)
