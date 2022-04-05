@@ -35,7 +35,7 @@ public class Main extends Application {
         root.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
         primaryStage.setTitle("Hello Asteroids");
         Scene scene = new Scene(root);
-        PlayerShip player = new PlayerShip(900, 600);
+        PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
         List<Bullet> bullets = new ArrayList<>();
         root.getChildren().add(player);
 
@@ -60,7 +60,7 @@ public class Main extends Application {
                     player.changeAngle("right");
                     break;
                 case SPACE:
-                    Bullet b  = new Bullet(player.getTranslateX(), player.getTranslateY(), player.getRotate());
+                    Bullet b  = new Bullet(player.getNoseX(), player.getNoseY(), player.getRotate());
                     root.getChildren().add(b);
                     bullets.add(b);
                     break;
