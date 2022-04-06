@@ -47,17 +47,6 @@ public class PlayerShip extends Polyline {
     }
 
     public double getNoseX() {
-        
-        // returns x coordinate of nose position
-        // using methods inherited from shape class
-        // 
-        // double angle = Math.atan2(this.getTranslateY(), this.getTranslateX());
-    
-        double halfHeight = this.getLayoutBounds().getWidth()/2;
-        // return this.getTranslateX() + Math.cos(Math.toRadians(angle))*halfHeight - Math.cos(Math.toRadians(angle))*halfHeight;
-        //return this.getTranslateX();//+this.getLayoutBounds().getWidth()/2; //+ halfHeight;
-        //return (this.getTranslateX() + 2* halfHeight * Math.cos(Math.toRadians(this.getRotate())));
-
         double halfWidth = this.getLayoutBounds().getWidth()/2;
         double squareCenter = this.getTranslateX() + halfWidth;
         double noseX = squareCenter + halfWidth * Math.sin(Math.toRadians(180 - this.getRotate()));
@@ -66,15 +55,6 @@ public class PlayerShip extends Polyline {
     }
  
     public double getNoseY() {
-        // returns y coordinate of nose position
-        // using methods inherited from shape class
-        // double angle = Math.atan2(this.getTranslateY(), this.getTranslateX());
-    
-        //double halfHeight = this.getLayoutBounds().getMinY();
-        // return this.getTranslateY() + Math.sin(Math.toRadians(angle))*halfHeight + Math.cos(Math.toRadians(angle))*halfHeight;
-        //return this.getTranslateY()+this.getLayoutBounds().getHeight()/2; //+this.getLayoutBounds().getMinY();  
-        //return (this.getTranslateX() - 2*halfHeight * Math.sin(Math.toRadians(this.getRotate())));
-
         double halfWidth = this.getLayoutBounds().getWidth()/2;
         double squareCenter = this.getTranslateY() + halfWidth;
         double noseY = squareCenter + halfWidth * Math.cos(Math.toRadians(180 - this.getRotate()));
