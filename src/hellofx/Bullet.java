@@ -11,16 +11,19 @@ public class Bullet extends Polyline {
     private double x, y, rotate;
     private double life;
     //private Rectangle size;
-    private int speed = 8;
+    private int speed = 0;
     long startTime = System.currentTimeMillis();
     public static final int BULLET_WIDTH = 2;
     
-public Bullet(double x1, double y1, double r1) {
+public Bullet(double x1, double y1, double r1, int s) {
     // x1 and y1 to be nose position of ship that fired (either alien or space ship)
     super(Bullet.bulletPoints);
     this.setTranslateX(x1);
     this.setTranslateY(y1);
     this.setRotate(r1);
+    // setting to 6 so bullet travels at reasonable speed regardless
+    // bullet speed dependent on ship speed
+    this.speed = 6 + s;
 
 }
 

@@ -62,7 +62,7 @@ public class Main extends Application {
                     player.changeAngle("right");
                     break;
                 case SPACE:
-                    Bullet b  = new Bullet(player.getNoseX(), player.getNoseY(), player.getRotate());
+                    Bullet b  = new Bullet(player.getNoseX(), player.getNoseY(), player.getRotate(), player.getSpeed());
                     root.getChildren().add(b);
                     bullets.add(b);
                     break;
