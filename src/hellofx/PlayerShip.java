@@ -4,13 +4,13 @@ import javafx.scene.shape.Polyline;
 
 public class PlayerShip extends Polyline {
     private static double[] shipPoints = {
-        20.0, 0.0,
-        0.0, 60.0,
-        20.0, 40.0,
-        20.0, 0.0,
-        20.0, 40.0,
-        40.0, 60.0,
-        20.0, 0.0,
+        25.0, 0.0,
+        0.0, 50.0,
+        25.0, 25.0,
+        25.0, 0.0,
+        25.0, 25.0,
+        50.0, 50.0,
+        25.0, 0.0,
     };
     private int speed = 0;
     private double angleFactor = 14.4;
@@ -40,9 +40,6 @@ public class PlayerShip extends Polyline {
 
     public void changeSpeed(int speedChange) {
         this.speed += speedChange;
-        if (this.getSpeed() < 0) {
-            this.speed = 0;
-        }
         // setting arbitrary max speed - feel free to change
         if (this.getSpeed() > 6) {
             this.speed = 6;
@@ -50,27 +47,18 @@ public class PlayerShip extends Polyline {
     }
 
     public double getNoseX() {
-        
-        // returns x coordinate of nose position
-        // using methods inherited from shape class
-        // 
-        // double angle = Math.atan2(this.getTranslateY(), this.getTranslateX());
-    
-        double halfHeight = this.getLayoutBounds().getWidth()/2;
-        // return this.getTranslateX() + Math.cos(Math.toRadians(angle))*halfHeight - Math.cos(Math.toRadians(angle))*halfHeight;
-        return this.getTranslateX() + halfHeight;
-        //return (this.getTranslateX() + 2* halfHeight * Math.cos(Math.toRadians(this.getRotate())));
-    }
+        double halfWidth = this.getLayoutBounds().getWidth()/2;
+        double squareCenter = this.getTranslateX() + halfWidth;
+        double noseX = squareCenter + halfWidth * Math.sin(Math.toRadians(180 - this.getRotate()));
+        return noseX; 
 
+    }
+ 
     public double getNoseY() {
-        // returns y coordinate of nose position
-        // using methods inherited from shape class
-        // double angle = Math.atan2(this.getTranslateY(), this.getTranslateX());
-    
-        double halfHeight = this.getLayoutBounds().getHeight()/2;
-        // return this.getTranslateY() + Math.sin(Math.toRadians(angle))*halfHeight + Math.cos(Math.toRadians(angle))*halfHeight;
-        return this.getTranslateY()+halfHeight;
-        //return (this.getTranslateX() - 2*halfHeight * Math.sin(Math.toRadians(this.getRotate())));
+        double halfWidth = this.getLayoutBounds().getWidth()/2;
+        double squareCenter = this.getTranslateY() + halfWidth;
+        double noseY = squareCenter + halfWidth * Math.cos(Math.toRadians(180 - this.getRotate()));
+        return noseY;
     }
 
     public void changeAngle(String direction) {

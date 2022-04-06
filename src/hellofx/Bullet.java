@@ -40,7 +40,7 @@ public int addPoints() {
 }
 // method updates coordinates if either goes off screen
 public void wrap() {
-    //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+      //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
      if (this.getTranslateX() + this.getLayoutBounds().getWidth()/2<0)
      this.setTranslateX(1000+this.getLayoutBounds().getWidth()/2);
      if (this.getTranslateX() > 1000 + this.getLayoutBounds().getWidth()/2)

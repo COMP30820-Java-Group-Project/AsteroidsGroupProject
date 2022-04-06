@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.*;
 
 public class Main extends Application {
 
@@ -37,6 +38,7 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
         List<Bullet> bullets = new ArrayList<>();
+
         root.getChildren().add(player);
 
         new AnimationTimer() {
@@ -75,7 +77,6 @@ public class Main extends Application {
                 // remove from screen
                 root.getChildren().remove(b);
             }
-                
           
 
         }
