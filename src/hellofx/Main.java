@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
@@ -38,6 +39,10 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
         List<Bullet> bullets = new ArrayList<>();
+        // continuous inputs 
+        List<String> constantPress = new ArrayList<String>();
+        // discrete inputs
+        List<String> onePress = new ArrayList<String>();
 
         root.getChildren().add(player);
 
@@ -48,26 +53,62 @@ public class Main extends Application {
         // call move method initially so that movement is constant
         player.move();
         scene.setOnKeyPressed(e -> {
-            switch(e.getCode()) {
-                case UP:
-                    player.changeSpeed(1);
-                    break;
-                case DOWN:
-                    player.changeSpeed(-1);
-                    break;
-                case LEFT:
-                    player.changeAngle("left");
-                    break;
-                case RIGHT:
-                    player.changeAngle("right");
-                    break;
-                case SPACE:
-                    Bullet b  = new Bullet(player.getNoseX(), player.getNoseY(), player.getRotate(), player.getSpeed());
-                    root.getChildren().add(b);
-                    bullets.add(b);
-                    break;
+                    String keyName = e.getCode().toString();
+                    if (!constantPress.contains(keyName)){
+                        // add only if not in list already
+                        constantPress.add(keyName);
+                        // will never already contain given it is cleared after handling
+                        onePress.add(keyName);
+                    }
+                });
+
+        scene.setOnKeyReleased(e -> {
+                    String keyName = e.getCode().toString();
+                    if (constantPress.contains(keyName)){
+                        constantPress.remove(keyName);
+                    }
+                });
+        // scene.setOnKeyPressed(e -> {
+            if (constantPress.contains("UP")) {
+                player.changeSpeed(0.1);
             }
-        });
+            if (constantPress.contains("DOWN")) {
+                player.changeSpeed(-0.1);
+            }
+            if (constantPress.contains("LEFT")) {
+                player.changeAngle("left");
+            }
+            if (constantPress.contains("RIGHT")) {
+                player.changeAngle("right");
+            }
+            if (onePress.contains("SPACE")) {
+                Bullet b  = new Bullet(player.getNoseX(), player.getNoseY(), player.getRotate(), player.getSpeed());
+                root.getChildren().add(b);
+                bullets.add(b);
+            }
+            // clear list so handled only once
+            onePress.clear();
+            
+            // switch(e.getCode()) {
+            //     case UP:
+            //         player.changeSpeed(1);
+            //         break;
+            //     case DOWN:
+            //         player.changeSpeed(-1);
+            //         break;
+            //     case LEFT:
+            //         player.changeAngle("left");
+            //         break;
+            //     case RIGHT:
+            //         player.changeAngle("right");
+            //         break;
+            //     case SPACE:
+            //         Bullet b  = new Bullet(player.getNoseX(), player.getNoseY(), player.getRotate(), player.getSpeed());
+            //         root.getChildren().add(b);
+            //         bullets.add(b);
+            //         break;
+            // }
+        // });
         for (int i = 0; i < bullets.size(); i++) {
             Bullet b = bullets.get(i);
             b.move();

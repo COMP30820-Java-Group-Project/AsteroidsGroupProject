@@ -12,8 +12,8 @@ public class PlayerShip extends Polyline {
         50.0, 50.0,
         25.0, 0.0,
     };
-    private int speed = 0;
-    private double angleFactor = 14.4;
+    private double speed = 0;
+    private double angleFactor = 4;
 
     PlayerShip(int x, int y) {
         super(PlayerShip.shipPoints);
@@ -21,7 +21,7 @@ public class PlayerShip extends Polyline {
         setTranslateY(y);
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return this.speed;
     
     }
@@ -40,7 +40,7 @@ public class PlayerShip extends Polyline {
        this.setTranslateY(-this.getLayoutBounds().getHeight()/2);
    }
 
-    public void changeSpeed(int speedChange) {
+    public void changeSpeed(double speedChange) {
         this.speed += speedChange;
          if (this.getSpeed() < 0) {
             this.speed = 0;
@@ -74,7 +74,7 @@ public class PlayerShip extends Polyline {
 
     public void move() {
         double playerAngle = this.getRotate();
-        int playerSpeed = this.getSpeed();
+        double playerSpeed = this.getSpeed();
         double currentX = this.getTranslateX();
         double currentY = this.getTranslateY();
         double currentVelocityX = playerSpeed * Math.sin(Math.toRadians(playerAngle));
