@@ -49,7 +49,7 @@ public void wrap() {
      if (this.getTranslateX() > 1000 + this.getLayoutBounds().getWidth()/2)
      this.setTranslateX(-this.getLayoutBounds().getWidth()/2);
      if (this.getTranslateY() + this.getLayoutBounds().getHeight()/2<0)
-     this.setTranslateY(900+this.getLayoutBounds().getWidth()/2);
+     this.setTranslateY(900+this.getLayoutBounds().getHeight()/2);
      if (this.getTranslateY() > 900 + this.getLayoutBounds().getHeight()/2)
      this.setTranslateY(-this.getLayoutBounds().getHeight()/2);
  }
