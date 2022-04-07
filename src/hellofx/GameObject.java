@@ -2,6 +2,8 @@ package hellofx;
 import javafx.scene.shape.Polyline;
 
 public abstract class GameObject extends Polyline {
+    protected double speed = 0;
+    
     public GameObject(double[] points){
         super(points);
     }
@@ -17,4 +19,15 @@ public abstract class GameObject extends Polyline {
        if (this.getTranslateY() > 900 + this.getLayoutBounds().getHeight()/2)
        this.setTranslateY(-this.getLayoutBounds().getHeight()/2);
    }
+
+   public void move() {
+       double objectAngle = this.getRotate();
+       double currentX = this.getTranslateX();
+       double currentY = this.getTranslateY();
+       double currentVelocityX = this.speed * Math.sin(Math.toRadians(objectAngle));
+       double currentVelocityY = -this.speed * Math.cos(Math.toRadians(objectAngle));
+       this.setTranslateX(currentX + currentVelocityX);
+       this.setTranslateY(currentY + currentVelocityY);
+       this.wrap();
+    }
 }

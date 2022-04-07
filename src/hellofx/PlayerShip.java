@@ -10,7 +10,6 @@ public class PlayerShip extends GameObject {
         50.0, 50.0,
         25.0, 0.0,
     };
-    private double speed = 0;
     private double angleFactor = 4;
 
     PlayerShip(int x, int y) {
@@ -23,7 +22,7 @@ public class PlayerShip extends GameObject {
         return this.speed;
     
     }
-
+    
     public void hyperspace(int width, int height) {
         double x = Math.random() * width;
         double y = Math.random() * height;
@@ -61,17 +60,5 @@ public class PlayerShip extends GameObject {
         double currentAngle = getRotate();
         if (direction == "left") setRotate(currentAngle - angleFactor);
         else if (direction == "right") setRotate(currentAngle + angleFactor);
-    }
-
-    public void move() {
-        double playerAngle = this.getRotate();
-        double playerSpeed = this.getSpeed();
-        double currentX = this.getTranslateX();
-        double currentY = this.getTranslateY();
-        double currentVelocityX = playerSpeed * Math.sin(Math.toRadians(playerAngle));
-        double currentVelocityY = -playerSpeed * Math.cos(Math.toRadians(playerAngle));
-        this.setTranslateX(currentX + currentVelocityX);
-        this.setTranslateY(currentY + currentVelocityY);
-        this.wrap();
-    }
+    }   
 }
