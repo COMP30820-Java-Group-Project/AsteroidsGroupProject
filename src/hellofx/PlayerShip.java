@@ -1,6 +1,6 @@
 package hellofx;
 
-public class PlayerShip extends GameObject {
+public class PlayerShip extends Sprite {
     private static double[] shipPoints = {
         25.0, 0.0,
         0.0, 50.0,

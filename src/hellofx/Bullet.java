@@ -1,6 +1,6 @@
 package hellofx;
 
-public class Bullet extends GameObject {
+public class Bullet extends Sprite {
     private static double[] bulletPoints = {
         2, -2, 2, 2, -2, 2, -2, -2
     };

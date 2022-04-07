@@ -1,10 +1,10 @@
 package hellofx;
 import javafx.scene.shape.Polyline;
 
-public abstract class GameObject extends Polyline {
+public abstract class Sprite extends Polyline {
     protected double speed = 0;
     
-    public GameObject(double[] points){
+    public Sprite(double[] points){
         super(points);
     }
     
