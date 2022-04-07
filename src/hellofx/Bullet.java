@@ -1,10 +1,6 @@
 package hellofx;
 
-
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Polyline;
-
-public class Bullet extends Polyline {
+public class Bullet extends GameObject {
     private static double[] bulletPoints = {
         2, -2, 2, 2, -2, 2, -2, -2
     };
@@ -41,18 +37,6 @@ public int addPoints() {
     // pointsSet() = pointsGet() + 1;
     return 1;
 }
-// method updates coordinates if either goes off screen
-public void wrap() {
-      //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-     if (this.getTranslateX() + this.getLayoutBounds().getWidth()/2<0)
-     this.setTranslateX(1000+this.getLayoutBounds().getWidth()/2);
-     if (this.getTranslateX() > 1000 + this.getLayoutBounds().getWidth()/2)
-     this.setTranslateX(-this.getLayoutBounds().getWidth()/2);
-     if (this.getTranslateY() + this.getLayoutBounds().getHeight()/2<0)
-     this.setTranslateY(900+this.getLayoutBounds().getHeight()/2);
-     if (this.getTranslateY() > 900 + this.getLayoutBounds().getHeight()/2)
-     this.setTranslateY(-this.getLayoutBounds().getHeight()/2);
- }
 
 public void move() {
 	double playerAngle = this.getRotate();
@@ -64,8 +48,6 @@ public void move() {
     this.setTranslateX(currentX + currentVelocityX);
     this.setTranslateY(currentY + currentVelocityY);
     this.wrap();
-    
-
 }
 
 }
