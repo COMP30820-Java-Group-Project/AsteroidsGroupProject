@@ -26,6 +26,13 @@ public class PlayerShip extends Polyline {
     
     }
 
+    // naive - needs to check if object there
+    public void hyperspace(int width, int height) {
+        double x = Math.random() * width;
+        double y = Math.random() * height;
+        this.setTranslateX(x);
+        this.setTranslateY(y);
+    }
     
 
      public void wrap() {
