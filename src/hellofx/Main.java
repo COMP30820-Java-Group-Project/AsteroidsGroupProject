@@ -90,8 +90,13 @@ public class Main extends Application {
                 bullets.add(b);
             }
             if (onePress.contains("H")) {
-                //if (bullets.isEmpty()) {
+                // call hyperspace method
                 player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
+                // keep hyperspacing while there is an intersection
+                 // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
+                while (bulletIntersects(bullets, player)){
+                    player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
+                }
             }
             // clear list so handled only once
             onePress.clear();
@@ -119,22 +124,32 @@ public class Main extends Application {
         for (int i = 0; i < bullets.size(); i++) {
             Bullet b = bullets.get(i);
             b.move();
-            if (System.currentTimeMillis() - b.startTime > 200){
+            if (System.currentTimeMillis() - b.startTime > 2000){
                 // remove from list
                 bullets.remove(b);
                 // remove from screen
                 root.getChildren().remove(b);
             }
-          
-
         }
         }}.start();
         //AnimationTimer timer = new PlayerShipTimer(player);
         //timer.start();
         primaryStage.setScene(scene);
         primaryStage.show();
-    }        
-
+    }
+    // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
+    // need to find a better class for this type of method to be in    
+    // method that takes list of bullets and check if they intersect with the Shape. Returns true if one bullet intersects, false otherwise
+    public boolean bulletIntersects(List<Bullet> L, Shape s) {
+        for (int i = 0; i < L.size(); i++) {
+            Bullet b = L.get(i);    
+            Shape area = Shape.intersect(b, s);
+            if (area.getBoundsInLocal().getWidth() > 0) {
+                return true;
+            }
+        }
+        return false;
+        }
     public static void main(String[] args) {
         launch(args);
     }
