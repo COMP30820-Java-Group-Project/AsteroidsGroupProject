@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -37,6 +38,8 @@ public class Main extends Application {
         root.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
         primaryStage.setTitle("Hello Asteroids");
         Scene scene = new Scene(root);
+        // Point2D point2d_1 = new Point2D(20.0f, 150.0f);
+        // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
         List<Bullet> bullets = new ArrayList<>();
         // continuous inputs 
@@ -86,6 +89,10 @@ public class Main extends Application {
                 root.getChildren().add(b);
                 bullets.add(b);
             }
+            if (onePress.contains("H")) {
+                //if (bullets.isEmpty()) {
+                player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
+            }
             // clear list so handled only once
             onePress.clear();
             
@@ -112,7 +119,7 @@ public class Main extends Application {
         for (int i = 0; i < bullets.size(); i++) {
             Bullet b = bullets.get(i);
             b.move();
-            if (System.currentTimeMillis() - b.startTime > 2000){
+            if (System.currentTimeMillis() - b.startTime > 200){
                 // remove from list
                 bullets.remove(b);
                 // remove from screen
