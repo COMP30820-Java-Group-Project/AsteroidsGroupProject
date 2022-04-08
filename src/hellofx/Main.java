@@ -21,7 +21,7 @@ public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
     int lives = 6;
     int level = 1;
-    int largeAsteroids = 9;
+    int largeAsteroids = 1;
     List<Asteroid> allAster = new ArrayList<>();
     List<Asteroid> largeAster = new ArrayList<>();
     
@@ -39,6 +39,8 @@ public class Main extends Application {
         root.getChildren().add(pointsDisplay);
         Text levelDisplay = new Text(20,45, "Level: " + level);
         root.getChildren().add(levelDisplay);
+        Text livesDisplay = new Text(20,60, "Lives: " + lives);
+        root.getChildren().add(livesDisplay);
         // Point2D point2d_1 = new Point2D(20.0f, 150.0f);
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
         
@@ -136,10 +138,13 @@ public class Main extends Application {
         
         if (asteroidIntersects(allAster, player) && !player.getInvincible()) {
             player.death();
+            lives -=1;
+            livesDisplay.setText("Lives: " + lives);
         }
 
+        // if currently invincible (after dying)
         if (player.getInvincible()) {
-            if (System.currentTimeMillis()-player.deathtime > 6000) {
+            if (System.currentTimeMillis()-player.deathtime > 5000) {
                 player.notinvincible();
         }}
 

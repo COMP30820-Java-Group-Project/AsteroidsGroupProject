@@ -20,7 +20,7 @@ public class PlayerShip extends ShipSprite {
         super(PlayerShip.shipPoints);
         this.setTranslateX(x);
         this.setTranslateY(y);
-        this.setFill(Color.BLUE);
+        this.setFill(Color.BLACK);
     }
 
     public void setInvincible(boolean bool) {
@@ -48,7 +48,7 @@ public class PlayerShip extends ShipSprite {
 
     public void notinvincible() {
         this.setInvincible(false);
-        this.setFill(Color.BLUE);
+        this.setFill(Color.BLACK);
     }
     
     public void hyperspace(int width, int height) {
