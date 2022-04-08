@@ -1,8 +1,6 @@
 package hellofx;
 
 public class Alien extends ShipSprite {
-    double startX = 0.0;
-    double startY = 20.0;
 
     private static double[] alienCoordinates = { 
         0.0, 20.0, 
@@ -16,8 +14,6 @@ public class Alien extends ShipSprite {
         };
         
     private double angleChange;
-    
-    private double alienHealth;
     
     Alien(int x, int y) {
         super(Alien.alienCoordinates);
