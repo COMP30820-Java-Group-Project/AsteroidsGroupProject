@@ -1,6 +1,7 @@
 package hellofx;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -12,24 +13,12 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
+import javafx.scene.text.Text;
 
 public class Main extends Application {
-
-    // Lets us add children
-    //private Pane root = new Pane();
-
-    // private PlayerShip player = new PlayerShip(900, 600);
-    // List<Bullet> bullets = new ArrayList<>();
-
-
-    // private Parent createContent() {
-    //     root.setPrefSize(1000, 900);
-
-    //     root.getChildren().add(player);
-  
-    //     return root;
-    // }
-
+    AtomicInteger points = new AtomicInteger();
+    int lives = 0;
+    int level = 0;
     @Override
     public void start(Stage primaryStage) throws Exception{
         Pane root = new Pane();
@@ -38,6 +27,9 @@ public class Main extends Application {
         root.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
         primaryStage.setTitle("Hello Asteroids");
         Scene scene = new Scene(root);
+
+        Text pointsDisplay = new Text(20,30, "Points: " + points);
+        root.getChildren().add(pointsDisplay);
         // Point2D point2d_1 = new Point2D(20.0f, 150.0f);
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
@@ -47,6 +39,7 @@ public class Main extends Application {
         List<Asteroid> mediumAster = new ArrayList<>();
         List<Asteroid> smallAster = new ArrayList<>();
         List<Bullet> bullets = new ArrayList<>();
+        
         // continuous inputs 
         List<String> constantPress = new ArrayList<String>();
         // discrete inputs
@@ -142,6 +135,7 @@ public class Main extends Application {
                     root.getChildren().remove(a);
                     bullets.remove(b);
                     root.getChildren().remove(b);
+                    pointsDisplay.setText("Points: " + points.addAndGet(100));
                     if (largeAster.contains(a)) {
                         largeAster.remove(a);
                         for (int k=0; k<mediumAsteroids;k++) {
@@ -187,6 +181,9 @@ public class Main extends Application {
         
 
         }}.start();
+
+
+        //scene.fillText(pointsText);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
