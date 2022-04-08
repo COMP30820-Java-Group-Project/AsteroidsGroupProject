@@ -42,6 +42,7 @@ public class Main extends Application {
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
         Alien alien = new Alien(SCREENWIDTH/3,SCREENHEIGHT/6);
+        List<Asteroid> allAster = new ArrayList<>();
         List<Asteroid> largeAster = new ArrayList<>();
         List<Asteroid> mediumAster = new ArrayList<>();
         List<Asteroid> smallAster = new ArrayList<>();
@@ -55,8 +56,11 @@ public class Main extends Application {
         root.getChildren().add(alien);
 
         int largeAsteroids = 5;
+        int mediumAsteroids = 3;
+        int smallAsteroids = 3;
         for (int i=0; i<largeAsteroids;i++) {
             Asteroid a  = new Asteroid("large");
+            allAster.add(a);
             largeAster.add(a);
             root.getChildren().add(a);
         }
@@ -124,19 +128,63 @@ public class Main extends Application {
                 root.getChildren().remove(b);
             }
         }
-        for (int i = 0; i < largeAster.size(); i++) {
-            Asteroid a = largeAster.get(i);
+        // this should probably be moved somewhere else
+        // loop through list of all asteroids to move them and check if any of them intersect with a bullet
+        // if there is an intersection, then check if it is of a certain size
+        // if of a certain size, either create more and delete from list, or delete from list if small
+        for (int i = 0; i < allAster.size(); i++) {
+            Asteroid a = allAster.get(i);
             a.move();
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet b = bullets.get(j);
-            if (generalIntersects(b, a)) {
-                largeAster.remove(a);
-                root.getChildren().remove(a);
-                bullets.remove(b);
-                root.getChildren().remove(b);
+                if (generalIntersects(b, a)) {
+                    allAster.remove(a);
+                    root.getChildren().remove(a);
+                    bullets.remove(b);
+                    root.getChildren().remove(b);
+                    if (largeAster.contains(a)) {
+                        largeAster.remove(a);
+                        for (int k=0; k<mediumAsteroids;k++) {
+                            Asteroid a2  = new Asteroid("medium");
+                            allAster.add(a2);
+                            mediumAster.add(a2);
+                            root.getChildren().add(a2);
+                        }
+                    }
+                    if (mediumAster.contains(a)) {
+                        mediumAster.remove(a);
+                        for (int k=0; k<smallAsteroids;k++) {
+                            Asteroid a3  = new Asteroid("small");
+                            allAster.add(a3);
+                            smallAster.add(a3);
+                            root.getChildren().add(a3);
+                        }
+                    }
+                    if (smallAster.contains(a)) {
+                        smallAster.remove(a);
+                    }
+                }
             }
         }
-        }
+        // for (int i = 0; i < largeAster.size(); i++) {
+        //     Asteroid a = largeAster.get(i);
+        //     a.move();
+        //     for (int j = 0; j < bullets.size(); j++) {
+        //         Bullet b = bullets.get(j);
+        //     if (generalIntersects(b, a)) {
+        //         largeAster.remove(a);
+        //         root.getChildren().remove(a);
+        //         bullets.remove(b);
+        //         root.getChildren().remove(b);
+        //         for (int k=0; k<mediumAsteroids;k++) {
+        //             Asteroid a2  = new Asteroid("medium");
+        //             mediumAster.add(a2);
+        //             root.getChildren().add(a2);
+        //             a2.move();
+        //         }
+        //     }
+        // }
+        
 
         }}.start();
         primaryStage.setScene(scene);
