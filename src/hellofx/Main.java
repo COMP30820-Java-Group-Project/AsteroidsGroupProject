@@ -42,9 +42,9 @@ public class Main extends Application {
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
         Alien alien = new Alien(SCREENWIDTH/3,SCREENHEIGHT/6);
-        LargeAsteroid largeAster = new LargeAsteroid();
-        MediumAsteroid mediumAster = new MediumAsteroid();
-        SmallAsteroid smallAster = new SmallAsteroid();
+        List<Asteroid> largeAster = new ArrayList<>();
+        List<Asteroid> mediumAster = new ArrayList<>();
+        List<Asteroid> smallAster = new ArrayList<>();
         List<Bullet> bullets = new ArrayList<>();
         // continuous inputs 
         List<String> constantPress = new ArrayList<String>();
@@ -53,9 +53,13 @@ public class Main extends Application {
 
         root.getChildren().add(player);
         root.getChildren().add(alien);
-        root.getChildren().add(largeAster);
-        root.getChildren().add(mediumAster);
-        root.getChildren().add(smallAster);
+
+        int largeAsteroids = 5;
+        for (int i=0; i<largeAsteroids;i++) {
+            Asteroid a  = new Asteroid("large");
+            largeAster.add(a);
+            root.getChildren().add(a);
+        }
 
         new AnimationTimer() {
             
@@ -64,9 +68,6 @@ public class Main extends Application {
         // call move method initially so that movement is constant
         player.move();
         alien.move();
-        largeAster.move();
-        mediumAster.move();
-        smallAster.move();
         scene.setOnKeyPressed(e -> {
                     String keyName = e.getCode().toString();
                     if (!constantPress.contains(keyName)){
@@ -105,34 +106,14 @@ public class Main extends Application {
                 // call hyperspace method
                 player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 // keep hyperspacing while there is an intersection
-                 // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
+                // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
                 while (bulletIntersects(bullets, player)){
                     player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 }
             }
             // clear list so handled only once
             onePress.clear();
-            
-            // switch(e.getCode()) {
-            //     case UP:
-            //         player.changeSpeed(1);
-            //         break;
-            //     case DOWN:
-            //         player.changeSpeed(-1);
-            //         break;
-            //     case LEFT:
-            //         player.changeAngle("left");
-            //         break;
-            //     case RIGHT:
-            //         player.changeAngle("right");
-            //         break;
-            //     case SPACE:
-            //         Bullet b  = new Bullet(player.getNoseX(), player.getNoseY(), player.getRotate(), player.getSpeed());
-            //         root.getChildren().add(b);
-            //         bullets.add(b);
-            //         break;
-            // }
-        // });
+
         for (int i = 0; i < bullets.size(); i++) {
             Bullet b = bullets.get(i);
             b.move();
@@ -143,9 +124,12 @@ public class Main extends Application {
                 root.getChildren().remove(b);
             }
         }
+        for (int i = 0; i < largeAster.size(); i++) {
+            Asteroid a = largeAster.get(i);
+            a.move();
+        }
+
         }}.start();
-        //AnimationTimer timer = new PlayerShipTimer(player);
-        //timer.start();
         primaryStage.setScene(scene);
         primaryStage.show();
     }

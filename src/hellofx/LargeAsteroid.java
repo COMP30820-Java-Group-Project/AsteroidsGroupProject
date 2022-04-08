@@ -1,11 +1,11 @@
-package hellofx;
+// package hellofx;
 
-public class LargeAsteroid extends Asteroid {
+// public class LargeAsteroid extends Asteroid {
 
-    public LargeAsteroid() {
-        super();
-        // creates an asteroid according to large size
-        super.createCoOrdinates("large");
-    }
+//     public LargeAsteroid() {
+//         super();
+//         // creates an asteroid according to large size
+//         super.createCoOrdinates("large");
+//     }
 
-}
+// }
