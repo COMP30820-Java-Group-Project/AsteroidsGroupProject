@@ -1,5 +1,7 @@
 package hellofx;
 
+import java.time.chrono.ThaiBuddhistChronology;
+
 public class PlayerShip extends Sprite {
     private static double[] shipPoints = {
         25.0, 0.0,
@@ -41,7 +43,7 @@ public class PlayerShip extends Sprite {
         }
     }
 
-    public double getNoseX() {
+    private double getNoseX() {
         double halfWidth = this.getLayoutBounds().getWidth()/2;
         double squareCenter = this.getTranslateX() + halfWidth;
         double noseX = squareCenter + halfWidth * Math.sin(Math.toRadians(180 - this.getRotate()));
@@ -49,7 +51,7 @@ public class PlayerShip extends Sprite {
 
     }
  
-    public double getNoseY() {
+    private double getNoseY() {
         double halfWidth = this.getLayoutBounds().getWidth()/2;
         double squareCenter = this.getTranslateY() + halfWidth;
         double noseY = squareCenter + halfWidth * Math.cos(Math.toRadians(180 - this.getRotate()));
@@ -60,5 +62,10 @@ public class PlayerShip extends Sprite {
         double currentAngle = getRotate();
         if (direction == "left") setRotate(currentAngle - angleFactor);
         else if (direction == "right") setRotate(currentAngle + angleFactor);
-    }   
+    }
+    
+    public Bullet fireBullet() {
+        Bullet newBullet  = new Bullet(this.getNoseX(), this.getNoseY(), this.getRotate(), this.speed);
+        return newBullet;
+    }
 }

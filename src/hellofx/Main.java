@@ -85,7 +85,7 @@ public class Main extends Application {
                 player.changeAngle("right");
             }
             if (onePress.contains("SPACE")) {
-                Bullet b  = new Bullet(player.getNoseX(), player.getNoseY(), player.getRotate(), player.getSpeed());
+                Bullet b  = player.fireBullet();
                 root.getChildren().add(b);
                 bullets.add(b);
             }
