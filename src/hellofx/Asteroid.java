@@ -27,11 +27,19 @@ public class Asteroid extends Sprite {
     public double createXCoOrdinates(int width) {
         // x denotes starting coordinate
         double x = Math.random() * width;
+        // add 200px buffer around center
+        while (x>(width/2-100) && x<(width/2+100)) {
+            x = Math.random() * width;
+        }
         return x;
     }
     public double createYCoOrdinates(int height) {
         // y denotes starting coordinate
         double y = Math.random() * height;
+        // add 200px buffer around center
+        while (y>(height/2-100) && y<(height/2+100)) {
+            y = Math.random() * height;
+        }
         return y;
     }
 
