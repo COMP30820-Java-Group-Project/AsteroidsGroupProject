@@ -145,7 +145,7 @@ public class Main extends Application {
                     if (largeAster.contains(a)) {
                         largeAster.remove(a);
                         for (int k=0; k<mediumAsteroids;k++) {
-                            Asteroid a2  = new Asteroid("medium");
+                            Asteroid a2  = new Asteroid("medium", a.getTranslateX(), a.getTranslateY());
                             allAster.add(a2);
                             mediumAster.add(a2);
                             root.getChildren().add(a2);
@@ -154,7 +154,7 @@ public class Main extends Application {
                     if (mediumAster.contains(a)) {
                         mediumAster.remove(a);
                         for (int k=0; k<smallAsteroids;k++) {
-                            Asteroid a3  = new Asteroid("small");
+                            Asteroid a3  = new Asteroid("small", a.getTranslateX(), a.getTranslateY());
                             allAster.add(a3);
                             smallAster.add(a3);
                             root.getChildren().add(a3);

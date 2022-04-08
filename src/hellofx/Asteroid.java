@@ -12,6 +12,18 @@ public class Asteroid extends Sprite {
         // Generating a random angle to fly at
         this.setRotate((Math.random() * (360 - 0)) + 0);
     }
+
+    // 2nd constructor for medium and small asteroids when coordinates already determined
+    public Asteroid(String size, double x, double y) {
+        super();
+        createShip(size);
+        this.speed = 3;
+        this.setTranslateX(x);
+        this.setTranslateY(y);
+        // Generating a random angle to fly at
+        this.setRotate((Math.random() * (360 - 0)) + 0);
+    }
+
     public double createXCoOrdinates(int width) {
         // x denotes starting coordinate
         double x = Math.random() * width;
