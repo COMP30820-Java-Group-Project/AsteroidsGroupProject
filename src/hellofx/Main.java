@@ -127,6 +127,15 @@ public class Main extends Application {
         for (int i = 0; i < largeAster.size(); i++) {
             Asteroid a = largeAster.get(i);
             a.move();
+            for (int j = 0; j < bullets.size(); j++) {
+                Bullet b = bullets.get(j);
+            if (generalIntersects(b, a)) {
+                largeAster.remove(a);
+                root.getChildren().remove(a);
+                bullets.remove(b);
+                root.getChildren().remove(b);
+            }
+        }
         }
 
         }}.start();
@@ -146,6 +155,15 @@ public class Main extends Application {
         }
         return false;
         }
+
+        public boolean generalIntersects(Shape s1, Shape s2) {
+                Shape area = Shape.intersect(s1, s2);
+                if (area.getBoundsInLocal().getWidth() > 0) {
+                    return true;
+                }
+            
+            return false;
+            }
     public static void main(String[] args) {
         launch(args);
     }
