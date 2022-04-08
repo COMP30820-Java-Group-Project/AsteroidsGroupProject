@@ -6,7 +6,7 @@ public class Asteroid extends Sprite {
     public Asteroid(String size) {
         super();
         createShip(size);
-        this.speed = 3;
+        this.speed = doubleSetSpeed(0.8);
         this.setTranslateX(this.createXCoOrdinates(1000));
         this.setTranslateY(this.createXCoOrdinates(900));
         // Generating a random angle to fly at
@@ -14,15 +14,20 @@ public class Asteroid extends Sprite {
     }
 
     // 2nd constructor for medium and small asteroids when coordinates already determined
-    public Asteroid(String size, double x, double y) {
+    public Asteroid(String size, double x, double y, double s) {
         super();
         createShip(size);
-        this.speed = 3;
+        this.speed = doubleSetSpeed(s);
         this.setTranslateX(x);
         this.setTranslateY(y);
         // Generating a random angle to fly at
         this.setRotate((Math.random() * (360 - 0)) + 0);
     }
+    // return value for speed based on a seed value
+    public double doubleSetSpeed(double seed) {
+        double speed = (Math.random() * seed) + seed;
+        return speed;
+    } 
 
     public double createXCoOrdinates(int width) {
         // x denotes starting coordinate
