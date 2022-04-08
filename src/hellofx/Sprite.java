@@ -7,6 +7,10 @@ public abstract class Sprite extends Polyline {
     public Sprite(double[] points){
         super(points);
     }
+
+    public Sprite() {
+        super();
+    }
     
     public void wrap() {
         //Rectangle2D screenBounds = Screen.getPrimary().getBounds();

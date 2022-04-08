@@ -42,6 +42,9 @@ public class Main extends Application {
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
         Alien alien = new Alien(SCREENWIDTH/3,SCREENHEIGHT/6);
+        LargeAsteroid largeAster = new LargeAsteroid();
+        MediumAsteroid mediumAster = new MediumAsteroid();
+        SmallAsteroid smallAster = new SmallAsteroid();
         List<Bullet> bullets = new ArrayList<>();
         // continuous inputs 
         List<String> constantPress = new ArrayList<String>();
@@ -50,6 +53,9 @@ public class Main extends Application {
 
         root.getChildren().add(player);
         root.getChildren().add(alien);
+        root.getChildren().add(largeAster);
+        root.getChildren().add(mediumAster);
+        root.getChildren().add(smallAster);
 
         new AnimationTimer() {
             
@@ -58,6 +64,9 @@ public class Main extends Application {
         // call move method initially so that movement is constant
         player.move();
         alien.move();
+        largeAster.move();
+        mediumAster.move();
+        smallAster.move();
         scene.setOnKeyPressed(e -> {
                     String keyName = e.getCode().toString();
                     if (!constantPress.contains(keyName)){
