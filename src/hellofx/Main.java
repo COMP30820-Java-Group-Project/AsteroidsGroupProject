@@ -13,14 +13,15 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 
 public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
-    int lives = 0;
+    int lives = 6;
     int level = 1;
-    int largeAsteroids = 9;
+    int largeAsteroids = 1;
     List<Asteroid> allAster = new ArrayList<>();
     List<Asteroid> largeAster = new ArrayList<>();
     
@@ -38,11 +39,15 @@ public class Main extends Application {
         root.getChildren().add(pointsDisplay);
         Text levelDisplay = new Text(20,45, "Level: " + level);
         root.getChildren().add(levelDisplay);
+        Text livesDisplay = new Text(20,60, "Lives: " + lives);
+        root.getChildren().add(livesDisplay);
         // Point2D point2d_1 = new Point2D(20.0f, 150.0f);
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
-        PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
-        Alien alien = new Alien(SCREENWIDTH/3,SCREENHEIGHT/6);
         
+        Alien alien = new Alien(SCREENWIDTH/3,SCREENHEIGHT/6);
+        List<PlayerShip> players = new ArrayList<>();
+        PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
+        players.add(player);
         List<Asteroid> mediumAster = new ArrayList<>();
         List<Asteroid> smallAster = new ArrayList<>();
         List<Bullet> bullets = new ArrayList<>();
@@ -128,6 +133,21 @@ public class Main extends Application {
                 root.getChildren().remove(b);
             }
         }
+        // update for alien and alien bullets
+        // if intersection and player not invincible
+        
+        if (asteroidIntersects(allAster, player) && !player.getInvincible()) {
+            player.death();
+            lives -=1;
+            livesDisplay.setText("Lives: " + lives);
+        }
+
+        // if currently invincible (after dying)
+        if (player.getInvincible()) {
+            if (System.currentTimeMillis()-player.deathtime > 5000) {
+                player.notinvincible();
+        }}
+
         // this should probably be moved somewhere else
         // loop through list of all asteroids to move them and check if any of them intersect with a bullet
         // if there is an intersection, then check if it is of a certain size
@@ -178,7 +198,27 @@ public class Main extends Application {
                     root.getChildren().add(aNew);
                 }
             }
+            
         }
+        
+
+
+        // call move method initially so that movement is constant
+        // attempt to create new ship on death
+        // for (int i = 0; i < players.size(); i++) {
+        //     PlayerShip p = players.get(i);
+        //     p.move();
+        //     if (asteroidIntersects(allAster, p)) {
+        //         root.getChildren().remove(player);
+        //         players.remove(p);
+        //         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
+        //         root.getChildren().add(player);
+        //         players.add(player);
+        //     }
+
+        // }
+
+        
         
         }}.start();
 

@@ -18,6 +18,10 @@ public abstract class Sprite extends Polyline {
         return this.speed;
     }
 
+    public void setSpeed(double s) {
+        this.speed = s;
+    }
+
     public void wrap() {
         //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
        if (this.getTranslateX() + this.getLayoutBounds().getWidth()/2<0)
