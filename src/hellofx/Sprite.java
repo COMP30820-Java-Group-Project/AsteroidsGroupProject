@@ -4,10 +4,12 @@ import javafx.scene.shape.Polyline;
 public abstract class Sprite extends Polyline {
     protected double speed = 0;
     
+    // For everything else
     public Sprite(double[] points){
         super(points);
     }
 
+    // For asteroids
     public Sprite() {
         super();
     }
