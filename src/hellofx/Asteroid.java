@@ -12,14 +12,34 @@ public class Asteroid extends Sprite {
         // Generating a random angle to fly at
         this.setRotate((Math.random() * (360 - 0)) + 0);
     }
+
+    // 2nd constructor for medium and small asteroids when coordinates already determined
+    public Asteroid(String size, double x, double y) {
+        super();
+        createShip(size);
+        this.speed = 3;
+        this.setTranslateX(x);
+        this.setTranslateY(y);
+        // Generating a random angle to fly at
+        this.setRotate((Math.random() * (360 - 0)) + 0);
+    }
+
     public double createXCoOrdinates(int width) {
         // x denotes starting coordinate
         double x = Math.random() * width;
+        // add 200px buffer around center
+        while (x>(width/2-100) && x<(width/2+100)) {
+            x = Math.random() * width;
+        }
         return x;
     }
     public double createYCoOrdinates(int height) {
         // y denotes starting coordinate
         double y = Math.random() * height;
+        // add 200px buffer around center
+        while (y>(height/2-100) && y<(height/2+100)) {
+            y = Math.random() * height;
+        }
         return y;
     }
 
