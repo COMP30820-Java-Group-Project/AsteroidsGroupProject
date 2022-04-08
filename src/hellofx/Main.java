@@ -1,6 +1,7 @@
 package hellofx;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.animation.AnimationTimer;
@@ -18,7 +19,12 @@ import javafx.scene.text.Text;
 public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
     int lives = 0;
-    int level = 0;
+    int level = 1;
+    int largeAsteroids = 1;
+    List<Asteroid> allAster = new ArrayList<>();
+    List<Asteroid> largeAster = new ArrayList<>();
+    
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Pane root = new Pane();
@@ -30,12 +36,13 @@ public class Main extends Application {
 
         Text pointsDisplay = new Text(20,30, "Points: " + points);
         root.getChildren().add(pointsDisplay);
+        Text levelDisplay = new Text(20,45, "Level: " + level);
+        root.getChildren().add(levelDisplay);
         // Point2D point2d_1 = new Point2D(20.0f, 150.0f);
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
         Alien alien = new Alien(SCREENWIDTH/3,SCREENHEIGHT/6);
-        List<Asteroid> allAster = new ArrayList<>();
-        List<Asteroid> largeAster = new ArrayList<>();
+        
         List<Asteroid> mediumAster = new ArrayList<>();
         List<Asteroid> smallAster = new ArrayList<>();
         List<Bullet> bullets = new ArrayList<>();
@@ -48,7 +55,7 @@ public class Main extends Application {
         root.getChildren().add(player);
         root.getChildren().add(alien);
 
-        int largeAsteroids = 5;
+        
         int mediumAsteroids = 2;
         int smallAsteroids = 2;
         for (int i=0; i<largeAsteroids;i++) {
@@ -159,27 +166,20 @@ public class Main extends Application {
                     }
                 }
             }
+            // if empty then level is over and make new asteroids
+            if (allAster.isEmpty()) {
+                level += 1;
+                levelDisplay.setText("Level: " + level);
+                largeAsteroids += 1;
+                for (int j=0; j<largeAsteroids;j++) {
+                    Asteroid aNew  = new Asteroid("large");
+                    allAster.add(aNew);
+                    largeAster.add(aNew);
+                    root.getChildren().add(aNew);
+                }
+            }
         }
-        // for (int i = 0; i < largeAster.size(); i++) {
-        //     Asteroid a = largeAster.get(i);
-        //     a.move();
-        //     for (int j = 0; j < bullets.size(); j++) {
-        //         Bullet b = bullets.get(j);
-        //     if (generalIntersects(b, a)) {
-        //         largeAster.remove(a);
-        //         root.getChildren().remove(a);
-        //         bullets.remove(b);
-        //         root.getChildren().remove(b);
-        //         for (int k=0; k<mediumAsteroids;k++) {
-        //             Asteroid a2  = new Asteroid("medium");
-        //             mediumAster.add(a2);
-        //             root.getChildren().add(a2);
-        //             a2.move();
-        //         }
-        //     }
-        // }
         
-
         }}.start();
 
 
