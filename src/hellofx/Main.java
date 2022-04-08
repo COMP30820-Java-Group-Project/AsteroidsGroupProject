@@ -20,7 +20,7 @@ public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
     int lives = 0;
     int level = 1;
-    int largeAsteroids = 1;
+    int largeAsteroids = 9;
     List<Asteroid> allAster = new ArrayList<>();
     List<Asteroid> largeAster = new ArrayList<>();
     
@@ -111,7 +111,7 @@ public class Main extends Application {
                 player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 // keep hyperspacing while there is an intersection
                 // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
-                while (bulletIntersects(bullets, player)){
+                while (asteroidIntersects(allAster, player)){
                     player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 }
             }
@@ -190,9 +190,9 @@ public class Main extends Application {
     // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
     // need to find a better class for this type of method to be in    
     // method that takes list of bullets and check if they intersect with the Shape. Returns true if one bullet intersects, false otherwise
-    public boolean bulletIntersects(List<Bullet> L, Shape s) {
-        for (int i = 0; i < L.size(); i++) {
-            Bullet b = L.get(i);    
+    public boolean asteroidIntersects(List<Asteroid> A, Shape s) {
+        for (int i = 0; i < A.size(); i++) {
+            Asteroid b = A.get(i);    
             Shape area = Shape.intersect(b, s);
             if (area.getBoundsInLocal().getWidth() > 0) {
                 return true;
