@@ -41,6 +41,10 @@ public class Main extends Application {
         // Point2D point2d_1 = new Point2D(20.0f, 150.0f);
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
+        Alien alien = new Alien(SCREENWIDTH/3,SCREENHEIGHT/6);
+        LargeAsteroid largeAster = new LargeAsteroid();
+        MediumAsteroid mediumAster = new MediumAsteroid();
+        SmallAsteroid smallAster = new SmallAsteroid();
         List<Bullet> bullets = new ArrayList<>();
         // continuous inputs 
         List<String> constantPress = new ArrayList<String>();
@@ -48,6 +52,10 @@ public class Main extends Application {
         List<String> onePress = new ArrayList<String>();
 
         root.getChildren().add(player);
+        root.getChildren().add(alien);
+        root.getChildren().add(largeAster);
+        root.getChildren().add(mediumAster);
+        root.getChildren().add(smallAster);
 
         new AnimationTimer() {
             
@@ -55,6 +63,10 @@ public class Main extends Application {
         public void handle(long now) {
         // call move method initially so that movement is constant
         player.move();
+        alien.move();
+        largeAster.move();
+        mediumAster.move();
+        smallAster.move();
         scene.setOnKeyPressed(e -> {
                     String keyName = e.getCode().toString();
                     if (!constantPress.contains(keyName)){
@@ -85,7 +97,7 @@ public class Main extends Application {
                 player.changeAngle("right");
             }
             if (onePress.contains("SPACE")) {
-                Bullet b  = new Bullet(player.getNoseX(), player.getNoseY(), player.getRotate(), player.getSpeed());
+                Bullet b  = player.fireBullet();
                 root.getChildren().add(b);
                 bullets.add(b);
             }
