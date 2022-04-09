@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Random;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -46,7 +47,7 @@ public class Main extends Application {
         
         Alien alien = new Alien();
         List<PlayerShip> players = new ArrayList<>();
-        PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
+        PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENWIDTH/2);
         players.add(player);
         List<Asteroid> mediumAster = new ArrayList<>();
         List<Asteroid> smallAster = new ArrayList<>();
@@ -76,7 +77,18 @@ public class Main extends Application {
         public void handle(long now) {
         // call move method initially so that movement is constant
         player.move();
-        alien.move();
+        
+
+        //// Ship test firing implementation
+        Random alienTestRan = new Random();
+        int ranInt = alienTestRan.nextInt(100-0) + 0;
+        if (ranInt == 2) {
+            alien.pointToPlayer(player.getBoundsCenterX(), player.getBoundsCenterY());
+            Bullet alienBullet = alien.fireBullet();
+            root.getChildren().add(alienBullet);
+            bullets.add(alienBullet);
+        }
+        //// Ship test firing implementation
         scene.setOnKeyPressed(e -> {
                     String keyName = e.getCode().toString();
                     if (!constantPress.contains(keyName)){
