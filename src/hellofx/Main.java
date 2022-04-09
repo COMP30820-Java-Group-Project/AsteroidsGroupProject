@@ -158,6 +158,15 @@ public class Main extends Application {
         if (alien.onScreen) {
             if (System.currentTimeMillis() - alien.changeTime > alien.directionTime) {
                 alien.changeDirection();
+                }
+            // will need to find more general home for this check but cannot put in with asteroid check as will not work when no asteroids
+                   // check if bullets hit alien
+            for (int j = 0; j < bullets.size(); j++) {
+            Bullet b = bullets.get(j);
+            if (generalIntersects(b, alien)) {
+                alien.isHit();
+                root.getChildren().remove(alien);
+            }
             }
         }
         
@@ -171,13 +180,8 @@ public class Main extends Application {
             a.move();
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet b = bullets.get(j);
-                // check if bullets hit alien
-                if (alien.onScreen) {
-                    if (generalIntersects(b, alien)) {
-                        alien.isHit();
-                        root.getChildren().remove(alien);
-                    }
-                }
+             
+            
 
                 if (generalIntersects(b, a)) {
                     allAster.remove(a);
@@ -208,19 +212,20 @@ public class Main extends Application {
                     }
                 }
             }
-            // if empty then level is over and make new asteroids
-            if (allAster.isEmpty()) {
-                level += 1;
-                levelDisplay.setText("Level: " + level);
-                largeAsteroids += 1;
-                for (int j=0; j<largeAsteroids;j++) {
-                    Asteroid aNew  = new Asteroid("large");
-                    allAster.add(aNew);
-                    largeAster.add(aNew);
-                    root.getChildren().add(aNew);
-                }
-            }
             
+            
+        }
+        // if empty and no alien then level is over and make new asteroids
+        if (allAster.isEmpty() && !alien.onScreen) {
+            level += 1;
+            levelDisplay.setText("Level: " + level);
+            largeAsteroids += 1;
+            for (int j=0; j<largeAsteroids;j++) {
+                Asteroid aNew  = new Asteroid("large");
+                allAster.add(aNew);
+                largeAster.add(aNew);
+                root.getChildren().add(aNew);
+            }
         }
         
 
