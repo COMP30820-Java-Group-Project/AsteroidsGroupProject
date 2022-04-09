@@ -21,7 +21,7 @@ public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
     int lives = 6;
     int level = 1;
-    int largeAsteroids = 1;
+    int largeAsteroids = 9;
     List<Asteroid> allAster = new ArrayList<>();
     List<Asteroid> largeAster = new ArrayList<>();
     
@@ -116,7 +116,7 @@ public class Main extends Application {
                 player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 // keep hyperspacing while there is an intersection
                 // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
-                while (asteroidIntersects(allAster, player)){
+                while (asteroidIntersects(allAster, player) || generalIntersects(alien, player)){
                     player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 }
             }
