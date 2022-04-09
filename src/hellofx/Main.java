@@ -135,8 +135,7 @@ public class Main extends Application {
         }
         // update for alien and alien bullets
         // if intersection and player not invincible
-        
-        if (asteroidIntersects(allAster, player) && !player.getInvincible()) {
+        if (!player.getInvincible() && (asteroidIntersects(allAster, player) || (generalIntersects(alien, player)))) {
             player.death();
             lives -=1;
             livesDisplay.setText("Lives: " + lives);
