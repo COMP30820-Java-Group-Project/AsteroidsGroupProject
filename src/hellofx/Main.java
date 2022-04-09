@@ -47,7 +47,7 @@ public class Main extends Application {
         
         Alien alien = new Alien(150,150);
         List<PlayerShip> players = new ArrayList<>();
-        PlayerShip player = new PlayerShip(500, 450);
+        PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENWIDTH/2);
         players.add(player);
         List<Asteroid> mediumAster = new ArrayList<>();
         List<Asteroid> smallAster = new ArrayList<>();
