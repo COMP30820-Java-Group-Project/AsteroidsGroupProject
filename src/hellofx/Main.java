@@ -22,7 +22,7 @@ public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
     int lives = 6;
     int level = 1;
-    int largeAsteroids = 9;
+    int largeAsteroids = 1;
     List<Asteroid> allAster = new ArrayList<>();
     List<Asteroid> largeAster = new ArrayList<>();
     
@@ -51,7 +51,10 @@ public class Main extends Application {
         players.add(player);
         List<Asteroid> mediumAster = new ArrayList<>();
         List<Asteroid> smallAster = new ArrayList<>();
-        List<Bullet> bullets = new ArrayList<>();
+
+        List<Bullet> playerBullets = new ArrayList<>();
+
+        List<Bullet> shipBullets = new ArrayList<>();
         
         // continuous inputs 
         List<String> constantPress = new ArrayList<String>();
@@ -80,14 +83,14 @@ public class Main extends Application {
         
 
         //// Ship test firing implementation
-        Random alienTestRan = new Random();
-        int ranInt = alienTestRan.nextInt(100-0) + 0;
-        if (ranInt == 2) {
-            alien.pointToPlayer(player.getBoundsCenterX(), player.getBoundsCenterY());
-            Bullet alienBullet = alien.fireBullet();
-            root.getChildren().add(alienBullet);
-            bullets.add(alienBullet);
-        }
+        // Random alienTestRan = new Random();
+        // int ranInt = alienTestRan.nextInt(100-0) + 0;
+        // if (ranInt == 2) {
+        //     alien.pointToPlayer(player.getBoundsCenterX(), player.getBoundsCenterY());
+        //     Bullet alienBullet = alien.fireBullet();
+        //     root.getChildren().add(alienBullet);
+        //     bullets.add(alienBullet);
+        // }
         //// Ship test firing implementation
         scene.setOnKeyPressed(e -> {
                     String keyName = e.getCode().toString();
@@ -121,7 +124,7 @@ public class Main extends Application {
             if (onePress.contains("SPACE")) {
                 Bullet b  = player.fireBullet();
                 root.getChildren().add(b);
-                bullets.add(b);
+                playerBullets.add(b);
             }
             if (onePress.contains("H")) {
                 // call hyperspace method
@@ -135,12 +138,12 @@ public class Main extends Application {
             // clear list so handled only once
             onePress.clear();
 
-        for (int i = 0; i < bullets.size(); i++) {
-            Bullet b = bullets.get(i);
+        for (int i = 0; i < playerBullets.size(); i++) {
+            Bullet b = playerBullets.get(i);
             b.move();
             if (System.currentTimeMillis() - b.startTime > 2000){
                 // remove from list
-                bullets.remove(b);
+                playerBullets.remove(b);
                 // remove from screen
                 root.getChildren().remove(b);
             }
@@ -171,9 +174,9 @@ public class Main extends Application {
                 alien.changeDirection();
                 }
             // will need to find more general home for this check but cannot put in with asteroid check as will not work when no asteroids
-                   // check if bullets hit alien
-            for (int j = 0; j < bullets.size(); j++) {
-            Bullet b = bullets.get(j);
+                   // check if player bullets hit alien
+            for (int j = 0; j < playerBullets.size(); j++) {
+            Bullet b = playerBullets.get(j);
             if (generalIntersects(b, alien)) {
                 alien.isHit();
                 root.getChildren().remove(alien);
@@ -181,7 +184,6 @@ public class Main extends Application {
             }
         }
         
-
         // this should probably be moved somewhere else
         // loop through list of all asteroids to move them and check if any of them intersect with a bullet
         // if there is an intersection, then check if it is of a certain size
@@ -189,20 +191,18 @@ public class Main extends Application {
         for (int i = 0; i < allAster.size(); i++) {
             Asteroid a = allAster.get(i);
             a.move();
-            for (int j = 0; j < bullets.size(); j++) {
-                Bullet b = bullets.get(j);
-             
-            
-
+            for (int j = 0; j < playerBullets.size(); j++) {
+                Bullet b = playerBullets.get(j);
+    
                 if (generalIntersects(b, a)) {
                     allAster.remove(a);
                     root.getChildren().remove(a);
-                    bullets.remove(b);
+                    playerBullets.remove(b);
                     root.getChildren().remove(b);
                     pointsDisplay.setText("Points: " + points.addAndGet(100));
                     if (largeAster.contains(a)) {
                         largeAster.remove(a);
-                        for (int k=0; k<mediumAsteroids;k++) {
+                        for (int k=0; k <mediumAsteroids; k++) {
                             Asteroid a2  = new Asteroid("medium", a.getTranslateX(), a.getTranslateY(), a.getSpeed());
                             allAster.add(a2);
                             mediumAster.add(a2);
@@ -255,9 +255,6 @@ public class Main extends Application {
         //     }
 
         // }
-
-        
-        
         }}.start();
 
 

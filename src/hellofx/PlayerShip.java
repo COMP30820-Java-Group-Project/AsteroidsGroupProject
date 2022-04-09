@@ -38,7 +38,6 @@ public class PlayerShip extends ShipSprite {
         this.invincible();
         this.setRotate(0);
         this.deathtime = System.currentTimeMillis();
-      
     }
 
     public void invincible() {
@@ -55,8 +54,7 @@ public class PlayerShip extends ShipSprite {
         double x = Math.random() * width;
         double y = Math.random() * height;
         this.setTranslateX(x);
-        this.setTranslateY(y);
-        
+        this.setTranslateY(y); 
     }
 
     public void changeSpeed(double speedChange) {
