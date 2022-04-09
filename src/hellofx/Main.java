@@ -21,7 +21,7 @@ public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
     int lives = 6;
     int level = 1;
-    int largeAsteroids = 1;
+    int largeAsteroids = 9;
     List<Asteroid> allAster = new ArrayList<>();
     List<Asteroid> largeAster = new ArrayList<>();
     
@@ -44,7 +44,7 @@ public class Main extends Application {
         // Point2D point2d_1 = new Point2D(20.0f, 150.0f);
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
         
-        Alien alien = new Alien(SCREENWIDTH/3,SCREENHEIGHT/6);
+        Alien alien = new Alien();
         List<PlayerShip> players = new ArrayList<>();
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
         players.add(player);
@@ -58,7 +58,7 @@ public class Main extends Application {
         List<String> onePress = new ArrayList<String>();
 
         root.getChildren().add(player);
-        root.getChildren().add(alien);
+        
 
         
         int mediumAsteroids = 2;
@@ -116,7 +116,7 @@ public class Main extends Application {
                 player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 // keep hyperspacing while there is an intersection
                 // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
-                while (asteroidIntersects(allAster, player)){
+                while (asteroidIntersects(allAster, player) || generalIntersects(alien, player)){
                     player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 }
             }
@@ -135,8 +135,7 @@ public class Main extends Application {
         }
         // update for alien and alien bullets
         // if intersection and player not invincible
-        
-        if (asteroidIntersects(allAster, player) && !player.getInvincible()) {
+        if (!player.getInvincible() && (asteroidIntersects(allAster, player) || (generalIntersects(alien, player)))) {
             player.death();
             lives -=1;
             livesDisplay.setText("Lives: " + lives);
@@ -148,6 +147,29 @@ public class Main extends Application {
                 player.notinvincible();
         }}
 
+        if (!alien.onScreen) {
+            if (System.currentTimeMillis() > alien.spawnTime) {
+                alien.spawn(SCREENWIDTH, SCREENHEIGHT);
+                root.getChildren().add(alien);
+                
+            }
+        }
+        if (alien.onScreen) {
+            if (System.currentTimeMillis() - alien.changeTime > alien.directionTime) {
+                alien.changeDirection();
+                }
+            // will need to find more general home for this check but cannot put in with asteroid check as will not work when no asteroids
+                   // check if bullets hit alien
+            for (int j = 0; j < bullets.size(); j++) {
+            Bullet b = bullets.get(j);
+            if (generalIntersects(b, alien)) {
+                alien.isHit();
+                root.getChildren().remove(alien);
+            }
+            }
+        }
+        
+
         // this should probably be moved somewhere else
         // loop through list of all asteroids to move them and check if any of them intersect with a bullet
         // if there is an intersection, then check if it is of a certain size
@@ -157,6 +179,9 @@ public class Main extends Application {
             a.move();
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet b = bullets.get(j);
+             
+            
+
                 if (generalIntersects(b, a)) {
                     allAster.remove(a);
                     root.getChildren().remove(a);
@@ -186,19 +211,20 @@ public class Main extends Application {
                     }
                 }
             }
-            // if empty then level is over and make new asteroids
-            if (allAster.isEmpty()) {
-                level += 1;
-                levelDisplay.setText("Level: " + level);
-                largeAsteroids += 1;
-                for (int j=0; j<largeAsteroids;j++) {
-                    Asteroid aNew  = new Asteroid("large");
-                    allAster.add(aNew);
-                    largeAster.add(aNew);
-                    root.getChildren().add(aNew);
-                }
-            }
             
+            
+        }
+        // if empty and no alien then level is over and make new asteroids
+        if (allAster.isEmpty() && !alien.onScreen) {
+            level += 1;
+            levelDisplay.setText("Level: " + level);
+            largeAsteroids += 1;
+            for (int j=0; j<largeAsteroids;j++) {
+                Asteroid aNew  = new Asteroid("large");
+                allAster.add(aNew);
+                largeAster.add(aNew);
+                root.getChildren().add(aNew);
+            }
         }
         
 

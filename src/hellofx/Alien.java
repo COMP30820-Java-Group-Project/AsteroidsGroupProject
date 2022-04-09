@@ -12,13 +12,20 @@ public class Alien extends ShipSprite {
         20.0, 40.0,
         0.0, 20.0,
         };
-        
-    private double angleChange;
     
-    Alien(int x, int y) {
+    double directionTime;
+    long changeTime;
+    double spawnTime;
+    boolean onScreen;
+        
+    Alien() {
         super(Alien.alienCoordinates);
-        setTranslateX(x);
-        setTranslateY(y);
+        super.speed = 4;
+        this.setRotate(90);
+        this.directionTime = 200 + Math.random() * 3000;
+        this.changeTime = System.currentTimeMillis();
+        this.spawnTime = System.currentTimeMillis() + 10000 + Math.random() * 6000;
+        this.onScreen = false;
     }
     
     public double[] getLocation(){
@@ -27,19 +34,33 @@ public class Alien extends ShipSprite {
         double[] coordinates = {xCord, yCord};
         return coordinates;
     }
+
+    public void spawn(int x, int y) {
+        this.onScreen = true;
+        this.setTranslateX(x * Math.random());
+        this.setTranslateY(y * Math.random());
+    }
+
+    public void isHit() {
+        this.onScreen = false;
+        this.spawnTime = System.currentTimeMillis() + 10000 + Math.random() * 6000;
+    }
+
+    public void changeDirection() {
+        this.directionTime = 500 + Math.random()* 3500;
+        this.changeTime = System.currentTimeMillis();
+        if (this.getRotate()==90) {
+            this.setRotate(270);
+        }
+        else {
+            this.setRotate(90);
+        }
+    }
    
     public void changeSpeed(int speedChange) {
         this.speed += speedChange;
     }
-    
-    public void changeAngle(String direction) {
-        double currentAngle = getRotate();
-        if (direction == "left") setRotate(currentAngle - angleChange);
-        else if (direction == "right") setRotate(currentAngle + angleChange);
-    }
-    public void isHit(){
-
-    }
+ 
 }
 // method to get centre of player ship for aiming bullets
 //     public void getPlayerShip(){
