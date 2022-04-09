@@ -44,7 +44,7 @@ public class Main extends Application {
         // Point2D point2d_1 = new Point2D(20.0f, 150.0f);
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
         
-        Alien alien = new Alien(SCREENWIDTH/3,SCREENHEIGHT/6);
+        Alien alien = new Alien();
         List<PlayerShip> players = new ArrayList<>();
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
         players.add(player);
@@ -147,6 +147,10 @@ public class Main extends Application {
             if (System.currentTimeMillis()-player.deathtime > 5000) {
                 player.notinvincible();
         }}
+
+        if (System.currentTimeMillis() - alien.changeTime > alien.directionTime) {
+            alien.changeDirection();
+        }
 
         // this should probably be moved somewhere else
         // loop through list of all asteroids to move them and check if any of them intersect with a bullet
