@@ -3,14 +3,22 @@ package hellofx;
 public class Alien extends ShipSprite {
 
     private static double[] alienCoordinates = { 
-        0.0, 20.0, 
-        20.0, 0.0, 
-        40.0, 0.0,
-        60.0, 20.0,
-        40.0, 40.0,
-        30.0, 60.0,
-        20.0, 40.0,
-        0.0, 20.0,
+        // 0.0, 20.0, 
+        // 20.0, 0.0, 
+        // 40.0, 0.0,
+        // 60.0, 20.0,
+        // 40.0, 40.0,
+        // 30.0, 60.0,
+        // 20.0, 40.0,
+        // 0.0, 20.0,
+        30.0, 0.0,
+        35.0, 30.0,
+        60.0, 30.0,
+        60.0, 60.0,
+        0.0, 60.0,
+        0.0, 30.0,
+        25.0, 30.0,
+        30.0, 0.0,
         };
         
     private double angleChange;
@@ -26,6 +34,22 @@ public class Alien extends ShipSprite {
         double yCord = this.getTranslateY();
         double[] coordinates = {xCord, yCord};
         return coordinates;
+    }
+
+    public double getAngleToTraverse(double playerX, double playerY) {
+        double opposite = playerX - this.getTranslateX();
+        double adjacent = playerY - this.getTranslateY();
+        double angleToTraverse = Math.toDegrees(Math.atan(opposite/adjacent));
+        return angleToTraverse;
+    }
+
+    public void pointToPlayer(double playerX, double playerY) {
+        double alienX = this.getNoseX();
+        double alienY = this.getNoseY();
+        double coordY = playerY - alienY;
+        double coordX = playerX - alienX;
+        double angleOfDiff = Math.toDegrees(Math.atan2(coordY, coordX));
+        this.setRotate(angleOfDiff+90.0);
     }
    
     public void changeSpeed(int speedChange) {

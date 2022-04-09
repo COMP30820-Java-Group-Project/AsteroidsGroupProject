@@ -44,9 +44,9 @@ public class Main extends Application {
         // Point2D point2d_1 = new Point2D(20.0f, 150.0f);
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
         
-        Alien alien = new Alien(SCREENWIDTH/3,SCREENHEIGHT/6);
+        Alien alien = new Alien(150,150);
         List<PlayerShip> players = new ArrayList<>();
-        PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
+        PlayerShip player = new PlayerShip(500, 450);
         players.add(player);
         List<Asteroid> mediumAster = new ArrayList<>();
         List<Asteroid> smallAster = new ArrayList<>();
@@ -76,7 +76,13 @@ public class Main extends Application {
         public void handle(long now) {
         // call move method initially so that movement is constant
         player.move();
-        alien.move();
+        alien.pointToPlayer(player.getBoundsCenterX(), player.getBoundsCenterY());
+
+        //// Ship test firing implementation
+        Bullet alienBullet = alien.fireBullet();
+        root.getChildren().add(alienBullet);
+        bullets.add(alienBullet);
+        //// Ship test firing implementation
         scene.setOnKeyPressed(e -> {
                     String keyName = e.getCode().toString();
                     if (!constantPress.contains(keyName)){

@@ -6,11 +6,11 @@ public abstract class ShipSprite extends Sprite {
     }
 
     public Bullet fireBullet() {
-        Bullet newBullet  = new Bullet(this.getNoseX(), this.getNoseY(), this.getRotate(), this.speed);
+        Bullet newBullet  = new Bullet(this.getNoseX(), this.getNoseY(), this.getRotate(), 2); //testing alien – this.speed 
         return newBullet;
     }
 
-    private double getNoseX() {
+    protected double getNoseX() {
         double halfWidth = this.getLayoutBounds().getWidth()/2;
         double squareCenter = this.getTranslateX() + halfWidth;
         double noseX = squareCenter + halfWidth * Math.sin(Math.toRadians(180 - this.getRotate()));
@@ -18,7 +18,7 @@ public abstract class ShipSprite extends Sprite {
 
     }
  
-    private double getNoseY() {
+    protected double getNoseY() {
         double halfWidth = this.getLayoutBounds().getWidth()/2;
         double squareCenter = this.getTranslateY() + halfWidth;
         double noseY = squareCenter + halfWidth * Math.cos(Math.toRadians(180 - this.getRotate()));

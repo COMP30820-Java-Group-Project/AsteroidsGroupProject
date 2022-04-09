@@ -75,4 +75,16 @@ public class PlayerShip extends ShipSprite {
         if (direction == "left") setRotate(currentAngle - angleFactor);
         else if (direction == "right") setRotate(currentAngle + angleFactor);
     }
+
+    public double getBoundsCenterX() {
+        double halfWidth = this.getLayoutBounds().getWidth()/2;
+        double squareCenterX = this.getTranslateX() + halfWidth;
+        return squareCenterX;
+    }
+
+    public double getBoundsCenterY() {
+        double halfWidth = this.getLayoutBounds().getWidth()/2;
+        double squareCenterY = this.getTranslateY() + halfWidth;
+        return squareCenterY;
+    }
 }
