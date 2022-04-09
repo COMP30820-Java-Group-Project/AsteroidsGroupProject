@@ -1,4 +1,5 @@
 package hellofx;
+import java.util.Random;
 
 public class Alien extends ShipSprite {
 
@@ -49,7 +50,12 @@ public class Alien extends ShipSprite {
         double coordY = playerY - alienY;
         double coordX = playerX - alienX;
         double angleOfDiff = Math.toDegrees(Math.atan2(coordY, coordX));
-        this.setRotate(angleOfDiff+90.0);
+
+        // Getting ranNum from -10 to 10, makes alien shoot behind player sometimes
+        Random alienTestRan = new Random();
+        int angleChange = alienTestRan.nextInt(40-0) + 0;
+        angleChange -= 20;
+        this.setRotate(angleOfDiff+90.0+angleChange);
     }
    
     public void changeSpeed(int speedChange) {
