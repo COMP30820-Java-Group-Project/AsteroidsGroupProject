@@ -58,7 +58,7 @@ public class Main extends Application {
         List<String> onePress = new ArrayList<String>();
 
         root.getChildren().add(player);
-        root.getChildren().add(alien);
+        
 
         
         int mediumAsteroids = 2;
@@ -148,9 +148,19 @@ public class Main extends Application {
                 player.notinvincible();
         }}
 
-        if (System.currentTimeMillis() - alien.changeTime > alien.directionTime) {
-            alien.changeDirection();
+        if (!alien.onScreen) {
+            if (System.currentTimeMillis() > alien.spawnTime) {
+                alien.spawn(SCREENWIDTH, SCREENHEIGHT);
+                root.getChildren().add(alien);
+                
+            }
         }
+        if (alien.onScreen) {
+            if (System.currentTimeMillis() - alien.changeTime > alien.directionTime) {
+                alien.changeDirection();
+            }
+        }
+        
 
         // this should probably be moved somewhere else
         // loop through list of all asteroids to move them and check if any of them intersect with a bullet
@@ -161,6 +171,14 @@ public class Main extends Application {
             a.move();
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet b = bullets.get(j);
+                // check if bullets hit alien
+                if (alien.onScreen) {
+                    if (generalIntersects(b, alien)) {
+                        alien.isHit();
+                        root.getChildren().remove(alien);
+                    }
+                }
+
                 if (generalIntersects(b, a)) {
                     allAster.remove(a);
                     root.getChildren().remove(a);

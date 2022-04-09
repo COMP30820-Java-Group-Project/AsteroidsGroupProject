@@ -15,15 +15,17 @@ public class Alien extends ShipSprite {
     
     double directionTime;
     long changeTime;
+    double spawnTime;
+    boolean onScreen;
         
     Alien() {
         super(Alien.alienCoordinates);
         super.speed = 4;
         this.setRotate(90);
-        this.setTranslateX(100);
-        this.setTranslateY(100);
-        this.directionTime = 200 + Math.random()* 3000;
+        this.directionTime = 200 + Math.random() * 3000;
         this.changeTime = System.currentTimeMillis();
+        this.spawnTime = System.currentTimeMillis() + 10000 + Math.random() * 6000;
+        this.onScreen = false;
     }
     
     public double[] getLocation(){
@@ -34,7 +36,14 @@ public class Alien extends ShipSprite {
     }
 
     public void spawn(int x, int y) {
+        this.onScreen = true;
+        this.setTranslateX(x * Math.random());
+        this.setTranslateY(y * Math.random());
+    }
 
+    public void isHit() {
+        this.onScreen = false;
+        this.spawnTime = System.currentTimeMillis() + 10000 + Math.random() * 6000;
     }
 
     public void changeDirection() {
