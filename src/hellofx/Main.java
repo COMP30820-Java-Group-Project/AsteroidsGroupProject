@@ -120,7 +120,7 @@ public class Main extends Application {
                 player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 // keep hyperspacing while there is an intersection
                 // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
-                while (asteroidIntersects(allAster, player) || generalIntersects(alien, player)){
+                while (asteroidIntersects(allAster, player) || generalIntersects(alien, player) || alienBulletIntersets(alienBullets, player)){
                     player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 }
             }
