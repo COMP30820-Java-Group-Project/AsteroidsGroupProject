@@ -1,12 +1,16 @@
 package hellofx;
 
 public abstract class ShipSprite extends Sprite {
+
+    long fireTime = 0;
+
     ShipSprite(double[] points) {
         super(points);
     }
 
     public Bullet fireBullet() {
         Bullet newBullet  = new Bullet(this.getNoseX(), this.getNoseY(), this.getRotate(), 6); // AlienTesting – this.speed;
+        this.fireTime = System.currentTimeMillis();
         return newBullet;
     }
 

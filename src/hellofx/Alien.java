@@ -28,6 +28,8 @@ public class Alien extends ShipSprite {
     long changeTime;
     double spawnTime;
     boolean onScreen;
+    
+    double objectAngle = 90;
         
     Alien() {
         super(Alien.alienCoordinates);
@@ -66,9 +68,6 @@ public class Alien extends ShipSprite {
         angleChange -= 20;
         this.setRotate(angleOfDiff+90.0+angleChange);
     }
-   
-    public void changeSpeed(int speedChange) {
-        this.speed += speedChange;
 
     public void spawn(int x, int y) {
         this.onScreen = true;
@@ -84,17 +83,28 @@ public class Alien extends ShipSprite {
     public void changeDirection() {
         this.directionTime = 500 + Math.random()* 3500;
         this.changeTime = System.currentTimeMillis();
-        if (this.getRotate()==90) {
-            this.setRotate(270);
+        if (this.objectAngle==90) {
+            this.objectAngle = 270;
         }
         else {
-            this.setRotate(90);
+            this.objectAngle = 90;
         }
     }
    
     public void changeSpeed(int speedChange) {
         this.speed += speedChange;
     }
+
+    // new move method for alien since getRotate is used for pointing towards ship
+    public void move() {
+        double currentX = this.getTranslateX();
+        double currentY = this.getTranslateY();
+        double currentVelocityX = this.speed * Math.sin(Math.toRadians(this.objectAngle));
+        double currentVelocityY = -this.speed * Math.cos(Math.toRadians(this.objectAngle));
+        this.setTranslateX(currentX + currentVelocityX);
+        this.setTranslateY(currentY + currentVelocityY);
+        this.wrap();
+     }
  
 }
 // method to get centre of player ship for aiming bullets
