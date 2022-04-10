@@ -169,6 +169,9 @@ public class Main extends Application {
             if (generalIntersects(b, alien)) {
                 alien.isHit();
                 root.getChildren().remove(alien);
+                playerBullets.remove(b);
+                root.getChildren().remove(b);
+                pointsDisplay.setText("Points: " + points.addAndGet(100));
             }
             }
             if (System.currentTimeMillis() - alien.fireTime > 1500) {
@@ -188,6 +191,13 @@ public class Main extends Application {
                 alienBullets.remove(b);
                 // remove from screen
                 root.getChildren().remove(b);
+            }
+            if (generalIntersects(b, player)) {
+                alienBullets.remove(b);
+                root.getChildren().remove(b);
+                player.death();
+                lives -=1;
+                livesDisplay.setText("Lives: " + lives);
             }
         }
         
@@ -282,6 +292,17 @@ public class Main extends Application {
         }
         return false;
         }
+
+        public boolean alienBulletIntersets(List<Bullet> B, Shape s) {
+            for (int i = 0; i < B.size(); i++) {
+                Bullet b = B.get(i);    
+                Shape area = Shape.intersect(b, s);
+                if (area.getBoundsInLocal().getWidth() > 0) {
+                    return true;
+                }
+            }
+            return false;
+            }
 
         public boolean generalIntersects(Shape s1, Shape s2) {
                 Shape area = Shape.intersect(s1, s2);
