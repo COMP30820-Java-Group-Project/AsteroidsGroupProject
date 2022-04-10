@@ -54,7 +54,7 @@ public class Main extends Application {
 
         List<Bullet> playerBullets = new ArrayList<>();
 
-        List<Bullet> shipBullets = new ArrayList<>();
+        List<Bullet> alienBullets = new ArrayList<>();
         
         // continuous inputs 
         List<String> constantPress = new ArrayList<String>();
@@ -80,18 +80,7 @@ public class Main extends Application {
         public void handle(long now) {
         // call move method initially so that movement is constant
         player.move();
-        
-
-        //// Ship test firing implementation
-        // Random alienTestRan = new Random();
-        // int ranInt = alienTestRan.nextInt(100-0) + 0;
-        // if (ranInt == 2) {
-        //     alien.pointToPlayer(player.getBoundsCenterX(), player.getBoundsCenterY());
-        //     Bullet alienBullet = alien.fireBullet();
-        //     root.getChildren().add(alienBullet);
-        //     bullets.add(alienBullet);
-        // }
-        //// Ship test firing implementation
+        alien.move();
         scene.setOnKeyPressed(e -> {
                     String keyName = e.getCode().toString();
                     if (!constantPress.contains(keyName)){
@@ -181,6 +170,24 @@ public class Main extends Application {
                 alien.isHit();
                 root.getChildren().remove(alien);
             }
+            }
+            if (System.currentTimeMillis() - alien.fireTime > 1500) {
+            alien.pointToPlayer(player.getBoundsCenterX(), player.getBoundsCenterY());
+            Bullet alienBullet = alien.fireBullet();
+            root.getChildren().add(alienBullet);
+            alienBullets.add(alienBullet);
+            }      
+
+        }
+
+        for (int i = 0; i < alienBullets.size(); i++) {
+            Bullet b = alienBullets.get(i);
+            b.move();
+            if (System.currentTimeMillis() - b.startTime > 2000){
+                // remove from list
+                alienBullets.remove(b);
+                // remove from screen
+                root.getChildren().remove(b);
             }
         }
         
