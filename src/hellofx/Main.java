@@ -93,7 +93,7 @@ public class Main extends Application implements ActionListener {
         openingStage.setScene(scene);
         openingStage.show();
 
-        Button startButton = new Button("Try again");
+        Button startButton = new Button("Restart");
         startButton.setFont(Font.font(50));
 
         startButton.setOnAction(event -> {
@@ -110,6 +110,24 @@ public class Main extends Application implements ActionListener {
         vbox.setTranslateY(600);
 
         closingRoot.getChildren().add(vbox);
+
+        Button exitGame = new Button("Exit");
+        exitGame.setFont(Font.font(50));
+
+        exitGame.setOnAction(event -> {
+            try {
+                System.out.println("Clicked me");
+                openingStage.close();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        VBox vbox2 = new VBox(50, exitGame);
+        vbox2.setTranslateX(250);
+        vbox2.setTranslateY(700);
+
+        closingRoot.getChildren().add(vbox2);
 
     }
 
@@ -228,6 +246,7 @@ public class Main extends Application implements ActionListener {
                     lives -= 1;
                     if (lives == 0) {
                         try {
+                            this.stop();
                             gameOver(openingStage);
                         } catch (Exception e1) {
                             e1.printStackTrace();
