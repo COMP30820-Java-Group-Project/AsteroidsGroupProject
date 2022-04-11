@@ -1,20 +1,21 @@
 package hellofx;
 
-import java.beans.EventHandler;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.swing.Action;
+import javax.swing.JButton;
+
 import java.util.Random;
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Point2D;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -22,11 +23,17 @@ import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
 
-public class Main extends Application {
+import java.awt.event.*;
+import java.awt.*;
+
+public class Main extends Application implements ActionListener {
     AtomicInteger points = new AtomicInteger();
     int lives = 6;
     int level = 1;
@@ -34,13 +41,82 @@ public class Main extends Application {
     List<Asteroid> allAster = new ArrayList<>();
     List<Asteroid> largeAster = new ArrayList<>();
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
+    final int SCREENWIDTH = 1000;
+    final int SCREENHEIGHT = 900;
+    private Stage openingStage;
+
+    public void start(Stage openingStage) {
+        Pane openingRoot = new Pane();
+        openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        openingStage.setTitle("Hello Asteroids");
+        Text titleText = new Text(200, 200, "Welcome to Asteroids");
+        titleText.setFont(Font.font(50));
+        Text instructions = new Text(200, 350,
+                "UP key to accelerate \nDOWN key to decellerate \nLEFT and RIGHT to steer \nSPACEBAR to shoot \nH to jump into hyperspace");
+        instructions.setFont(Font.font(30));
+        openingRoot.getChildren().addAll(titleText, instructions);
+        Scene scene = new Scene(openingRoot);
+        openingStage.setScene(scene);
+        openingStage.show();
+
+        Button startButton = new Button("START");
+        startButton.setFont(Font.font(50));
+
+        startButton.setOnAction(event -> {
+            try {
+                System.out.println("Clicked me");
+                gamePlay(openingStage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        VBox vbox = new VBox(50, startButton);
+        vbox.setTranslateX(250);
+        vbox.setTranslateY(600);
+
+        openingRoot.getChildren().add(vbox);
+
+    }
+
+    public void gameOver(Stage openingStage) {
+        Pane closingRoot = new Pane();
+        closingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        openingStage.setTitle("Hello Asteroids");
+        Scene scene = new Scene(closingRoot);
+
+        Text titleText = new Text(200, 200, "Game Over!");
+        titleText.setFont(Font.font(50));
+
+        closingRoot.getChildren().addAll(titleText);
+
+        openingStage.setScene(scene);
+        openingStage.show();
+
+        Button startButton = new Button("Try again");
+        startButton.setFont(Font.font(50));
+
+        startButton.setOnAction(event -> {
+            try {
+                System.out.println("Clicked me");
+                gamePlay(openingStage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        VBox vbox = new VBox(50, startButton);
+        vbox.setTranslateX(250);
+        vbox.setTranslateY(600);
+
+        closingRoot.getChildren().add(vbox);
+
+    }
+
+    public void gamePlay(Stage openingStage) throws Exception {
         Pane root = new Pane();
-        final int SCREENWIDTH = 1000;
-        final int SCREENHEIGHT = 900;
         root.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
-        primaryStage.setTitle("Hello Asteroids");
+        openingStage.setTitle("Hello Asteroids");
         Scene scene = new Scene(root);
 
         Text pointsDisplay = new Text(20, 30, "Points: " + points);
@@ -49,7 +125,6 @@ public class Main extends Application {
         root.getChildren().add(levelDisplay);
         Text livesDisplay = new Text(20, 60, "Lives: " + lives);
         root.getChildren().add(livesDisplay);
-
         // Point2D point2d_1 = new Point2D(20.0f, 150.0f);
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
 
@@ -151,13 +226,14 @@ public class Main extends Application {
                         && (asteroidIntersects(allAster, player) || (generalIntersects(alien, player)))) {
                     player.death();
                     lives -= 1;
-
-                    // game over - to be developed
                     if (lives == 0) {
-                        // display game over screen
+                        try {
+                            gameOver(openingStage);
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
 
                     }
-
                     livesDisplay.setText("Lives: " + lives);
                 }
 
@@ -264,13 +340,8 @@ public class Main extends Application {
                     }
 
                 }
-
                 // if empty and no alien then level is over and make new asteroids
                 if (allAster.isEmpty() && !alien.onScreen) {
-                    // display levelling up message (so far message never goes away)
-                    Text levelUpDisplay = new Text(SCREENWIDTH / 2 - 100, SCREENWIDTH / 2 - 50, "LEVEL UP!");
-                    levelUpDisplay.setFont(Font.font(50));
-                    root.getChildren().add(levelUpDisplay);
                     level += 1;
                     levelDisplay.setText("Level: " + level);
                     largeAsteroids += 1;
@@ -281,43 +352,6 @@ public class Main extends Application {
                         root.getChildren().add(aNew);
                     }
                 }
-                /*
-                 * WORK IN PROGRESS: have level up text blink for a few seconds then go away
-                 * // if empty and no alien then level is over and make new asteroids
-                 * if (allAster.isEmpty() && !alien.onScreen) {
-                 * // display levelling up message
-                 * Text levelUpText = new Text(SCREENWIDTH / 2 - 100, SCREENWIDTH / 2 - 50,
-                 * "LEVEL UP!");
-                 * levelUpText.setFont(Font.font(50));
-                 * root.getChildren().add(levelUpText);
-                 * 
-                 * javafx.event.EventHandler<javafx.event.ActionEvent> lvlEventHandler = new
-                 * javafx.event.EventHandler<ActionEvent>() {
-                 * public void handle(ActionEvent e) {
-                 * if (levelUpText.getText().length() != 0) {
-                 * levelUpText.setText("");
-                 * } else {
-                 * levelUpText.setText("LEVEL UP!");
-                 * }
-                 * }
-                 * };
-                 * 
-                 * Timeline lvlAnimation = new Timeline(new KeyFrame(Duration.ofMillis(300),
-                 * lvlEventHandler));
-                 * lvlAnimation.setCycleCount(4);
-                 * lvlAnimation.play();
-                 * 
-                 * level += 1;
-                 * levelDisplay.setText("Level: " + level);
-                 * largeAsteroids += 1;
-                 * for (int j = 0; j < largeAsteroids; j++) {
-                 * Asteroid aNew = new Asteroid("large");
-                 * allAster.add(aNew);
-                 * largeAster.add(aNew);
-                 * root.getChildren().add(aNew);
-                 * }
-                 * }
-                 */
 
                 // call move method initially so that movement is constant
                 // attempt to create new ship on death
@@ -337,8 +371,8 @@ public class Main extends Application {
         }.start();
 
         // scene.fillText(pointsText);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        openingStage.setScene(scene);
+        openingStage.show();
     }
 
     // end product will not actually be checking for intersection of bullets but can
@@ -380,4 +414,16 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    @Override
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+        try {
+            gamePlay(openingStage);
+        } catch (Exception e1) {
+
+            e1.printStackTrace();
+        }
+
+    }
+
 }
