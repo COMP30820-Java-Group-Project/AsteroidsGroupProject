@@ -251,7 +251,6 @@ public class Main extends Application implements ActionListener {
                         } catch (Exception e1) {
                             e1.printStackTrace();
                         }
-
                     }
                     livesDisplay.setText("Lives: " + lives);
                 }
@@ -310,6 +309,14 @@ public class Main extends Application implements ActionListener {
                         root.getChildren().remove(b);
                         player.death();
                         lives -= 1;
+                        if (lives == 0) {
+                            try {
+                                this.stop();
+                                gameOver(openingStage);
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                        }
                         livesDisplay.setText("Lives: " + lives);
                     }
                 }
