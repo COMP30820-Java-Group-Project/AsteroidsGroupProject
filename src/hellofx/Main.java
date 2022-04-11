@@ -44,6 +44,7 @@ public class Main extends Application implements ActionListener {
     final int SCREENWIDTH = 1000;
     final int SCREENHEIGHT = 900;
     private Stage openingStage;
+    private int highScore = 1;
 
     public void start(Stage openingStage) {
         Pane openingRoot = new Pane();
@@ -88,7 +89,11 @@ public class Main extends Application implements ActionListener {
         Text titleText = new Text(200, 200, "Game Over!");
         titleText.setFont(Font.font(50));
 
-        closingRoot.getChildren().addAll(titleText);
+        String score = "High score: " + highScore;
+        Text scoreText = new Text(200, 300, score);
+        titleText.setFont(Font.font(50));
+
+        closingRoot.getChildren().addAll(titleText, scoreText);
 
         openingStage.setScene(scene);
         openingStage.show();
@@ -99,6 +104,7 @@ public class Main extends Application implements ActionListener {
         startButton.setOnAction(event -> {
             try {
                 System.out.println("Clicked me");
+                lives = 6;
                 gamePlay(openingStage);
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -369,6 +375,10 @@ public class Main extends Application implements ActionListener {
                 // if empty and no alien then level is over and make new asteroids
                 if (allAster.isEmpty() && !alien.onScreen) {
                     level += 1;
+                    // update high score
+                    if (level > highScore) {
+                        highScore = level;
+                    }
                     levelDisplay.setText("Level: " + level);
                     largeAsteroids += 1;
                     for (int j = 0; j < largeAsteroids; j++) {
