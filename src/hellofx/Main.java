@@ -158,29 +158,29 @@ public class Main extends Application {
                 
             }
         }
+        
         if (alien.onScreen) {
             if (System.currentTimeMillis() - alien.changeTime > alien.directionTime) {
                 alien.changeDirection();
                 }
             // will need to find more general home for this check but cannot put in with asteroid check as will not work when no asteroids
-                   // check if player bullets hit alien
+            // check if player bullets hit alien
             for (int j = 0; j < playerBullets.size(); j++) {
-            Bullet b = (Bullet) playerBullets.get(j);
-            if (Controller.shapesHaveIntersection(b, alien)) {
-                alien.isHit();
-                root.getChildren().remove(alien);
-                playerBullets.remove(b);
-                root.getChildren().remove(b);
-                pointsDisplay.setText("Points: " + points.addAndGet(100));
-            }
+                Bullet b = (Bullet) playerBullets.get(j);
+                if (Controller.shapesHaveIntersection(b, alien)) {
+                    alien.isHit();
+                    root.getChildren().remove(alien);
+                    playerBullets.remove(b);
+                    root.getChildren().remove(b);
+                    pointsDisplay.setText("Points: " + points.addAndGet(100));
+                }
             }
             if (System.currentTimeMillis() - alien.fireTime > 1500) {
-            alien.pointToPlayer(player.getBoundsCenterX(), player.getBoundsCenterY());
-            Bullet alienBullet = alien.fireBullet();
-            root.getChildren().add(alienBullet);
-            alienBullets.add(alienBullet);
+                alien.pointToPlayer(player.getBoundsCenterX(), player.getBoundsCenterY());
+                Bullet alienBullet = alien.fireBullet();
+                root.getChildren().add(alienBullet);
+                alienBullets.add(alienBullet);
             }      
-
         }
 
         for (int i = 0; i < alienBullets.size(); i++) {
