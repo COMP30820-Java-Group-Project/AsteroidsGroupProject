@@ -14,10 +14,8 @@ public class Controller {
         for (int i = 0; i < L.size(); i++) {
             Sprite b = L.get(i);    
             Shape area = Shape.intersect(b, s);
-            if (area.getBoundsInLocal().getWidth() > 0) {
-                return true;
-            }
+            if (area.getBoundsInLocal().getWidth() > 0) return true;
         }
         return false;
-        }
+    }
 }
