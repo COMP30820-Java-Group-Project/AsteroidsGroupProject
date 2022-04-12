@@ -51,7 +51,7 @@ public class Asteroid extends Sprite {
         return y;
     }
 
-    public void createAsteroid(String sizeCategory) {
+    private final void createAsteroid(String sizeCategory) {
         double a;
         double c;
 
