@@ -1,24 +1,21 @@
 package hellofx;
-
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.shape.*;
-import javafx.scene.paint.*;
+import java.util.List;
 
 
 public class Controller {
+    public static boolean shapesHaveIntersection(Shape s1, Shape s2) {
+        Shape sharedArea = Shape.intersect(s1, s2);
+        // If sharedArea bounds > 0 then true
+        return sharedArea.getBoundsInLocal().getWidth() > 0 ? true : false;
+    }
 
-    @FXML
-    private Rectangle myRect;
-
-    //private Label label;
-
-    public void initialize() {
-        // String javaVersion = System.getProperty("java.version");
-        // String javafxVersion = System.getProperty("javafx.version");
-        // label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
-
-        myRect = new Rectangle(25,25,250,250);
-        myRect.setFill(Color.PINK);
+    public static boolean listHasIntersection(List<Sprite> L, Shape s) {
+        for (int i = 0; i < L.size(); i++) {
+            Sprite b = L.get(i);    
+            Shape area = Shape.intersect(b, s);
+            if (area.getBoundsInLocal().getWidth() > 0) return true;
+        }
+        return false;
     }
 }

@@ -23,8 +23,8 @@ public class Main extends Application {
     int lives = 6;
     int level = 1;
     int largeAsteroids = 1;
-    List<Asteroid> allAster = new ArrayList<>();
-    List<Asteroid> largeAster = new ArrayList<>();
+    List<Sprite> allAster = new ArrayList<>();
+    List<Sprite> largeAster = new ArrayList<>();
     
 
     @Override
@@ -49,12 +49,12 @@ public class Main extends Application {
         List<PlayerShip> players = new ArrayList<>();
         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENWIDTH/2);
         players.add(player);
-        List<Asteroid> mediumAster = new ArrayList<>();
-        List<Asteroid> smallAster = new ArrayList<>();
+        List<Sprite> mediumAster = new ArrayList<>();
+        List<Sprite> smallAster = new ArrayList<>();
 
-        List<Bullet> playerBullets = new ArrayList<>();
+        List<Sprite> playerBullets = new ArrayList<>();
 
-        List<Bullet> alienBullets = new ArrayList<>();
+        List<Sprite> alienBullets = new ArrayList<>();
         
         // continuous inputs 
         List<String> constantPress = new ArrayList<String>();
@@ -120,7 +120,7 @@ public class Main extends Application {
                 player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 // keep hyperspacing while there is an intersection
                 // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
-                while (asteroidIntersects(allAster, player) || generalIntersects(alien, player) || alienBulletIntersets(alienBullets, player)){
+                while (Controller.listHasIntersection(allAster, player) || Controller.shapesHaveIntersection(alien, player) || Controller.listHasIntersection(alienBullets, player)){
                     player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 }
             }
@@ -128,7 +128,7 @@ public class Main extends Application {
             onePress.clear();
 
         for (int i = 0; i < playerBullets.size(); i++) {
-            Bullet b = playerBullets.get(i);
+            Bullet b = (Bullet)playerBullets.get(i);
             b.move();
             if (System.currentTimeMillis() - b.startTime > 2000){
                 // remove from list
@@ -139,7 +139,7 @@ public class Main extends Application {
         }
         // update for alien and alien bullets
         // if intersection and player not invincible
-        if (!player.getInvincible() && (asteroidIntersects(allAster, player) || (generalIntersects(alien, player)))) {
+        if (!player.getInvincible() && (Controller.listHasIntersection(allAster, player) || (Controller.shapesHaveIntersection(alien, player)))) {
             player.death();
             lives -=1;
             livesDisplay.setText("Lives: " + lives);
@@ -158,33 +158,33 @@ public class Main extends Application {
                 
             }
         }
+        
         if (alien.onScreen) {
             if (System.currentTimeMillis() - alien.changeTime > alien.directionTime) {
                 alien.changeDirection();
                 }
             // will need to find more general home for this check but cannot put in with asteroid check as will not work when no asteroids
-                   // check if player bullets hit alien
+            // check if player bullets hit alien
             for (int j = 0; j < playerBullets.size(); j++) {
-            Bullet b = playerBullets.get(j);
-            if (generalIntersects(b, alien)) {
-                alien.isHit();
-                root.getChildren().remove(alien);
-                playerBullets.remove(b);
-                root.getChildren().remove(b);
-                pointsDisplay.setText("Points: " + points.addAndGet(100));
-            }
+                Bullet b = (Bullet) playerBullets.get(j);
+                if (Controller.shapesHaveIntersection(b, alien)) {
+                    alien.isHit();
+                    root.getChildren().remove(alien);
+                    playerBullets.remove(b);
+                    root.getChildren().remove(b);
+                    pointsDisplay.setText("Points: " + points.addAndGet(100));
+                }
             }
             if (System.currentTimeMillis() - alien.fireTime > 1500) {
-            alien.pointToPlayer(player.getBoundsCenterX(), player.getBoundsCenterY());
-            Bullet alienBullet = alien.fireBullet();
-            root.getChildren().add(alienBullet);
-            alienBullets.add(alienBullet);
+                alien.pointToPlayer(player.getBoundsCenterX(), player.getBoundsCenterY());
+                Bullet alienBullet = alien.fireBullet();
+                root.getChildren().add(alienBullet);
+                alienBullets.add(alienBullet);
             }      
-
         }
 
         for (int i = 0; i < alienBullets.size(); i++) {
-            Bullet b = alienBullets.get(i);
+            Bullet b = (Bullet)alienBullets.get(i);
             b.move();
             if (System.currentTimeMillis() - b.startTime > 2000){
                 // remove from list
@@ -192,7 +192,7 @@ public class Main extends Application {
                 // remove from screen
                 root.getChildren().remove(b);
             }
-            if (generalIntersects(b, player) && !player.getInvincible()) {
+            if (Controller.shapesHaveIntersection(b, player) && !player.getInvincible()) {
                 alienBullets.remove(b);
                 root.getChildren().remove(b);
                 player.death();
@@ -206,12 +206,12 @@ public class Main extends Application {
         // if there is an intersection, then check if it is of a certain size
         // if of a certain size, either create more and delete from list, or delete from list if small
         for (int i = 0; i < allAster.size(); i++) {
-            Asteroid a = allAster.get(i);
+            Asteroid a = (Asteroid)allAster.get(i);
             a.move();
             for (int j = 0; j < playerBullets.size(); j++) {
-                Bullet b = playerBullets.get(j);
+                Bullet b = (Bullet)playerBullets.get(j);
     
-                if (generalIntersects(b, a)) {
+                if (Controller.shapesHaveIntersection(b, a)) {
                     allAster.remove(a);
                     root.getChildren().remove(a);
                     playerBullets.remove(b);
@@ -263,7 +263,7 @@ public class Main extends Application {
         // for (int i = 0; i < players.size(); i++) {
         //     PlayerShip p = players.get(i);
         //     p.move();
-        //     if (asteroidIntersects(allAster, p)) {
+        //     if (Controller.listHasIntersection(allAster, p)) {
         //         root.getChildren().remove(player);
         //         players.remove(p);
         //         PlayerShip player = new PlayerShip(SCREENWIDTH/2, SCREENHEIGHT/2);
@@ -278,40 +278,7 @@ public class Main extends Application {
         //scene.fillText(pointsText);
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-    // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
-    // need to find a better class for this type of method to be in    
-    // method that takes list of bullets and check if they intersect with the Shape. Returns true if one bullet intersects, false otherwise
-    public boolean asteroidIntersects(List<Asteroid> A, Shape s) {
-        for (int i = 0; i < A.size(); i++) {
-            Asteroid b = A.get(i);    
-            Shape area = Shape.intersect(b, s);
-            if (area.getBoundsInLocal().getWidth() > 0) {
-                return true;
-            }
-        }
-        return false;
-        }
-
-        public boolean alienBulletIntersets(List<Bullet> B, Shape s) {
-            for (int i = 0; i < B.size(); i++) {
-                Bullet b = B.get(i);    
-                Shape area = Shape.intersect(b, s);
-                if (area.getBoundsInLocal().getWidth() > 0) {
-                    return true;
-                }
-            }
-            return false;
-            }
-
-        public boolean generalIntersects(Shape s1, Shape s2) {
-                Shape area = Shape.intersect(s1, s2);
-                if (area.getBoundsInLocal().getWidth() > 0) {
-                    return true;
-                }
-            
-            return false;
-            }
+    }    
     public static void main(String[] args) {
         launch(args);
     }
