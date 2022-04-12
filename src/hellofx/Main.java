@@ -120,7 +120,7 @@ public class Main extends Application {
                 player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 // keep hyperspacing while there is an intersection
                 // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
-                while (asteroidIntersects(allAster, player) || generalIntersects(alien, player) || alienBulletIntersets(alienBullets, player)){
+                while (asteroidIntersects(allAster, player) || Controller.shapesHaveIntersection(alien, player) || alienBulletIntersets(alienBullets, player)){
                     player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                 }
             }
@@ -139,7 +139,7 @@ public class Main extends Application {
         }
         // update for alien and alien bullets
         // if intersection and player not invincible
-        if (!player.getInvincible() && (asteroidIntersects(allAster, player) || (generalIntersects(alien, player)))) {
+        if (!player.getInvincible() && (asteroidIntersects(allAster, player) || (Controller.shapesHaveIntersection(alien, player)))) {
             player.death();
             lives -=1;
             livesDisplay.setText("Lives: " + lives);
@@ -166,7 +166,7 @@ public class Main extends Application {
                    // check if player bullets hit alien
             for (int j = 0; j < playerBullets.size(); j++) {
             Bullet b = playerBullets.get(j);
-            if (generalIntersects(b, alien)) {
+            if (Controller.shapesHaveIntersection(b, alien)) {
                 alien.isHit();
                 root.getChildren().remove(alien);
                 playerBullets.remove(b);
@@ -192,7 +192,7 @@ public class Main extends Application {
                 // remove from screen
                 root.getChildren().remove(b);
             }
-            if (generalIntersects(b, player) && !player.getInvincible()) {
+            if (Controller.shapesHaveIntersection(b, player) && !player.getInvincible()) {
                 alienBullets.remove(b);
                 root.getChildren().remove(b);
                 player.death();
@@ -211,7 +211,7 @@ public class Main extends Application {
             for (int j = 0; j < playerBullets.size(); j++) {
                 Bullet b = playerBullets.get(j);
     
-                if (generalIntersects(b, a)) {
+                if (Controller.shapesHaveIntersection(b, a)) {
                     allAster.remove(a);
                     root.getChildren().remove(a);
                     playerBullets.remove(b);
@@ -304,14 +304,7 @@ public class Main extends Application {
             return false;
             }
 
-        public boolean generalIntersects(Shape s1, Shape s2) {
-                Shape area = Shape.intersect(s1, s2);
-                if (area.getBoundsInLocal().getWidth() > 0) {
-                    return true;
-                }
-            
-            return false;
-            }
+        
     public static void main(String[] args) {
         launch(args);
     }
