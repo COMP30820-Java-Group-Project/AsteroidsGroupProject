@@ -192,7 +192,7 @@ public class Main extends Application {
                 // remove from screen
                 root.getChildren().remove(b);
             }
-            if (generalIntersects(b, player)) {
+            if (generalIntersects(b, player) && !player.getInvincible()) {
                 alienBullets.remove(b);
                 root.getChildren().remove(b);
                 player.death();
