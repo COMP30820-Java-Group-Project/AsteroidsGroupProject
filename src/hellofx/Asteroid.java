@@ -2,22 +2,27 @@ package hellofx;
 
 public class Asteroid extends Sprite {
 
+    // using enums for sizes
+    private AsteroidSizes asteroidSize;
+
     // pass parameters to Polygon constructor
-    public Asteroid(String size) {
+    public Asteroid(AsteroidSizes asteroidSize) {
         super();
-        createAsteroid(size);
+        this.asteroidSize = asteroidSize;
+        createAsteroid(this.asteroidSize);
         this.speed = doubleSetSpeed(0.8);
-        this.setTranslateX(this.createXCoOrdinates(1000));
-        this.setTranslateY(this.createXCoOrdinates(900));
+        this.setTranslateX(this.createXCoOrdinates());
+        this.setTranslateY(this.createYCoOrdinates());
         // Generating a random angle to fly at
         this.setRotate((Math.random() * (360 - 0)) + 0);
     }
 
     // 2nd constructor for medium and small asteroids when coordinates already
     // determined
-    public Asteroid(String size, double x, double y, double s) {
+    public Asteroid(AsteroidSizes asteroidSize, double x, double y, double s) {
         super();
-        createAsteroid(size);
+        this.asteroidSize = asteroidSize;
+        createAsteroid(this.asteroidSize);
         this.speed = doubleSetSpeed(s);
         this.setTranslateX(x);
         this.setTranslateY(y);
@@ -31,27 +36,29 @@ public class Asteroid extends Sprite {
         return speed;
     }
 
-    public double createXCoOrdinates(int width) {
+    public double createXCoOrdinates() {
         // x denotes starting coordinate
-        double x = Math.random() * width;
+        double x = Math.random() * Main.SCREENWIDTH;
         // add 200px buffer around center
-        while (x > (width / 2) - 100 && x < (width / 2) + 100) {
-            x = Math.random() * width;
+        while (x > (Main.SCREENWIDTH / 2) - 100 && x < (Main.SCREENWIDTH / 2) + 100) {
+            x = Math.random() * Main.SCREENWIDTH;
         }
         return x;
     }
 
-    public double createYCoOrdinates(int height) {
+    public double createYCoOrdinates() {
         // y denotes starting coordinate
-        double y = Math.random() * height;
+        double y = Math.random() * Main.SCREENHEIGHT;
         // add 200px buffer around center
-        while (y > (height / 2) - 100 && y < (height / 2) + 100) {
-            y = Math.random() * height;
+        while (y > (Main.SCREENHEIGHT / 2) - 100 && y < (Main.SCREENHEIGHT / 2) + 100) {
+            y = Math.random() * Main.SCREENHEIGHT;
         }
         return y;
     }
 
-    private final void createAsteroid(String sizeCategory) {
+    // method takes enum size
+    // final as it is used in constructor
+    private final void createAsteroid(AsteroidSizes asize) {
         double a;
         double c;
 
@@ -59,16 +66,16 @@ public class Asteroid extends Sprite {
         // b^2 == c^2)
         // a and b will be the same for octagon so omit b
 
-        switch (sizeCategory) {
-            case "large":
+        switch (asize) {
+            case LARGE:
                 a = 42.42;
                 c = 60;
                 break;
-            case "medium":
+            case MEDIUM:
                 a = 28.28;
                 c = 40;
                 break;
-            case "small":
+            case SMALL:
                 a = 14.14;
                 c = 20;
                 break;

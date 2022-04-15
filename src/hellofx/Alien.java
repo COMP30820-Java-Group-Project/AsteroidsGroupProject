@@ -105,29 +105,4 @@ public class Alien extends ShipSprite {
         this.setTranslateY(currentY + currentVelocityY);
         this.wrap();
      }
- 
 }
-// method to get centre of player ship for aiming bullets
-//     public void getPlayerShip(){
-//         PlayerShip.get
-//         // get location of playership
-//         // shoot at location
-//     }
-//     Bullet shoot() {
-//         Bullet b = null;
-//         if(cooldown == 0) {
-//           b = new Bullet(x,y, player, 5);
-//         } 
-//         return b;
-//       }
-      
-//       boolean isHit(Bullet b) {
-//         if(b.x >= x && b.x <= x + 10 &&
-//             b.y >= y && b.y <= y + 10) {
-//           return true;
-//         }
-//         return false;
-//       }
-// }
-
-// bullet
