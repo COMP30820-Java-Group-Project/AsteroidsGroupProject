@@ -36,7 +36,8 @@ public class Asteroid extends Sprite {
         return speed;
     }
 
-    public double createXCoOrdinates() {
+    // final as it is used in constructor
+    private final double createXCoOrdinates() {
         // x denotes starting coordinate
         double x = Math.random() * Main.SCREENWIDTH;
         // add 200px buffer around center
@@ -46,7 +47,8 @@ public class Asteroid extends Sprite {
         return x;
     }
 
-    public double createYCoOrdinates() {
+    // final as it is used in constructor
+    private final double createYCoOrdinates() {
         // y denotes starting coordinate
         double y = Math.random() * Main.SCREENHEIGHT;
         // add 200px buffer around center

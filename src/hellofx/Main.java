@@ -2,36 +2,16 @@ package hellofx;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.swing.Action;
-import javax.swing.JButton;
-
-import java.util.Random;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.geometry.Point2D;
-
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
-
-import java.awt.event.*;
-import java.awt.*;
 
 public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
@@ -208,7 +188,7 @@ public class Main extends Application {
                 });
                 // scene.setOnKeyPressed(e -> {
                 if (constantPress.contains("UP")) {
-                    player.changeSpeed(0.1);
+                    player.thrust();
                 }
                 if (constantPress.contains("DOWN")) {
                     player.changeSpeed(-0.1);
@@ -220,7 +200,7 @@ public class Main extends Application {
                     player.changeAngle("right");
                 }
                 if (onePress.contains("SPACE")) {
-                    Bullet b  = player.fireBullet();
+                    Bullet b  = player.fireBullet(BulletType.PLAYER);
                     root.getChildren().add(b);
                     playerBullets.add(b);
                 }
@@ -295,7 +275,7 @@ public class Main extends Application {
                     }
                     if (System.currentTimeMillis() - alien.fireTime > 1500) {
                         alien.pointToPlayer(player.getBoundsCenterX(), player.getBoundsCenterY());
-                        Bullet alienBullet = alien.fireBullet();
+                        Bullet alienBullet = alien.fireBullet(BulletType.ALIEN);
                         root.getChildren().add(alienBullet);
                         alienBullets.add(alienBullet);
                     }      
