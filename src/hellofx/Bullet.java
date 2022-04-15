@@ -29,6 +29,7 @@ public class Bullet extends Sprite {
         this.bType = bType;
         this.colour = getColour(this.bType);
         this.setFill(this.colour);
+        
     }
 
     // final as it is used in constructor
