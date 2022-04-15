@@ -177,7 +177,7 @@ public class Main extends Application {
         int mediumAsteroids = 2;
         int smallAsteroids = 2;
         for (int i = 0; i < largeAsteroids; i++) {
-            Asteroid a = new Asteroid("large");
+            Asteroid a = new Asteroid(AsteroidSizes.LARGE);
             allAster.add(a);
             largeAster.add(a);
             root.getChildren().add(a);
@@ -338,7 +338,7 @@ public class Main extends Application {
                             if (largeAster.contains(a)) {
                                 largeAster.remove(a);
                                 for (int k=0; k <mediumAsteroids; k++) {
-                                    Asteroid a2  = new Asteroid("medium", a.getTranslateX(), a.getTranslateY(), a.getSpeed());
+                                    Asteroid a2  = new Asteroid(AsteroidSizes.MEDIUM, a.getTranslateX(), a.getTranslateY(), a.getSpeed());
                                     allAster.add(a2);
                                     mediumAster.add(a2);
                                     root.getChildren().add(a2);
@@ -347,7 +347,7 @@ public class Main extends Application {
                             if (mediumAster.contains(a)) {
                                 mediumAster.remove(a);
                                 for (int k=0; k<smallAsteroids;k++) {
-                                    Asteroid a3  = new Asteroid("small", a.getTranslateX(), a.getTranslateY(), a.getSpeed());
+                                    Asteroid a3  = new Asteroid(AsteroidSizes.SMALL, a.getTranslateX(), a.getTranslateY(), a.getSpeed());
                                     allAster.add(a3);
                                     smallAster.add(a3);
                                     root.getChildren().add(a3);
@@ -369,7 +369,7 @@ public class Main extends Application {
                     levelDisplay.setText("Level: " + level);
                     largeAsteroids += 1;
                     for (int j=0; j<largeAsteroids;j++) {
-                        Asteroid aNew  = new Asteroid("large");
+                        Asteroid aNew  = new Asteroid(AsteroidSizes.LARGE);
                         allAster.add(aNew);
                         largeAster.add(aNew);
                         root.getChildren().add(aNew);
