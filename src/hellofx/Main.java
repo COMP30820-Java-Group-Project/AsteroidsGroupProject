@@ -33,7 +33,7 @@ import javafx.scene.control.Button;
 import java.awt.event.*;
 import java.awt.*;
 
-public class Main extends Application implements ActionListener {
+public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
     int lives = 6;
     int level = 1;
@@ -451,17 +451,6 @@ public class Main extends Application implements ActionListener {
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    @Override
-    public void actionPerformed(java.awt.event.ActionEvent e) {
-        try {
-            gamePlay(openingStage);
-        } catch (Exception e1) {
-
-            e1.printStackTrace();
-        }
-
     }
 
 }
