@@ -105,6 +105,7 @@ public class Main extends Application implements ActionListener {
             try {
                 System.out.println("Clicked me");
                 lives = 6;
+                level = 1;
                 gamePlay(openingStage);
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -123,6 +124,7 @@ public class Main extends Application implements ActionListener {
         exitGame.setOnAction(event -> {
             try {
                 System.out.println("Clicked me");
+                highScore = 1;
                 openingStage.close();
             } catch (Exception e1) {
                 e1.printStackTrace();
