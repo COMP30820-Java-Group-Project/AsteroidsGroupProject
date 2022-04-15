@@ -220,7 +220,7 @@ public class Main extends Application {
                     player.changeAngle("right");
                 }
                 if (onePress.contains("SPACE")) {
-                    Bullet b  = player.fireBullet();
+                    Bullet b  = player.fireBullet(BulletType.PLAYER);
                     root.getChildren().add(b);
                     playerBullets.add(b);
                 }
@@ -295,7 +295,7 @@ public class Main extends Application {
                     }
                     if (System.currentTimeMillis() - alien.fireTime > 1500) {
                         alien.pointToPlayer(player.getBoundsCenterX(), player.getBoundsCenterY());
-                        Bullet alienBullet = alien.fireBullet();
+                        Bullet alienBullet = alien.fireBullet(BulletType.ALIEN);
                         root.getChildren().add(alienBullet);
                         alienBullets.add(alienBullet);
                     }      
