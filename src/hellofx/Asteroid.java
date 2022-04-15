@@ -7,8 +7,8 @@ public class Asteroid extends Sprite {
         super();
         createAsteroid(size);
         this.speed = doubleSetSpeed(0.8);
-        this.setTranslateX(this.createXCoOrdinates(1000));
-        this.setTranslateY(this.createXCoOrdinates(900));
+        this.setTranslateX(this.createXCoOrdinates());
+        this.setTranslateY(this.createYCoOrdinates());
         // Generating a random angle to fly at
         this.setRotate((Math.random() * (360 - 0)) + 0);
     }
@@ -31,22 +31,22 @@ public class Asteroid extends Sprite {
         return speed;
     }
 
-    public double createXCoOrdinates(int width) {
+    public double createXCoOrdinates() {
         // x denotes starting coordinate
-        double x = Math.random() * width;
+        double x = Math.random() * Main.SCREENWIDTH;
         // add 200px buffer around center
-        while (x > (width / 2) - 100 && x < (width / 2) + 100) {
-            x = Math.random() * width;
+        while (x > (Main.SCREENWIDTH / 2) - 100 && x < (Main.SCREENWIDTH / 2) + 100) {
+            x = Math.random() * Main.SCREENWIDTH;
         }
         return x;
     }
 
-    public double createYCoOrdinates(int height) {
+    public double createYCoOrdinates() {
         // y denotes starting coordinate
-        double y = Math.random() * height;
+        double y = Math.random() * Main.SCREENHEIGHT;
         // add 200px buffer around center
-        while (y > (height / 2) - 100 && y < (height / 2) + 100) {
-            y = Math.random() * height;
+        while (y > (Main.SCREENHEIGHT / 2) - 100 && y < (Main.SCREENHEIGHT / 2) + 100) {
+            y = Math.random() * Main.SCREENHEIGHT;
         }
         return y;
     }

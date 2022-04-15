@@ -41,9 +41,10 @@ public class Main extends Application {
     List<Sprite> allAster = new ArrayList<>();
     List<Sprite> largeAster = new ArrayList<>();
     
+    // constants for screen dimensions
+    final static int SCREENWIDTH = 1000;
+    final static int SCREENHEIGHT = 900;
 
-    final int SCREENWIDTH = 1000;
-    final int SCREENHEIGHT = 900;
     private Stage openingStage;
     private int highScore = 1;
 
