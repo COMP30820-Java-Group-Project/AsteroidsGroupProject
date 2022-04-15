@@ -377,9 +377,9 @@ public class Main extends Application {
             }
         }.start();
     
-    //scene.fillText(pointsText);
-    openingStage.setScene(scene);
-    openingStage.show();
+        //scene.fillText(pointsText);
+        openingStage.setScene(scene);
+        openingStage.show();
     }    
     public static void main(String[] args) {
         launch(args);
