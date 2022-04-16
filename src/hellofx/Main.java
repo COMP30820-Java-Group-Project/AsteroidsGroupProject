@@ -20,7 +20,7 @@ public class Main extends Application {
     int largeAsteroids = 1;
     List<Sprite> allAster = new ArrayList<>();
     List<Sprite> largeAster = new ArrayList<>();
-    
+
     // constants for screen dimensions
     final static int SCREENWIDTH = 1000;
     final static int SCREENHEIGHT = 900;
@@ -34,10 +34,13 @@ public class Main extends Application {
         openingStage.setTitle("Hello Asteroids");
         Text titleText = new Text(200, 200, "Welcome to Asteroids");
         titleText.setFont(Font.font(50));
-        Text instructions = new Text(200, 350,
-                "UP key to accelerate \nDOWN key to decellerate \nLEFT and RIGHT to steer \nSPACEBAR to shoot \nH to jump into hyperspace");
-        instructions.setFont(Font.font(30));
-        openingRoot.getChildren().addAll(titleText, instructions);
+        /*
+         * Text instructions = new Text(200, 350,
+         * "UP key to accelerate \nDOWN key to decellerate \nLEFT and RIGHT to steer \nSPACEBAR to shoot \nH to jump into hyperspace"
+         * );
+         * instructions.setFont(Font.font(30));
+         */
+        openingRoot.getChildren().addAll(titleText);
         Scene scene = new Scene(openingRoot);
         openingStage.setScene(scene);
         openingStage.show();
@@ -55,6 +58,56 @@ public class Main extends Application {
         });
 
         VBox vbox = new VBox(50, startButton);
+        vbox.setTranslateX(250);
+        vbox.setTranslateY(600);
+
+        openingRoot.getChildren().add(vbox);
+        Button instructionsButton = new Button("INTRUCTIONS");
+        instructionsButton.setFont(Font.font(50));
+
+        instructionsButton.setOnAction(event -> {
+            try {
+                System.out.println("Clicked me");
+                instructions(openingStage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        VBox vbox2 = new VBox(50, instructionsButton);
+        vbox2.setTranslateX(250);
+        vbox2.setTranslateY(700);
+
+        openingRoot.getChildren().add(vbox2);
+
+    }
+
+    public void instructions(Stage openingStage) {
+        Pane openingRoot = new Pane();
+        openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        openingStage.setTitle("Hello Asteroids");
+
+        Text instructions = new Text(200, 350,
+                "UP key to accelerate \nDOWN key to decellerate \nLEFT and RIGHT to steer \nSPACEBAR to shoot \nH to jump into hyperspace");
+        instructions.setFont(Font.font(30));
+        openingRoot.getChildren().addAll(instructions);
+        Scene scene = new Scene(openingRoot);
+        openingStage.setScene(scene);
+        openingStage.show();
+
+        Button backButton = new Button("MAIN MENU");
+        backButton.setFont(Font.font(50));
+
+        backButton.setOnAction(event -> {
+            try {
+                System.out.println("Clicked me");
+                start(openingStage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        VBox vbox = new VBox(50, backButton);
         vbox.setTranslateX(250);
         vbox.setTranslateY(600);
 
@@ -146,8 +199,8 @@ public class Main extends Application {
         List<Sprite> playerBullets = new ArrayList<>();
 
         List<Sprite> alienBullets = new ArrayList<>();
-        
-        // continuous inputs 
+
+        // continuous inputs
         List<String> constantPress = new ArrayList<String>();
         // discrete inputs
         List<String> onePress = new ArrayList<String>();
@@ -191,7 +244,7 @@ public class Main extends Application {
                     player.thrust();
                 }
                 // if (constantPress.contains("DOWN")) {
-                //     player.changeSpeed(-0.1);
+                // player.changeSpeed(-0.1);
                 // }
                 if (constantPress.contains("LEFT")) {
                     player.changeAngle("left");
@@ -200,7 +253,7 @@ public class Main extends Application {
                     player.changeAngle("right");
                 }
                 if (onePress.contains("SPACE")) {
-                    Bullet b  = player.fireBullet(BulletType.PLAYER);
+                    Bullet b = player.fireBullet(BulletType.PLAYER);
                     root.getChildren().add(b);
                     playerBullets.add(b);
                 }
@@ -208,8 +261,11 @@ public class Main extends Application {
                     // call hyperspace method
                     player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                     // keep hyperspacing while there is an intersection
-                    // end product will not actually be checking for intersection of bullets but can use this for asteroids and alien ship  
-                    while (Controller.listHasIntersection(allAster, player) || Controller.shapesHaveIntersection(alien, player) || Controller.listHasIntersection(alienBullets, player)){
+                    // end product will not actually be checking for intersection of bullets but can
+                    // use this for asteroids and alien ship
+                    while (Controller.listHasIntersection(allAster, player)
+                            || Controller.shapesHaveIntersection(alien, player)
+                            || Controller.listHasIntersection(alienBullets, player)) {
                         player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                     }
                 }
@@ -217,9 +273,9 @@ public class Main extends Application {
                 onePress.clear();
 
                 for (int i = 0; i < playerBullets.size(); i++) {
-                    Bullet b = (Bullet)playerBullets.get(i);
+                    Bullet b = (Bullet) playerBullets.get(i);
                     b.move();
-                    if (System.currentTimeMillis() - b.startTime > 2000){
+                    if (System.currentTimeMillis() - b.startTime > 2000) {
                         // remove from list
                         playerBullets.remove(b);
                         // remove from screen
@@ -228,7 +284,8 @@ public class Main extends Application {
                 }
                 // update for alien and alien bullets
                 // if intersection and player not invincible
-                if (!player.getInvincible() && (Controller.listHasIntersection(allAster, player) || (Controller.shapesHaveIntersection(alien, player)))) {
+                if (!player.getInvincible() && (Controller.listHasIntersection(allAster, player)
+                        || (Controller.shapesHaveIntersection(alien, player)))) {
                     player.death();
                     lives -= 1;
                     if (lives == 0) {
@@ -244,7 +301,7 @@ public class Main extends Application {
 
                 // if currently invincible (after dying)
                 if (player.getInvincible()) {
-                    if (System.currentTimeMillis()-player.deathtime > 5000) {
+                    if (System.currentTimeMillis() - player.deathtime > 5000) {
                         player.notinvincible();
                     }
                 }
@@ -253,15 +310,16 @@ public class Main extends Application {
                     if (System.currentTimeMillis() > alien.spawnTime) {
                         alien.spawn(SCREENWIDTH, SCREENHEIGHT);
                         root.getChildren().add(alien);
-                        
+
                     }
                 }
-                
+
                 if (alien.onScreen) {
                     if (System.currentTimeMillis() - alien.changeTime > alien.directionTime) {
                         alien.changeDirection();
                     }
-                    // will need to find more general home for this check but cannot put in with asteroid check as will not work when no asteroids
+                    // will need to find more general home for this check but cannot put in with
+                    // asteroid check as will not work when no asteroids
                     // check if player bullets hit alien
                     for (int j = 0; j < playerBullets.size(); j++) {
                         Bullet b = (Bullet) playerBullets.get(j);
@@ -278,13 +336,13 @@ public class Main extends Application {
                         Bullet alienBullet = alien.fireBullet(BulletType.ALIEN);
                         root.getChildren().add(alienBullet);
                         alienBullets.add(alienBullet);
-                    }      
+                    }
                 }
 
                 for (int i = 0; i < alienBullets.size(); i++) {
-                    Bullet b = (Bullet)alienBullets.get(i);
+                    Bullet b = (Bullet) alienBullets.get(i);
                     b.move();
-                    if (System.currentTimeMillis() - b.startTime > 2000){
+                    if (System.currentTimeMillis() - b.startTime > 2000) {
                         // remove from list
                         alienBullets.remove(b);
                         // remove from screen
@@ -294,21 +352,23 @@ public class Main extends Application {
                         alienBullets.remove(b);
                         root.getChildren().remove(b);
                         player.death();
-                        lives -=1;
+                        lives -= 1;
                         livesDisplay.setText("Lives: " + lives);
                     }
                 }
-            
+
                 // this should probably be moved somewhere else
-                // loop through list of all asteroids to move them and check if any of them intersect with a bullet
+                // loop through list of all asteroids to move them and check if any of them
+                // intersect with a bullet
                 // if there is an intersection, then check if it is of a certain size
-                // if of a certain size, either create more and delete from list, or delete from list if small
+                // if of a certain size, either create more and delete from list, or delete from
+                // list if small
                 for (int i = 0; i < allAster.size(); i++) {
-                    Asteroid a = (Asteroid)allAster.get(i);
+                    Asteroid a = (Asteroid) allAster.get(i);
                     a.move();
                     for (int j = 0; j < playerBullets.size(); j++) {
-                        Bullet b = (Bullet)playerBullets.get(j);
-            
+                        Bullet b = (Bullet) playerBullets.get(j);
+
                         if (Controller.shapesHaveIntersection(b, a)) {
                             allAster.remove(a);
                             root.getChildren().remove(a);
@@ -317,8 +377,9 @@ public class Main extends Application {
                             pointsDisplay.setText("Points: " + points.addAndGet(100));
                             if (largeAster.contains(a)) {
                                 largeAster.remove(a);
-                                for (int k=0; k <mediumAsteroids; k++) {
-                                    Asteroid a2  = new Asteroid(AsteroidSizes.MEDIUM, a.getTranslateX(), a.getTranslateY(), a.getSpeed());
+                                for (int k = 0; k < mediumAsteroids; k++) {
+                                    Asteroid a2 = new Asteroid(AsteroidSizes.MEDIUM, a.getTranslateX(),
+                                            a.getTranslateY(), a.getSpeed());
                                     allAster.add(a2);
                                     mediumAster.add(a2);
                                     root.getChildren().add(a2);
@@ -326,8 +387,9 @@ public class Main extends Application {
                             }
                             if (mediumAster.contains(a)) {
                                 mediumAster.remove(a);
-                                for (int k=0; k<smallAsteroids;k++) {
-                                    Asteroid a3  = new Asteroid(AsteroidSizes.SMALL, a.getTranslateX(), a.getTranslateY(), a.getSpeed());
+                                for (int k = 0; k < smallAsteroids; k++) {
+                                    Asteroid a3 = new Asteroid(AsteroidSizes.SMALL, a.getTranslateX(),
+                                            a.getTranslateY(), a.getSpeed());
                                     allAster.add(a3);
                                     smallAster.add(a3);
                                     root.getChildren().add(a3);
@@ -348,8 +410,8 @@ public class Main extends Application {
                     }
                     levelDisplay.setText("Level: " + level);
                     largeAsteroids += 1;
-                    for (int j=0; j<largeAsteroids;j++) {
-                        Asteroid aNew  = new Asteroid(AsteroidSizes.LARGE);
+                    for (int j = 0; j < largeAsteroids; j++) {
+                        Asteroid aNew = new Asteroid(AsteroidSizes.LARGE);
                         allAster.add(aNew);
                         largeAster.add(aNew);
                         root.getChildren().add(aNew);
@@ -357,11 +419,12 @@ public class Main extends Application {
                 }
             }
         }.start();
-    
-        //scene.fillText(pointsText);
+
+        // scene.fillText(pointsText);
         openingStage.setScene(scene);
         openingStage.show();
-    }    
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
