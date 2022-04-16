@@ -3,8 +3,10 @@ package hellofx;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
@@ -32,14 +34,11 @@ public class Main extends Application {
         Pane openingRoot = new Pane();
         openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
         openingStage.setTitle("Hello Asteroids");
-        Text titleText = new Text(200, 200, "Welcome to Asteroids");
+        Text titleText = new Text(0, 300, "Welcome to Asteroids");
         titleText.setFont(Font.font(50));
-        /*
-         * Text instructions = new Text(200, 350,
-         * "UP key to accelerate \nDOWN key to decellerate \nLEFT and RIGHT to steer \nSPACEBAR to shoot \nH to jump into hyperspace"
-         * );
-         * instructions.setFont(Font.font(30));
-         */
+        // bind the text to the centre of the X plane
+        titleText.layoutXProperty().bind(openingRoot.widthProperty().subtract(titleText.prefWidth(-1)).divide(2));
+
         openingRoot.getChildren().addAll(titleText);
         Scene scene = new Scene(openingRoot);
         openingStage.setScene(scene);
@@ -58,8 +57,8 @@ public class Main extends Application {
         });
 
         VBox vbox = new VBox(50, startButton);
-        vbox.setTranslateX(250);
-        vbox.setTranslateY(600);
+        vbox.setTranslateX(400);
+        vbox.setTranslateY(450);
 
         openingRoot.getChildren().add(vbox);
         Button instructionsButton = new Button("INTRUCTIONS");
@@ -75,8 +74,8 @@ public class Main extends Application {
         });
 
         VBox vbox2 = new VBox(50, instructionsButton);
-        vbox2.setTranslateX(250);
-        vbox2.setTranslateY(700);
+        vbox2.setTranslateX(310);
+        vbox2.setTranslateY(600);
 
         openingRoot.getChildren().add(vbox2);
 
@@ -87,10 +86,13 @@ public class Main extends Application {
         openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
         openingStage.setTitle("Hello Asteroids");
 
-        Text instructions = new Text(200, 350,
+        Text instructionsText = new Text(0, 350,
                 "UP key to accelerate \nDOWN key to decellerate \nLEFT and RIGHT to steer \nSPACEBAR to shoot \nH to jump into hyperspace");
-        instructions.setFont(Font.font(30));
-        openingRoot.getChildren().addAll(instructions);
+        instructionsText.setFont(Font.font(30));
+        instructionsText.layoutXProperty()
+                .bind(openingRoot.widthProperty().subtract(instructionsText.prefWidth(-1)).divide(2));
+
+        openingRoot.getChildren().addAll(instructionsText);
         Scene scene = new Scene(openingRoot);
         openingStage.setScene(scene);
         openingStage.show();
@@ -108,7 +110,7 @@ public class Main extends Application {
         });
 
         VBox vbox = new VBox(50, backButton);
-        vbox.setTranslateX(250);
+        vbox.setTranslateX(325);
         vbox.setTranslateY(600);
 
         openingRoot.getChildren().add(vbox);
@@ -121,14 +123,16 @@ public class Main extends Application {
         openingStage.setTitle("Hello Asteroids");
         Scene scene = new Scene(closingRoot);
 
-        Text titleText = new Text(200, 200, "Game Over!");
-        titleText.setFont(Font.font(50));
+        Text gameOverText = new Text(0, 200, "Game Over!");
+        gameOverText.setFont(Font.font(50));
+        gameOverText.layoutXProperty().bind(closingRoot.widthProperty().subtract(gameOverText.prefWidth(-1)).divide(2));
 
         String score = "High score: " + highScore;
-        Text scoreText = new Text(200, 300, score);
-        titleText.setFont(Font.font(50));
+        Text scoreText = new Text(0, 350, score);
+        scoreText.setFont(Font.font(30));
+        scoreText.layoutXProperty().bind(closingRoot.widthProperty().subtract(gameOverText.prefWidth(-1)).divide(1.8));
 
-        closingRoot.getChildren().addAll(titleText, scoreText);
+        closingRoot.getChildren().addAll(gameOverText, scoreText);
 
         openingStage.setScene(scene);
         openingStage.show();
@@ -148,8 +152,8 @@ public class Main extends Application {
         });
 
         VBox vbox = new VBox(50, startButton);
-        vbox.setTranslateX(250);
-        vbox.setTranslateY(600);
+        vbox.setTranslateX(395);
+        vbox.setTranslateY(450);
 
         closingRoot.getChildren().add(vbox);
 
@@ -167,8 +171,8 @@ public class Main extends Application {
         });
 
         VBox vbox2 = new VBox(50, exitGame);
-        vbox2.setTranslateX(250);
-        vbox2.setTranslateY(700);
+        vbox2.setTranslateX(430);
+        vbox2.setTranslateY(600);
 
         closingRoot.getChildren().add(vbox2);
 
@@ -288,7 +292,7 @@ public class Main extends Application {
                         || (Controller.shapesHaveIntersection(alien, player)))) {
                     player.death();
                     lives -= 1;
-                    if (lives == 0) {
+                    if (lives < 1) {
                         try {
                             this.stop();
                             gameOver(openingStage);
@@ -353,6 +357,14 @@ public class Main extends Application {
                         root.getChildren().remove(b);
                         player.death();
                         lives -= 1;
+                        if (lives < 1) {
+                            try {
+                                this.stop();
+                                gameOver(openingStage);
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
+                            }
+                        }
                         livesDisplay.setText("Lives: " + lives);
                     }
                 }
