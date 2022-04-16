@@ -1,19 +1,27 @@
 package hellofx;
 
+import java.security.cert.PolicyNode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 
 public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
@@ -33,9 +41,11 @@ public class Main extends Application {
     public void start(Stage openingStage) {
         Pane openingRoot = new Pane();
         openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
         Text titleText = new Text(0, 300, "Welcome to Asteroids");
-        titleText.setFont(Font.font(50));
+        titleText.setFont(Font.font("Monospaced", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 50));
+        titleText.setFill(Color.WHITE);
         // bind the text to the centre of the X plane
         titleText.layoutXProperty().bind(openingRoot.widthProperty().subtract(titleText.prefWidth(-1)).divide(2));
 
@@ -45,11 +55,11 @@ public class Main extends Application {
         openingStage.show();
 
         Button startButton = new Button("START");
-        startButton.setFont(Font.font(50));
-
+        startButton.setFont(Font.font("Monospaced", 50));
+        startButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        startButton.setTextFill(Color.WHITE);
         startButton.setOnAction(event -> {
             try {
-                System.out.println("Clicked me");
                 gamePlay(openingStage);
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -61,12 +71,12 @@ public class Main extends Application {
         vbox.setTranslateY(450);
 
         openingRoot.getChildren().add(vbox);
-        Button instructionsButton = new Button("INTRUCTIONS");
-        instructionsButton.setFont(Font.font(50));
-
+        Button instructionsButton = new Button("INSTRUCTIONS");
+        instructionsButton.setFont(Font.font("Monospaced", 50));
+        instructionsButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        instructionsButton.setTextFill(Color.WHITE);
         instructionsButton.setOnAction(event -> {
             try {
-                System.out.println("Clicked me");
                 instructions(openingStage);
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -84,11 +94,13 @@ public class Main extends Application {
     public void instructions(Stage openingStage) {
         Pane openingRoot = new Pane();
         openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
 
         Text instructionsText = new Text(0, 350,
                 "UP key to accelerate \nDOWN key to decellerate \nLEFT and RIGHT to steer \nSPACEBAR to shoot \nH to jump into hyperspace");
-        instructionsText.setFont(Font.font(30));
+        instructionsText.setFont(Font.font("Monospaced", 30));
+        instructionsText.setFill(Color.WHITE);
         instructionsText.layoutXProperty()
                 .bind(openingRoot.widthProperty().subtract(instructionsText.prefWidth(-1)).divide(2));
 
@@ -98,11 +110,12 @@ public class Main extends Application {
         openingStage.show();
 
         Button backButton = new Button("MAIN MENU");
-        backButton.setFont(Font.font(50));
+        backButton.setFont(Font.font("Monospaced", 50));
+        backButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        backButton.setTextFill(Color.WHITE);
 
         backButton.setOnAction(event -> {
             try {
-                System.out.println("Clicked me");
                 start(openingStage);
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -120,16 +133,22 @@ public class Main extends Application {
     public void gameOver(Stage openingStage) {
         Pane closingRoot = new Pane();
         closingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        closingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+
         openingStage.setTitle("Hello Asteroids");
+        
         Scene scene = new Scene(closingRoot);
 
         Text gameOverText = new Text(0, 200, "Game Over!");
-        gameOverText.setFont(Font.font(50));
+        gameOverText.setFont(Font.font("Monospaced", FontWeight.EXTRA_BOLD, 50));
+        gameOverText.setFill(Color.WHITE);
+        
         gameOverText.layoutXProperty().bind(closingRoot.widthProperty().subtract(gameOverText.prefWidth(-1)).divide(2));
 
         String score = "High score: " + highScore;
         Text scoreText = new Text(0, 350, score);
-        scoreText.setFont(Font.font(30));
+        scoreText.setFont(Font.font("Monospaced", FontPosture.ITALIC, 30));
+        scoreText.setFill(Color.WHITE);
         scoreText.layoutXProperty().bind(closingRoot.widthProperty().subtract(gameOverText.prefWidth(-1)).divide(1.8));
 
         closingRoot.getChildren().addAll(gameOverText, scoreText);
@@ -137,12 +156,12 @@ public class Main extends Application {
         openingStage.setScene(scene);
         openingStage.show();
 
-        Button startButton = new Button("Restart");
-        startButton.setFont(Font.font(50));
-
+        Button startButton = new Button("RESTART");
+        startButton.setFont(Font.font("Monospaced", 50));
+        startButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        startButton.setTextFill(Color.WHITE);
         startButton.setOnAction(event -> {
             try {
-                System.out.println("Clicked me");
                 lives = 6;
                 level = 1;
                 gamePlay(openingStage);
@@ -157,12 +176,12 @@ public class Main extends Application {
 
         closingRoot.getChildren().add(vbox);
 
-        Button exitGame = new Button("Exit");
-        exitGame.setFont(Font.font(50));
-
+        Button exitGame = new Button("EXIT");
+        exitGame.setFont(Font.font("Monospaced", 50));
+        exitGame.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        exitGame.setTextFill(Color.WHITE);
         exitGame.setOnAction(event -> {
             try {
-                System.out.println("Clicked me");
                 highScore = 1;
                 openingStage.close();
             } catch (Exception e1) {
@@ -181,14 +200,21 @@ public class Main extends Application {
     public void gamePlay(Stage openingStage) throws Exception {
         Pane root = new Pane();
         root.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
         Scene scene = new Scene(root);
 
         Text pointsDisplay = new Text(20, 30, "Points: " + points);
+        pointsDisplay.setFill(Color.WHITE);
+        pointsDisplay.setFont(Font.font("Monospaced"));
         root.getChildren().add(pointsDisplay);
         Text levelDisplay = new Text(20, 45, "Level: " + level);
+        levelDisplay.setFill(Color.WHITE);
+        levelDisplay.setFont(Font.font("Monospaced"));
         root.getChildren().add(levelDisplay);
         Text livesDisplay = new Text(20, 60, "Lives: " + lives);
+        livesDisplay.setFill(Color.WHITE);
+        livesDisplay.setFont(Font.font("Monospaced"));
         root.getChildren().add(livesDisplay);
         // Point2D point2d_1 = new Point2D(20.0f, 150.0f);
         // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
@@ -421,6 +447,7 @@ public class Main extends Application {
                         highScore = level;
                     }
                     levelDisplay.setText("Level: " + level);
+                    levelDisplay.setFill(Color.WHITE);
                     largeAsteroids += 1;
                     for (int j = 0; j < largeAsteroids; j++) {
                         Asteroid aNew = new Asteroid(AsteroidSizes.LARGE);

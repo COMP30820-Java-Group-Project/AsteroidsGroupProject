@@ -1,6 +1,8 @@
 package hellofx;
 import java.util.Random;
 
+import javafx.scene.paint.Color;
+
 public class Alien extends ShipSprite {
 
     private static double[] alienCoordinates = { 
@@ -39,6 +41,7 @@ public class Alien extends ShipSprite {
         this.changeTime = System.currentTimeMillis();
         this.spawnTime = System.currentTimeMillis() + 10000 + Math.random() * 6000;
         this.onScreen = false;
+        this.setFill(Color.WHITE);
     }
     
     public double[] getLocation(){

@@ -24,7 +24,7 @@ public class PlayerShip extends ShipSprite {
         super(PlayerShip.shipPoints);
         this.setTranslateX(x);
         this.setTranslateY(y);
-        this.setFill(Color.BLACK);
+        this.setFill(Color.WHITE);
         // this.currentVelocityX = 0;
         // this.currentVelocityY = 0;
         this.speed = new Point2D(0, 0);
@@ -54,7 +54,7 @@ public class PlayerShip extends ShipSprite {
 
     public void notinvincible() {
         this.setInvincible(false);
-        this.setFill(Color.BLACK);
+        this.setFill(Color.WHITE);
     }
     
     public void hyperspace(int width, int height) {

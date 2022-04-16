@@ -1,5 +1,8 @@
 package hellofx;
 
+
+import javafx.scene.paint.Color;
+
 public class Asteroid extends Sprite {
 
     // using enums for sizes
@@ -104,5 +107,7 @@ public class Asteroid extends Sprite {
                         this.getTranslateY() + a + c + a - thirdRand,
                         this.getTranslateX() - a, this.getTranslateY() + a + c, this.getTranslateX() - a + fourthRand,
                         this.getTranslateY() + a + fourthRand, this.getTranslateX(), this.getTranslateY() });
-    };
+        this.setFill(Color.GRAY);
+    }
+
 }

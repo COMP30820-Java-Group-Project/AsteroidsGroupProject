@@ -43,7 +43,7 @@ public class Bullet extends Sprite {
                 c = Color.RED;
                 break;
             default:
-            c = Color.BLACK;
+            c = Color.WHITE;
             break;
         }
         return c;
