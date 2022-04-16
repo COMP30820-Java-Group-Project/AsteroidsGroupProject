@@ -4,9 +4,16 @@ import java.security.cert.PolicyNode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
@@ -20,11 +27,14 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 
 public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
+    AtomicInteger highScore = new AtomicInteger();
     int lives = 6;
     int level = 1;
     int largeAsteroids = 1;
@@ -36,7 +46,6 @@ public class Main extends Application {
     final static int SCREENHEIGHT = 900;
 
     private Stage openingStage;
-    private int highScore = 1;
 
     public void start(Stage openingStage) {
         Pane openingRoot = new Pane();
@@ -59,7 +68,8 @@ public class Main extends Application {
         // String css = getClass().getResource("style.css").toExternalForm();
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         // startButton.setFont(Font.font("Monospaced", 50));
-        // startButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        // startButton.setBackground(new Background(new BackgroundFill(Color.BLACK,
+        // CornerRadii.EMPTY, Insets.EMPTY)));
         // startButton.setTextFill(Color.WHITE);
         startButton.setOnAction(event -> {
             try {
@@ -71,9 +81,8 @@ public class Main extends Application {
 
         VBox vbox = new VBox(50, startButton);
         vbox.setTranslateX(400);
-        vbox.setTranslateY(450);
+        vbox.setTranslateY(400);
 
-        openingRoot.getChildren().add(vbox);
         Button instructionsButton = new Button("INSTRUCTIONS");
         instructionsButton.setId("button");
         instructionsButton.setOnAction(event -> {
@@ -86,10 +95,28 @@ public class Main extends Application {
 
         VBox vbox2 = new VBox(50, instructionsButton);
         vbox2.setTranslateX(310);
-        vbox2.setTranslateY(600);
+        vbox2.setTranslateY(500);
 
-        openingRoot.getChildren().add(vbox2);
+        // add high scores button
+        Button scoresButton = new Button("HIGH SCORES");
+        scoresButton.setFont(Font.font("Monospaced", 50));
+        scoresButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        scoresButton.setTextFill(Color.WHITE);
+        scoresButton.setOnAction(event -> {
+            // display high scores
+            try {
+                highScores(openingStage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
 
+        VBox vbox3 = new VBox(50, scoresButton);
+        vbox3.setTranslateX(400);
+        vbox3.setTranslateY(600);
+
+        // display all buttons
+        openingRoot.getChildren().addAll(vbox, vbox2, vbox3);
     }
 
     public void instructions(Stage openingStage) {
@@ -111,9 +138,70 @@ public class Main extends Application {
         openingStage.show();
 
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-        
+
         Button backButton = new Button("MAIN MENU");
         backButton.setId("button");
+
+        backButton.setOnAction(event -> {
+            try {
+                start(openingStage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        VBox vbox = new VBox(50, backButton);
+        vbox.setTranslateX(325);
+        vbox.setTranslateY(600);
+
+        openingRoot.getChildren().add(vbox);
+
+    }
+
+    public void highScores(Stage openingStage) {
+        Pane openingRoot = new Pane();
+        openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        openingStage.setTitle("Hello Asteroids");
+
+        Text scoresTitle = new Text(0, 350, "HIGH SCORES");
+        scoresTitle.setFont(Font.font("Monospaced", 40));
+        scoresTitle.setFill(Color.WHITE);
+        scoresTitle.layoutXProperty()
+                .bind(openingRoot.widthProperty().subtract(scoresTitle.prefWidth(-1)).divide(2));
+
+        Text scoresText = new Text(400, 400, "");
+        scoresText.setFont(Font.font("Monospaced", 30));
+        scoresText.setFill(Color.WHITE);
+
+        // read High Scores file and create string of the contents
+        // code from W3Schools
+        try {
+            File scoresFile = new File("HighScores.txt");
+            Scanner myReader = new Scanner(scoresFile);
+            String displayScores = "";
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                displayScores += data + "\n";
+                System.out.println(data);
+            }
+            myReader.close();
+            // set the high scores scene text to the contents of the file
+            scoresText.setText(displayScores);
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        openingRoot.getChildren().addAll(scoresText);
+        Scene scene = new Scene(openingRoot);
+        openingStage.setScene(scene);
+        openingStage.show();
+
+        Button backButton = new Button("MAIN MENU");
+        backButton.setFont(Font.font("Monospaced", 50));
+        backButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        backButton.setTextFill(Color.WHITE);
 
         backButton.setOnAction(event -> {
             try {
@@ -137,34 +225,80 @@ public class Main extends Application {
         closingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         openingStage.setTitle("Hello Asteroids");
-        
+
         Scene scene = new Scene(closingRoot);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         Text gameOverText = new Text(0, 200, "Game Over!");
         gameOverText.setFont(Font.font("Monospaced", FontWeight.EXTRA_BOLD, 50));
         gameOverText.setFill(Color.WHITE);
-        
+
         gameOverText.layoutXProperty().bind(closingRoot.widthProperty().subtract(gameOverText.prefWidth(-1)).divide(2));
 
-        String score = "High score: " + highScore;
+        String score = "Score: " + highScore.get();
         Text scoreText = new Text(0, 350, score);
         scoreText.setFont(Font.font("Monospaced", FontPosture.ITALIC, 30));
         scoreText.setFill(Color.WHITE);
         scoreText.layoutXProperty().bind(closingRoot.widthProperty().subtract(gameOverText.prefWidth(-1)).divide(1.8));
 
-        closingRoot.getChildren().addAll(gameOverText, scoreText);
+        // username input
+        Text promptText = new Text(0, 380, "Enter your name to be added to the leaderboard:");
+        promptText.setFont(Font.font("Monospaced", 20));
+        promptText.setFill(Color.rgb(150, 255, 168));
+        promptText.layoutXProperty().bind(closingRoot.widthProperty().subtract(promptText.prefWidth(-1)).divide(2));
+
+        // create message to display when username is provided
+        Text doneMessage = new Text(450, 420, "Added!");
+        doneMessage.setFont(Font.font("Monospaced", 20));
+        doneMessage.setFill(Color.rgb(150, 255, 168));
+
+        // create textfield - enter key triggers event
+        TextField userInput = new TextField();
+        userInput.setTranslateX(380);
+        userInput.setTranslateY(420);
+        userInput.setStyle("-fx-background-color: rgb(150, 255, 168); -fx-font-size: 20;");
+        userInput.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // formulate HighScores entry
+                System.out.println("text entered: " + userInput.getText());
+                String username = userInput.getText();
+                String scoreEntry = username + " " + highScore.get();
+                System.out.println(scoreEntry);
+
+                // now add entry to the file
+                // code from W3Schools
+                try {
+                    FileWriter addHighScore = new FileWriter("HighScores.txt", true);
+                    addHighScore.write("\n" + scoreEntry);
+                    addHighScore.flush();
+                    addHighScore.close();
+                    System.out.println("Successfully wrote to the file.");
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    doneMessage.setText("An error occurred.");
+                    e.printStackTrace();
+                }
+
+                // replace input box with message
+                closingRoot.getChildren().remove(userInput);
+                closingRoot.getChildren().addAll(doneMessage);
+            }
+        });
+
+        closingRoot.getChildren().addAll(gameOverText, scoreText, promptText, userInput);
 
         openingStage.setScene(scene);
         openingStage.show();
 
         Button startButton = new Button("RESTART");
         startButton.setId("button");
-        
+
         startButton.setOnAction(event -> {
             try {
                 lives = 6;
                 level = 1;
+                highScore.addAndGet(0);
                 gamePlay(openingStage);
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -173,16 +307,15 @@ public class Main extends Application {
 
         VBox vbox = new VBox(50, startButton);
         vbox.setTranslateX(395);
-        vbox.setTranslateY(450);
+        vbox.setTranslateY(600);
 
         closingRoot.getChildren().add(vbox);
 
         Button exitGame = new Button("EXIT");
         exitGame.setId("button");
-        
+
         exitGame.setOnAction(event -> {
             try {
-                highScore = 1;
                 openingStage.close();
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -191,7 +324,7 @@ public class Main extends Application {
 
         VBox vbox2 = new VBox(50, exitGame);
         vbox2.setTranslateX(430);
-        vbox2.setTranslateY(600);
+        vbox2.setTranslateY(700);
 
         closingRoot.getChildren().add(vbox2);
 
@@ -321,6 +454,14 @@ public class Main extends Application {
                     lives -= 1;
                     if (lives < 1) {
                         try {
+                            // update highscore
+                            if (points.get() > highScore.get()) {
+                                highScore.addAndGet(points.get());
+                            }
+                            // reinitailise asteroids and points
+                            largeAsteroids = 1;
+                            points.addAndGet(0);
+                            // end game
                             this.stop();
                             gameOver(openingStage);
                         } catch (Exception e1) {
@@ -386,6 +527,14 @@ public class Main extends Application {
                         lives -= 1;
                         if (lives < 1) {
                             try {
+                                // update high score
+                                if (points.get() > highScore.get()) {
+                                    highScore.addAndGet(points.get());
+                                }
+                                // reinitailise asteroids and points
+                                largeAsteroids = 1;
+                                points.addAndGet(0);
+                                // end game
                                 this.stop();
                                 gameOver(openingStage);
                             } catch (Exception e1) {
@@ -443,10 +592,6 @@ public class Main extends Application {
                 // if empty and no alien then level is over and make new asteroids
                 if (allAster.isEmpty() && !alien.onScreen) {
                     level += 1;
-                    // update high score
-                    if (level > highScore) {
-                        highScore = level;
-                    }
                     levelDisplay.setText("Level: " + level);
                     levelDisplay.setFill(Color.WHITE);
                     largeAsteroids += 1;
