@@ -44,6 +44,7 @@ public class PlayerShip extends ShipSprite {
         this.setSpeed(0);
         this.invincible();
         this.setRotate(0);
+        this.speed = new Point2D(0, 0);
         this.deathtime = System.currentTimeMillis();
     }
 
