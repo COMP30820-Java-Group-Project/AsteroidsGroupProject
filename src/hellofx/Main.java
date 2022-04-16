@@ -35,7 +35,7 @@ import javafx.scene.layout.HBox;
 public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
     AtomicInteger highScore = new AtomicInteger();
-    int lives = 1;
+    int lives = 6;
     int level = 1;
     int largeAsteroids = 1;
     List<Sprite> allAster = new ArrayList<>();
