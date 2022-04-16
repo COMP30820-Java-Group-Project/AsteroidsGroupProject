@@ -190,9 +190,9 @@ public class Main extends Application {
                 if (constantPress.contains("UP")) {
                     player.thrust();
                 }
-                if (constantPress.contains("DOWN")) {
-                    player.changeSpeed(-0.1);
-                }
+                // if (constantPress.contains("DOWN")) {
+                //     player.changeSpeed(-0.1);
+                // }
                 if (constantPress.contains("LEFT")) {
                     player.changeAngle("left");
                 }
