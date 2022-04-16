@@ -4,9 +4,12 @@ import java.security.cert.PolicyNode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Scanner;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
@@ -20,12 +23,14 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 
 public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
-    int lives = 6;
+    int lives = 1;
     int level = 1;
     int largeAsteroids = 1;
     List<Sprite> allAster = new ArrayList<>();
@@ -73,7 +78,8 @@ public class Main extends Application {
         openingRoot.getChildren().add(vbox);
         Button instructionsButton = new Button("INSTRUCTIONS");
         instructionsButton.setFont(Font.font("Monospaced", 50));
-        instructionsButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        instructionsButton
+                .setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         instructionsButton.setTextFill(Color.WHITE);
         instructionsButton.setOnAction(event -> {
             try {
@@ -136,13 +142,13 @@ public class Main extends Application {
         closingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         openingStage.setTitle("Hello Asteroids");
-        
+
         Scene scene = new Scene(closingRoot);
 
         Text gameOverText = new Text(0, 200, "Game Over!");
         gameOverText.setFont(Font.font("Monospaced", FontWeight.EXTRA_BOLD, 50));
         gameOverText.setFill(Color.WHITE);
-        
+
         gameOverText.layoutXProperty().bind(closingRoot.widthProperty().subtract(gameOverText.prefWidth(-1)).divide(2));
 
         String score = "High score: " + highScore;
@@ -151,7 +157,39 @@ public class Main extends Application {
         scoreText.setFill(Color.WHITE);
         scoreText.layoutXProperty().bind(closingRoot.widthProperty().subtract(gameOverText.prefWidth(-1)).divide(1.8));
 
-        closingRoot.getChildren().addAll(gameOverText, scoreText);
+        // username input
+        Text promptText = new Text(0, 380, "Enter your name to be added to the leaderboard:");
+        promptText.setFont(Font.font("Monospaced", 20));
+        promptText.setFill(Color.rgb(150, 255, 168));
+        promptText.layoutXProperty().bind(closingRoot.widthProperty().subtract(promptText.prefWidth(-1)).divide(2));
+
+        // create message to display when username is provided
+        Text doneMessage = new Text(450, 420, "Added!");
+        doneMessage.setFont(Font.font("Monospaced", 20));
+        doneMessage.setFill(Color.rgb(150, 255, 168));
+
+        // create textfield - enter key triggers event
+        TextField userInput = new TextField();
+        userInput.setTranslateX(380);
+        userInput.setTranslateY(420);
+        userInput.setStyle("-fx-background-color: rgb(150, 255, 168); -fx-font-size: 20;");
+        userInput.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // add information to leaderboard
+                System.out.println("text entered: " + userInput.getText());
+                String username = userInput.getText();
+                String scoreEntry = username + " " + highScore;
+                System.out.println(scoreEntry);
+
+                // replace input box with message
+                closingRoot.getChildren().remove(userInput);
+                closingRoot.getChildren().addAll(doneMessage);
+
+            }
+        });
+
+        closingRoot.getChildren().addAll(gameOverText, scoreText, promptText, userInput);
 
         openingStage.setScene(scene);
         openingStage.show();
@@ -172,7 +210,7 @@ public class Main extends Application {
 
         VBox vbox = new VBox(50, startButton);
         vbox.setTranslateX(395);
-        vbox.setTranslateY(450);
+        vbox.setTranslateY(600);
 
         closingRoot.getChildren().add(vbox);
 
@@ -191,7 +229,7 @@ public class Main extends Application {
 
         VBox vbox2 = new VBox(50, exitGame);
         vbox2.setTranslateX(430);
-        vbox2.setTranslateY(600);
+        vbox2.setTranslateY(700);
 
         closingRoot.getChildren().add(vbox2);
 
