@@ -38,8 +38,8 @@ public abstract class Sprite extends Polyline {
        double objectAngle = this.getRotate();
        double currentX = this.getTranslateX();
        double currentY = this.getTranslateY();
-       double currentVelocityX = this.speed * Math.sin(Math.toRadians(objectAngle));
-       double currentVelocityY = -this.speed * Math.cos(Math.toRadians(objectAngle));
+       double currentVelocityX = this.speed * Math.cos(Math.toRadians(objectAngle));
+       double currentVelocityY = this.speed * Math.sin(Math.toRadians(objectAngle));
        this.setTranslateX(currentX + currentVelocityX);
        this.setTranslateY(currentY + currentVelocityY);
        this.wrap();

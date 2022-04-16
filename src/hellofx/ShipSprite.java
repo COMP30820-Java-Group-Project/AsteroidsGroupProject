@@ -9,7 +9,7 @@ public abstract class ShipSprite extends Sprite {
     }
 
     public Bullet fireBullet(BulletType bType) {
-        Bullet newBullet  = new Bullet(this.getNoseX(), this.getNoseY(), this.getRotate(), 6, bType); // AlienTesting – this.speed;
+        Bullet newBullet  = new Bullet(this.getNoseX(), this.getNoseY(), this.getRotate()-90, 6, bType); // AlienTesting – this.speed;
         this.fireTime = System.currentTimeMillis();
         return newBullet;
     }
