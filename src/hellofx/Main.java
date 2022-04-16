@@ -55,9 +55,12 @@ public class Main extends Application {
         openingStage.show();
 
         Button startButton = new Button("START");
-        startButton.setFont(Font.font("Monospaced", 50));
-        startButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        startButton.setTextFill(Color.WHITE);
+        startButton.setId("button");
+        // String css = getClass().getResource("style.css").toExternalForm();
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        // startButton.setFont(Font.font("Monospaced", 50));
+        // startButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        // startButton.setTextFill(Color.WHITE);
         startButton.setOnAction(event -> {
             try {
                 gamePlay(openingStage);
@@ -72,9 +75,7 @@ public class Main extends Application {
 
         openingRoot.getChildren().add(vbox);
         Button instructionsButton = new Button("INSTRUCTIONS");
-        instructionsButton.setFont(Font.font("Monospaced", 50));
-        instructionsButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        instructionsButton.setTextFill(Color.WHITE);
+        instructionsButton.setId("button");
         instructionsButton.setOnAction(event -> {
             try {
                 instructions(openingStage);
@@ -109,10 +110,10 @@ public class Main extends Application {
         openingStage.setScene(scene);
         openingStage.show();
 
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        
         Button backButton = new Button("MAIN MENU");
-        backButton.setFont(Font.font("Monospaced", 50));
-        backButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        backButton.setTextFill(Color.WHITE);
+        backButton.setId("button");
 
         backButton.setOnAction(event -> {
             try {
@@ -138,6 +139,7 @@ public class Main extends Application {
         openingStage.setTitle("Hello Asteroids");
         
         Scene scene = new Scene(closingRoot);
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         Text gameOverText = new Text(0, 200, "Game Over!");
         gameOverText.setFont(Font.font("Monospaced", FontWeight.EXTRA_BOLD, 50));
@@ -157,9 +159,8 @@ public class Main extends Application {
         openingStage.show();
 
         Button startButton = new Button("RESTART");
-        startButton.setFont(Font.font("Monospaced", 50));
-        startButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        startButton.setTextFill(Color.WHITE);
+        startButton.setId("button");
+        
         startButton.setOnAction(event -> {
             try {
                 lives = 6;
@@ -177,9 +178,8 @@ public class Main extends Application {
         closingRoot.getChildren().add(vbox);
 
         Button exitGame = new Button("EXIT");
-        exitGame.setFont(Font.font("Monospaced", 50));
-        exitGame.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        exitGame.setTextFill(Color.WHITE);
+        exitGame.setId("button");
+        
         exitGame.setOnAction(event -> {
             try {
                 highScore = 1;
@@ -203,6 +203,7 @@ public class Main extends Application {
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         Text pointsDisplay = new Text(20, 30, "Points: " + points);
         pointsDisplay.setFill(Color.WHITE);
