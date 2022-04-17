@@ -25,8 +25,6 @@ public class PlayerShip extends ShipSprite {
         this.setTranslateX(x);
         this.setTranslateY(y);
         this.setFill(Color.WHITE);
-        // this.currentVelocityX = 0;
-        // this.currentVelocityY = 0;
         this.speed = new Point2D(0, 0);
     }
 
@@ -41,7 +39,6 @@ public class PlayerShip extends ShipSprite {
     public void death() {
         this.setTranslateX(500);
         this.setTranslateY(450);
-        this.setSpeed(0);
         this.invincible();
         this.setRotate(0);
         this.speed = new Point2D(0, 0);
@@ -65,17 +62,6 @@ public class PlayerShip extends ShipSprite {
         this.setTranslateY(y); 
     }
 
-    // public void changeSpeed(double speedChange) {
-    //     this.speed += speedChange;
-    //      if (this.getSpeed() < 0) {
-    //         this.speed = 0;
-    //     }
-    //     // setting arbitrary max speed - feel free to change
-    //     if (this.getSpeed() > 6) {
-    //         this.speed = 6;
-    //     }
-    // }
-
     public void changeAngle(String direction) {
         currentAngle = getRotate();
         if (direction == "left") setRotate(currentAngle - angleFactor);
@@ -95,25 +81,14 @@ public class PlayerShip extends ShipSprite {
     }
 
     public void thrust() {
-        //this.changeSpeed(0.1);
-        //this.currentAngle = Math.toRadians(this.getRotate());
-        //double objectAngle = this.getRotate();
-        // double currentX = this.getTranslateX();
-        // double currentY = this.getTranslateY();
         double currentVelocityX = Math.sin(Math.toRadians(this.getRotate()));
         double currentVelocityY = -Math.cos(Math.toRadians(this.getRotate()));
-        currentVelocityX *= 0.05;
-        currentVelocityY *= 0.05;
-        // double changeX = Math.cos(Math.toRadians(this.getRotate()));
-        // double changeY = Math.sin(Math.toRadians(this.getRotate()));
-        // this.setTranslateX(this.getTranslateX() + currentVelocityX);
-        // this.setTranslateY(this.getTranslateY() + currentVelocityY);
+        currentVelocityX *= 0.06;
+        currentVelocityY *= 0.06;
         this.speed = this.speed.add(currentVelocityX, currentVelocityY);
      }
 
      public void move() {
-        // double cvx = currentVelocityX + Math.sin(currentAngle);
-        // double cvy = currentVelocityX + -Math.cos(currentAngle);
         this.setTranslateX(this.getTranslateX() + this.speed.getX());
         this.setTranslateY(this.getTranslateY() + this.speed.getY());
         this.wrap();

@@ -1,6 +1,5 @@
 package hellofx;
 
-import java.security.cert.PolicyNode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -9,13 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.Background;
@@ -30,7 +27,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 
 public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
@@ -44,8 +40,6 @@ public class Main extends Application {
     // constants for screen dimensions
     final static int SCREENWIDTH = 1000;
     final static int SCREENHEIGHT = 900;
-
-    private Stage openingStage;
 
     public void start(Stage openingStage) {
         Pane openingRoot = new Pane();
@@ -327,7 +321,6 @@ public class Main extends Application {
         vbox2.setTranslateY(700);
 
         closingRoot.getChildren().add(vbox2);
-
     }
 
     public void gamePlay(Stage openingStage) throws Exception {
@@ -427,9 +420,9 @@ public class Main extends Application {
                     // keep hyperspacing while there is an intersection
                     // end product will not actually be checking for intersection of bullets but can
                     // use this for asteroids and alien ship
-                    while (Controller.listHasIntersection(allAster, player)
-                            || Controller.shapesHaveIntersection(alien, player)
-                            || Controller.listHasIntersection(alienBullets, player)) {
+                    while (Sprite.listHasIntersection(allAster, player)
+                            || Sprite.shapesHaveIntersection(alien, player)
+                            || Sprite.listHasIntersection(alienBullets, player)) {
                         player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
                     }
                 }
@@ -448,8 +441,8 @@ public class Main extends Application {
                 }
                 // update for alien and alien bullets
                 // if intersection and player not invincible
-                if (!player.getInvincible() && (Controller.listHasIntersection(allAster, player)
-                        || (Controller.shapesHaveIntersection(alien, player)))) {
+                if (!player.getInvincible() && (Sprite.listHasIntersection(allAster, player)
+                        || (Sprite.shapesHaveIntersection(alien, player)))) {
                     player.death();
                     lives -= 1;
                     if (lives < 1) {
@@ -495,7 +488,7 @@ public class Main extends Application {
                     // check if player bullets hit alien
                     for (int j = 0; j < playerBullets.size(); j++) {
                         Bullet b = (Bullet) playerBullets.get(j);
-                        if (Controller.shapesHaveIntersection(b, alien)) {
+                        if (Sprite.shapesHaveIntersection(b, alien)) {
                             alien.isHit();
                             root.getChildren().remove(alien);
                             playerBullets.remove(b);
@@ -520,7 +513,7 @@ public class Main extends Application {
                         // remove from screen
                         root.getChildren().remove(b);
                     }
-                    if (Controller.shapesHaveIntersection(b, player) && !player.getInvincible()) {
+                    if (Sprite.shapesHaveIntersection(b, player) && !player.getInvincible()) {
                         alienBullets.remove(b);
                         root.getChildren().remove(b);
                         player.death();
@@ -557,7 +550,7 @@ public class Main extends Application {
                     for (int j = 0; j < playerBullets.size(); j++) {
                         Bullet b = (Bullet) playerBullets.get(j);
 
-                        if (Controller.shapesHaveIntersection(b, a)) {
+                        if (Sprite.shapesHaveIntersection(b, a)) {
                             allAster.remove(a);
                             root.getChildren().remove(a);
                             playerBullets.remove(b);

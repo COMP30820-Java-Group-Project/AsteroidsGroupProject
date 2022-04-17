@@ -19,7 +19,6 @@ public abstract class ShipSprite extends Sprite {
         double squareCenter = this.getTranslateX() + halfWidth;
         double noseX = squareCenter + halfWidth * Math.sin(Math.toRadians(180 - this.getRotate()));
         return noseX; 
-
     }
  
     protected double getNoseY() {
