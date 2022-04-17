@@ -30,7 +30,6 @@ import javafx.scene.layout.CornerRadii;
 
 public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
-    AtomicInteger highScore = new AtomicInteger();
     int lives = 6;
     int level = 1;
     int largeAsteroids = 1;
@@ -229,7 +228,7 @@ public class Main extends Application {
 
         gameOverText.layoutXProperty().bind(closingRoot.widthProperty().subtract(gameOverText.prefWidth(-1)).divide(2));
 
-        String score = "Score: " + highScore.get();
+        String score = "Score: " + points.get();
         Text scoreText = new Text(0, 350, score);
         scoreText.setFont(Font.font("Monospaced", FontPosture.ITALIC, 30));
         scoreText.setFill(Color.WHITE);
@@ -257,7 +256,7 @@ public class Main extends Application {
                 // formulate HighScores entry
                 System.out.println("text entered: " + userInput.getText());
                 String username = userInput.getText();
-                String scoreEntry = username + " " + highScore.get();
+                String scoreEntry = username + " " + points.get();
                 System.out.println(scoreEntry);
 
                 // now add entry to the file
@@ -290,9 +289,9 @@ public class Main extends Application {
 
         startButton.setOnAction(event -> {
             try {
+                points.set(0);
                 lives = 6;
                 level = 1;
-                highScore.addAndGet(0);
                 gamePlay(openingStage);
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -442,20 +441,11 @@ public class Main extends Application {
                     player.death();
                     lives -= 1;
                     if (lives < 1) {
-                        try {
-                            // update highscore
-                            if (points.get() > highScore.get()) {
-                                highScore.addAndGet(points.get());
-                            }
-                            // reinitailise asteroids and points
-                            largeAsteroids = 1;
-                            points.set(0);
-                            // end game
-                            this.stop();
-                            gameOver(openingStage);
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
+                        // reinitailise asteroids
+                        largeAsteroids = 1;
+                        // end game
+                        this.stop();
+                        gameOver(openingStage);
                     }
                     livesDisplay.setText("Lives: " + lives);
                 }
@@ -506,20 +496,11 @@ public class Main extends Application {
                         player.death();
                         lives -= 1;
                         if (lives < 1) {
-                            try {
-                                // update high score
-                                if (points.get() > highScore.get()) {
-                                    highScore.addAndGet(points.get());
-                                }
-                                // reinitailise asteroids and points
-                                largeAsteroids = 1;
-                                points.addAndGet(0);
-                                // end game
-                                this.stop();
-                                gameOver(openingStage);
-                            } catch (Exception e1) {
-                                e1.printStackTrace();
-                            }
+                            // reinitailise asteroids
+                            largeAsteroids = 1;
+                            // end game
+                            this.stop();
+                            gameOver(openingStage);
                         }
                         livesDisplay.setText("Lives: " + lives);
                     }

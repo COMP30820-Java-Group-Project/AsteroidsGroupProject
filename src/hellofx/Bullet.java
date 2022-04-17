@@ -9,13 +9,13 @@ public class Bullet extends Sprite {
     private Color colour;
 
     // make size a constant
-    final static int B_WIDTH = 2;
+    final static int B_WIDTH = 4;
 
     private static double[] bulletPoints = {
-        B_WIDTH, -B_WIDTH, B_WIDTH, B_WIDTH, -B_WIDTH, B_WIDTH, -B_WIDTH, -B_WIDTH, B_WIDTH, -B_WIDTH
+            B_WIDTH, -B_WIDTH, B_WIDTH, B_WIDTH, -B_WIDTH, B_WIDTH, -B_WIDTH, -B_WIDTH, B_WIDTH, -B_WIDTH
     };
     long startTime = System.currentTimeMillis();
-    
+
     public Bullet(double x1, double y1, double r1, double s, BulletType bType) {
         // x1 and y1 to be nose position of ship that fired (either alien or space ship)
         super(Bullet.bulletPoints);
@@ -29,7 +29,7 @@ public class Bullet extends Sprite {
         this.bType = bType;
         this.colour = getColour(this.bType);
         this.setFill(this.colour);
-        
+
     }
 
     // final as it is used in constructor
@@ -38,13 +38,13 @@ public class Bullet extends Sprite {
         switch (bt) {
             case PLAYER:
                 c = Color.GREEN;
-                break;              
+                break;
             case ALIEN:
                 c = Color.RED;
                 break;
             default:
-            c = Color.WHITE;
-            break;
+                c = Color.WHITE;
+                break;
         }
         return c;
     }
