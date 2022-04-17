@@ -4,3 +4,5 @@ salt lamp 5000
 Lorna  12400
 mo 500
  Kevin 2300
+kevin 300
+Kevin 1300

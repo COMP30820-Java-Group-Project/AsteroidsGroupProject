@@ -449,7 +449,7 @@ public class Main extends Application {
                             }
                             // reinitailise asteroids and points
                             largeAsteroids = 1;
-                            points.addAndGet(0);
+                            points.set(0);
                             // end game
                             this.stop();
                             gameOver(openingStage);
