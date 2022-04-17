@@ -1,4 +1,5 @@
 package hellofx;
+import java.util.List;
 import java.util.Random;
 
 import javafx.scene.paint.Color;
@@ -92,6 +93,16 @@ public class Alien extends ShipSprite {
         else {
             this.objectAngle = 90;
         }
+    }
+
+    public boolean checkOnScreen() {
+        if (this.onScreen) {
+            if (System.currentTimeMillis() - this.changeTime > this.directionTime) {
+                this.changeDirection();
+            }
+            return true;
+        }
+        return false;
     }
    
     public void changeSpeed(int speedChange) {

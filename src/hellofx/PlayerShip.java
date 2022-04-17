@@ -54,6 +54,12 @@ public class PlayerShip extends ShipSprite {
         this.setInvincible(false);
         this.setFill(Color.WHITE);
     }
+
+    public void checkInvincible() {
+        if (System.currentTimeMillis() - this.deathtime > 5000) {
+            this.notinvincible();
+        }
+    }
     
     public void hyperspace(int width, int height) {
         double x = Math.random() * width;

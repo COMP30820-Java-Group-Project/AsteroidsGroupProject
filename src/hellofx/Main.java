@@ -396,13 +396,9 @@ public class Main extends Application {
                         constantPress.remove(keyName);
                     }
                 });
-                // scene.setOnKeyPressed(e -> {
                 if (constantPress.contains("UP")) {
                     player.thrust();
                 }
-                // if (constantPress.contains("DOWN")) {
-                // player.changeSpeed(-0.1);
-                // }
                 if (constantPress.contains("LEFT")) {
                     player.changeAngle("left");
                 }
@@ -463,26 +459,17 @@ public class Main extends Application {
                     }
                     livesDisplay.setText("Lives: " + lives);
                 }
-
-                // if currently invincible (after dying)
-                if (player.getInvincible()) {
-                    if (System.currentTimeMillis() - player.deathtime > 5000) {
-                        player.notinvincible();
-                    }
-                }
+                // call method to check if invincible
+                player.checkInvincible();
 
                 if (!alien.onScreen) {
                     if (System.currentTimeMillis() > alien.spawnTime) {
                         alien.spawn(SCREENWIDTH, SCREENHEIGHT);
                         root.getChildren().add(alien);
-
                     }
                 }
 
-                if (alien.onScreen) {
-                    if (System.currentTimeMillis() - alien.changeTime > alien.directionTime) {
-                        alien.changeDirection();
-                    }
+                if (alien.checkOnScreen()) {
                     // will need to find more general home for this check but cannot put in with
                     // asteroid check as will not work when no asteroids
                     // check if player bullets hit alien
