@@ -37,8 +37,8 @@ public class PlayerShip extends ShipSprite {
     }
 
     public void death() {
-        this.setTranslateX(500);
-        this.setTranslateY(450);
+        this.setTranslateX(Controller.SCREENWIDTH/2);
+        this.setTranslateY(Controller.SCREENHEIGHT/2);
         this.invincible();
         this.setRotate(0);
         this.speed = new Point2D(0, 0);

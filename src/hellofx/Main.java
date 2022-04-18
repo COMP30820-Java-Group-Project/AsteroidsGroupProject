@@ -36,13 +36,9 @@ public class Main extends Application {
     List<Sprite> allAster = new ArrayList<>();
     List<Sprite> largeAster = new ArrayList<>();
 
-    // constants for screen dimensions
-    final static int SCREENWIDTH = 1000;
-    final static int SCREENHEIGHT = 900;
-
     public void start(Stage openingStage) {
         Pane openingRoot = new Pane();
-        openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        openingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
         openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
         Text titleText = new Text(0, 300, "Welcome to Asteroids");
@@ -114,7 +110,7 @@ public class Main extends Application {
 
     public void instructions(Stage openingStage) {
         Pane openingRoot = new Pane();
-        openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        openingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
         openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
 
@@ -153,7 +149,7 @@ public class Main extends Application {
 
     public void highScores(Stage openingStage) {
         Pane openingRoot = new Pane();
-        openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        openingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
         openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
 
@@ -214,7 +210,7 @@ public class Main extends Application {
 
     public void gameOver(Stage openingStage) {
         Pane closingRoot = new Pane();
-        closingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        closingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
         closingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         openingStage.setTitle("Hello Asteroids");
@@ -324,7 +320,7 @@ public class Main extends Application {
 
     public void gamePlay(Stage openingStage) throws Exception {
         Pane root = new Pane();
-        root.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        root.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
         Scene scene = new Scene(root);
@@ -347,7 +343,7 @@ public class Main extends Application {
 
         Alien alien = new Alien();
         List<PlayerShip> players = new ArrayList<>();
-        PlayerShip player = new PlayerShip(SCREENWIDTH / 2, SCREENWIDTH / 2);
+        PlayerShip player = new PlayerShip(Controller.SCREENWIDTH / 2, Controller.SCREENWIDTH / 2);
         players.add(player);
         List<Sprite> mediumAster = new ArrayList<>();
         List<Sprite> smallAster = new ArrayList<>();
@@ -411,14 +407,14 @@ public class Main extends Application {
                 }
                 if (onePress.contains("H")) {
                     // call hyperspace method
-                    player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
+                    player.hyperspace(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
                     // keep hyperspacing while there is an intersection
                     // end product will not actually be checking for intersection of bullets but can
                     // use this for asteroids and alien ship
                     while (Sprite.listHasIntersection(allAster, player)
                             || Sprite.shapesHaveIntersection(alien, player)
                             || Sprite.listHasIntersection(alienBullets, player)) {
-                        player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
+                        player.hyperspace(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
                     }
                 }
                 // clear list so handled only once
@@ -454,7 +450,7 @@ public class Main extends Application {
 
                 if (!alien.onScreen) {
                     if (System.currentTimeMillis() > alien.spawnTime) {
-                        alien.spawn(SCREENWIDTH, SCREENHEIGHT);
+                        alien.spawn(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
                         root.getChildren().add(alien);
                     }
                 }
