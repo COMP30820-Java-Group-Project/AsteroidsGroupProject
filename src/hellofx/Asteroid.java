@@ -42,10 +42,10 @@ public class Asteroid extends Sprite {
     // final as it is used in constructor
     private final double createXCoOrdinates() {
         // x denotes starting coordinate
-        double x = Math.random() * Main.SCREENWIDTH;
+        double x = Math.random() * Controller.SCREENWIDTH;
         // add 200px buffer around center
-        while (x > (Main.SCREENWIDTH / 2) - 100 && x < (Main.SCREENWIDTH / 2) + 100) {
-            x = Math.random() * Main.SCREENWIDTH;
+        while (x > (Controller.SCREENWIDTH / 2) - 100 && x < (Controller.SCREENWIDTH / 2) + 100) {
+            x = Math.random() * Controller.SCREENWIDTH;
         }
         return x;
     }
@@ -53,10 +53,10 @@ public class Asteroid extends Sprite {
     // final as it is used in constructor
     private final double createYCoOrdinates() {
         // y denotes starting coordinate
-        double y = Math.random() * Main.SCREENHEIGHT;
+        double y = Math.random() * Controller.SCREENHEIGHT;
         // add 200px buffer around center
-        while (y > (Main.SCREENHEIGHT / 2) - 100 && y < (Main.SCREENHEIGHT / 2) + 100) {
-            y = Math.random() * Main.SCREENHEIGHT;
+        while (y > (Controller.SCREENHEIGHT / 2) - 100 && y < (Controller.SCREENHEIGHT / 2) + 100) {
+            y = Math.random() * Controller.SCREENHEIGHT;
         }
         return y;
     }

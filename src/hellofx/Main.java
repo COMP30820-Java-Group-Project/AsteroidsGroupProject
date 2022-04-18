@@ -32,17 +32,13 @@ public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
     int lives = 6;
     int level = 1;
-    int largeAsteroids = 1;
+    int largeAsteroids = Controller.LARGE_ASTEROID_COUNT;
     List<Sprite> allAster = new ArrayList<>();
     List<Sprite> largeAster = new ArrayList<>();
 
-    // constants for screen dimensions
-    final static int SCREENWIDTH = 1000;
-    final static int SCREENHEIGHT = 900;
-
     public void start(Stage openingStage) {
         Pane openingRoot = new Pane();
-        openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        openingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
         openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
         Text titleText = new Text(0, 300, "Welcome to Asteroids");
@@ -114,7 +110,7 @@ public class Main extends Application {
 
     public void instructions(Stage openingStage) {
         Pane openingRoot = new Pane();
-        openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        openingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
         openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
 
@@ -153,7 +149,7 @@ public class Main extends Application {
 
     public void highScores(Stage openingStage) {
         Pane openingRoot = new Pane();
-        openingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        openingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
         openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
 
@@ -214,7 +210,7 @@ public class Main extends Application {
 
     public void gameOver(Stage openingStage) {
         Pane closingRoot = new Pane();
-        closingRoot.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        closingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
         closingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         openingStage.setTitle("Hello Asteroids");
@@ -324,7 +320,7 @@ public class Main extends Application {
 
     public void gamePlay(Stage openingStage) throws Exception {
         Pane root = new Pane();
-        root.setPrefSize(SCREENWIDTH, SCREENHEIGHT);
+        root.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
         Scene scene = new Scene(root);
@@ -347,7 +343,7 @@ public class Main extends Application {
 
         Alien alien = new Alien();
         List<PlayerShip> players = new ArrayList<>();
-        PlayerShip player = new PlayerShip(SCREENWIDTH / 2, SCREENWIDTH / 2);
+        PlayerShip player = new PlayerShip(Controller.SCREENWIDTH / 2, Controller.SCREENWIDTH / 2);
         players.add(player);
         List<Sprite> mediumAster = new ArrayList<>();
         List<Sprite> smallAster = new ArrayList<>();
@@ -363,8 +359,8 @@ public class Main extends Application {
 
         root.getChildren().add(player);
 
-        int mediumAsteroids = 2;
-        int smallAsteroids = 2;
+        int mediumAsteroids = Controller.MEDIUM_ASTEROID_COUNT;
+        int smallAsteroids = Controller.SMALL_ASTEROID_COUNT;
         for (int i = 0; i < largeAsteroids; i++) {
             Asteroid a = new Asteroid(AsteroidSizes.LARGE);
             allAster.add(a);
@@ -454,7 +450,6 @@ public class Main extends Application {
 
                 if (!alien.onScreen) {
                     if (System.currentTimeMillis() > alien.spawnTime) {
-                        
                         alien.spawn();
                         while (Sprite.shapesHaveIntersection(alien, player)) {
                             alien.spawn();
