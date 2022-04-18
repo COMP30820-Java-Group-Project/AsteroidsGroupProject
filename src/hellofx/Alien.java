@@ -73,10 +73,10 @@ public class Alien extends ShipSprite {
         this.setRotate(angleOfDiff+90.0+angleChange);
     }
 
-    public void spawn(int x, int y) {
+    public void spawn() {
         this.onScreen = true;
-        this.setTranslateX(x * Math.random());
-        this.setTranslateY(y * Math.random());
+        this.setTranslateX(Main.SCREENWIDTH * Math.random());
+        this.setTranslateY(Main.SCREENHEIGHT * Math.random());
     }
 
     public void isHit() {

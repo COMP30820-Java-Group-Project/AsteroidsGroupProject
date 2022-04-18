@@ -411,14 +411,14 @@ public class Main extends Application {
                 }
                 if (onePress.contains("H")) {
                     // call hyperspace method
-                    player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
+                    player.hyperspace();
                     // keep hyperspacing while there is an intersection
                     // end product will not actually be checking for intersection of bullets but can
                     // use this for asteroids and alien ship
                     while (Sprite.listHasIntersection(allAster, player)
                             || Sprite.shapesHaveIntersection(alien, player)
                             || Sprite.listHasIntersection(alienBullets, player)) {
-                        player.hyperspace(SCREENWIDTH, SCREENHEIGHT);
+                        player.hyperspace();
                     }
                 }
                 // clear list so handled only once
@@ -454,7 +454,11 @@ public class Main extends Application {
 
                 if (!alien.onScreen) {
                     if (System.currentTimeMillis() > alien.spawnTime) {
-                        alien.spawn(SCREENWIDTH, SCREENHEIGHT);
+                        
+                        alien.spawn();
+                        while (Sprite.shapesHaveIntersection(alien, player)) {
+                            alien.spawn();
+                        }
                         root.getChildren().add(alien);
                     }
                 }
@@ -484,7 +488,7 @@ public class Main extends Application {
                 for (int i = 0; i < alienBullets.size(); i++) {
                     Bullet b = (Bullet) alienBullets.get(i);
                     b.move();
-                    if (System.currentTimeMillis() - b.startTime > 2000) {
+                    if (System.currentTimeMillis() - b.startTime > 1000) {
                         // remove from list
                         alienBullets.remove(b);
                         // remove from screen
