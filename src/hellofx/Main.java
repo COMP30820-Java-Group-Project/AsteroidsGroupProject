@@ -32,7 +32,7 @@ public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
     int lives = 6;
     int level = 1;
-    int largeAsteroids = 1;
+    int largeAsteroids = Controller.LARGE_ASTEROID_COUNT;
     List<Sprite> allAster = new ArrayList<>();
     List<Sprite> largeAster = new ArrayList<>();
 
@@ -359,8 +359,8 @@ public class Main extends Application {
 
         root.getChildren().add(player);
 
-        int mediumAsteroids = 2;
-        int smallAsteroids = 2;
+        int mediumAsteroids = Controller.MEDIUM_ASTEROID_COUNT;
+        int smallAsteroids = Controller.SMALL_ASTEROID_COUNT;
         for (int i = 0; i < largeAsteroids; i++) {
             Asteroid a = new Asteroid(AsteroidSizes.LARGE);
             allAster.add(a);

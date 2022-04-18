@@ -5,3 +5,4 @@ public enum AsteroidSizes {
     MEDIUM,
     SMALL
 }
+
