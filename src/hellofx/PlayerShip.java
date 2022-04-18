@@ -61,9 +61,9 @@ public class PlayerShip extends ShipSprite {
         }
     }
     
-    public void hyperspace(int width, int height) {
-        double x = Math.random() * width;
-        double y = Math.random() * height;
+    public void hyperspace() {
+        double x = Math.random() * Main.SCREENWIDTH;
+        double y = Math.random() * Main.SCREENHEIGHT;
         this.setTranslateX(x);
         this.setTranslateY(y); 
     }
