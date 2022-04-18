@@ -75,8 +75,8 @@ public class Alien extends ShipSprite {
 
     public void spawn() {
         this.onScreen = true;
-        this.setTranslateX(Main.SCREENWIDTH * Math.random());
-        this.setTranslateY(Main.SCREENHEIGHT * Math.random());
+        this.setTranslateX(Controller.SCREENWIDTH * Math.random());
+        this.setTranslateY(Controller.SCREENHEIGHT * Math.random());
     }
 
     public void isHit() {
