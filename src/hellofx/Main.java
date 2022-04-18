@@ -437,7 +437,7 @@ public class Main extends Application {
                 // update for alien and alien bullets
                 // if intersection and player not invincible
                 if (!player.getInvincible() && (Sprite.listHasIntersection(allAster, player)
-                        || (Sprite.shapesHaveIntersection(alien, player)))) {
+                        || (Sprite.shapesHaveIntersection(alien, player) && alien.onScreen))) {
                     player.death();
                     lives -= 1;
                     if (lives < 1) {
