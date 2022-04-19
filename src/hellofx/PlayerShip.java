@@ -37,8 +37,8 @@ public class PlayerShip extends ShipSprite {
     }
 
     public void death() {
-        this.setTranslateX(Controller.SCREENWIDTH/2);
-        this.setTranslateY(Controller.SCREENHEIGHT/2);
+        this.setTranslateX(GAMEDIMENSIONS.SCREENWIDTH.getVal()/2);
+        this.setTranslateY(GAMEDIMENSIONS.SCREENHEIGHT.getVal()/2);
         this.invincible();
         this.setRotate(0);
         this.speed = new Point2D(0, 0);
@@ -62,8 +62,8 @@ public class PlayerShip extends ShipSprite {
     }
     
     public void hyperspace() {
-        double x = Math.random() * Controller.SCREENWIDTH;
-        double y = Math.random() * Controller.SCREENHEIGHT;
+        double x = Math.random() * GAMEDIMENSIONS.SCREENWIDTH.getVal();
+        double y = Math.random() * GAMEDIMENSIONS.SCREENHEIGHT.getVal();
         this.setTranslateX(x);
         this.setTranslateY(y); 
     }
