@@ -1,4 +1,4 @@
-package hellofx;
+package asteroidsgame;
 
 public abstract class ShipSprite extends Sprite {
 

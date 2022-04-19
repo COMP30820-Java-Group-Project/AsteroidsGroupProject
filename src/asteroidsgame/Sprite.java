@@ -1,4 +1,4 @@
-package hellofx;
+package asteroidsgame;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.*;
 import java.util.List;

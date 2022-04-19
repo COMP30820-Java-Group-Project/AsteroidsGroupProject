@@ -1,4 +1,4 @@
-package hellofx;
+package asteroidsgame;
 
 import javafx.scene.paint.Color;
 

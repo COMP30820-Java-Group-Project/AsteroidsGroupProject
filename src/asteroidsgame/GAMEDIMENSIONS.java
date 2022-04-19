@@ -1,4 +1,4 @@
-package hellofx;
+package asteroidsgame;
 public enum GAMEDIMENSIONS{
     SCREENWIDTH(1000), 
     SCREENHEIGHT(900);
