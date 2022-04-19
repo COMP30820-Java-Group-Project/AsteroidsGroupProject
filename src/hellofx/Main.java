@@ -32,7 +32,11 @@ public class Main extends Application {
     AtomicInteger points = new AtomicInteger();
     int lives = 6;
     int level = 1;
-    int largeAsteroids = Controller.LARGE_ASTEROID_COUNT;
+
+    // constants for small and medium, large is changed for each level
+    final static int MEDIUM_ASTEROID_COUNT = 2;
+    final static int SMALL_ASTEROID_COUNT = 2;
+    int largeAsteroids = 1;
     List<Sprite> allAster = new ArrayList<>();
     List<Sprite> largeAster = new ArrayList<>();
 
@@ -400,8 +404,6 @@ public class Main extends Application {
         livesDisplay.setFill(Color.WHITE);
         livesDisplay.setFont(Font.font("Monospaced"));
         root.getChildren().add(livesDisplay);
-        // Point2D point2d_1 = new Point2D(20.0f, 150.0f);
-        // PlayerShip player = new PlayerShip(point2d_1.getX(), point2d_1.getY());
 
         Alien alien = new Alien();
         List<PlayerShip> players = new ArrayList<>();
@@ -421,8 +423,6 @@ public class Main extends Application {
 
         root.getChildren().add(player);
 
-        int mediumAsteroids = Controller.MEDIUM_ASTEROID_COUNT;
-        int smallAsteroids = Controller.SMALL_ASTEROID_COUNT;
         for (int i = 0; i < largeAsteroids; i++) {
             Asteroid a = new Asteroid(AsteroidSizes.LARGE);
             allAster.add(a);
@@ -471,8 +471,6 @@ public class Main extends Application {
                     // call hyperspace method
                     player.hyperspace();
                     // keep hyperspacing while there is an intersection
-                    // end product will not actually be checking for intersection of bullets but can
-                    // use this for asteroids and alien ship
                     while (Sprite.listHasIntersection(allAster, player)
                             || Sprite.shapesHaveIntersection(alien, player)
                             || Sprite.listHasIntersection(alienBullets, player)) {
@@ -521,8 +519,6 @@ public class Main extends Application {
                 }
 
                 if (alien.checkOnScreen()) {
-                    // will need to find more general home for this check but cannot put in with
-                    // asteroid check as will not work when no asteroids
                     // check if player bullets hit alien
                     for (int j = 0; j < playerBullets.size(); j++) {
                         Bullet b = (Bullet) playerBullets.get(j);
@@ -567,7 +563,6 @@ public class Main extends Application {
                     }
                 }
 
-                // this should probably be moved somewhere else
                 // loop through list of all asteroids to move them and check if any of them
                 // intersect with a bullet
                 // if there is an intersection, then check if it is of a certain size
@@ -587,7 +582,7 @@ public class Main extends Application {
                             pointsDisplay.setText("Points: " + points.addAndGet(100));
                             if (largeAster.contains(a)) {
                                 largeAster.remove(a);
-                                for (int k = 0; k < mediumAsteroids; k++) {
+                                for (int k = 0; k < MEDIUM_ASTEROID_COUNT; k++) {
                                     Asteroid a2 = new Asteroid(AsteroidSizes.MEDIUM, a.getTranslateX(),
                                             a.getTranslateY(), a.getSpeed());
                                     allAster.add(a2);
@@ -597,7 +592,7 @@ public class Main extends Application {
                             }
                             if (mediumAster.contains(a)) {
                                 mediumAster.remove(a);
-                                for (int k = 0; k < smallAsteroids; k++) {
+                                for (int k = 0; k < SMALL_ASTEROID_COUNT; k++) {
                                     Asteroid a3 = new Asteroid(AsteroidSizes.SMALL, a.getTranslateX(),
                                             a.getTranslateY(), a.getSpeed());
                                     allAster.add(a3);
@@ -627,7 +622,6 @@ public class Main extends Application {
             }
         }.start();
 
-        // scene.fillText(pointsText);
         openingStage.setScene(scene);
         openingStage.show();
     }
