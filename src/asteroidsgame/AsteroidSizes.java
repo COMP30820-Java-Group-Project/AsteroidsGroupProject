@@ -1,4 +1,4 @@
-package hellofx;
+package asteroidsgame;
 
 // enums for allowable asteroid sizes
 public enum AsteroidSizes {

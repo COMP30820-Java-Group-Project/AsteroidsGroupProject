@@ -1,4 +1,4 @@
-package hellofx;
+package asteroidsgame;
 
 import java.util.ArrayList;
 import java.util.List;
