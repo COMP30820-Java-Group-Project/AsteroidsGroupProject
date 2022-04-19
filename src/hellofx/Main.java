@@ -110,7 +110,7 @@ public class Main extends Application {
         openingStage.setTitle("Hello Asteroids");
 
         Text instructionsText = new Text(0, 350,
-                "UP key to accelerate \nDOWN key to decellerate \nLEFT and RIGHT to steer \nSPACEBAR to shoot \nH to jump into hyperspace");
+                "UP key to thrust \nLEFT and RIGHT keys to steer \nSPACEBAR to shoot \nH to jump into hyperspace");
         instructionsText.setFont(Font.font("Monospaced", 30));
         instructionsText.setFill(Color.WHITE);
         instructionsText.layoutXProperty()
