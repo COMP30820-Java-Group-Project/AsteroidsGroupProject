@@ -139,6 +139,7 @@ public class Main extends Application {
         });
 
         VBox vbox = new VBox(50, backButton);
+        
         vbox.setTranslateX(325);
         vbox.setTranslateY(600);
 
@@ -348,7 +349,7 @@ public class Main extends Application {
         });
 
         VBox vbox = new VBox(50, startButton);
-        vbox.setTranslateX(395);
+        vbox.setTranslateX(360);
         vbox.setTranslateY(500);
 
         Button mainMenu = new Button("MAIN MENU");
@@ -363,7 +364,7 @@ public class Main extends Application {
         });
 
         VBox vbox2 = new VBox(50, mainMenu);
-        vbox2.setTranslateX(430);
+        vbox2.setTranslateX(325);
         vbox2.setTranslateY(600);
 
         Button exitGame = new Button("EXIT");
@@ -378,7 +379,7 @@ public class Main extends Application {
         });
 
         VBox vbox3 = new VBox(50, exitGame);
-        vbox3.setTranslateX(430);
+        vbox3.setTranslateX(400);
         vbox3.setTranslateY(700);
 
         closingRoot.getChildren().addAll(vbox, vbox2, vbox3);
