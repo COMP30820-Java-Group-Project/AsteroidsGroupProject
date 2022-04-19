@@ -3,6 +3,7 @@
     -fx-text-fill: white;
     -fx-font-size: 50;
     -fx-font-family: 'Courier New', Courier, monospace;
+    -fx-position: center;
 }
 #button:hover {
     -fx-text-fill: grey;

@@ -54,12 +54,9 @@ public class Main extends Application {
 
         Button startButton = new Button("START");
         startButton.setId("button");
-        // String css = getClass().getResource("style.css").toExternalForm();
+
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-        // startButton.setFont(Font.font("Monospaced", 50));
-        // startButton.setBackground(new Background(new BackgroundFill(Color.BLACK,
-        // CornerRadii.EMPTY, Insets.EMPTY)));
-        // startButton.setTextFill(Color.WHITE);
+       
         startButton.setOnAction(event -> {
             try {
                 gamePlay(openingStage);
@@ -88,9 +85,7 @@ public class Main extends Application {
 
         // add high scores button
         Button scoresButton = new Button("HIGH SCORES");
-        scoresButton.setFont(Font.font("Monospaced", 50));
-        scoresButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        scoresButton.setTextFill(Color.WHITE);
+        scoresButton.setId("button");
         scoresButton.setOnAction(event -> {
             // display high scores
             try {
@@ -186,11 +181,10 @@ public class Main extends Application {
         Scene scene = new Scene(openingRoot);
         openingStage.setScene(scene);
         openingStage.show();
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         Button backButton = new Button("MAIN MENU");
-        backButton.setFont(Font.font("Monospaced", 50));
-        backButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        backButton.setTextFill(Color.WHITE);
+        backButton.setId("button");
 
         backButton.setOnAction(event -> {
             try {
