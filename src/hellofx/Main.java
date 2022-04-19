@@ -53,7 +53,7 @@ public class Main extends Application {
         openingStage.show();
 
         Button startButton = new Button("START");
-        startButton.setId("button");
+        startButton.getStyleClass().add("button");
 
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
        
@@ -70,7 +70,7 @@ public class Main extends Application {
         vbox.setTranslateY(400);
 
         Button instructionsButton = new Button("INSTRUCTIONS");
-        instructionsButton.setId("button");
+        instructionsButton.getStyleClass().add("button");
         instructionsButton.setOnAction(event -> {
             try {
                 instructions(openingStage);
@@ -85,7 +85,7 @@ public class Main extends Application {
 
         // add high scores button
         Button scoresButton = new Button("HIGH SCORES");
-        scoresButton.setId("button");
+        scoresButton.getStyleClass().add("button");
         scoresButton.setOnAction(event -> {
             // display high scores
             try {
@@ -96,7 +96,7 @@ public class Main extends Application {
         });
 
         VBox vbox3 = new VBox(50, scoresButton);
-        vbox3.setTranslateX(400);
+        vbox3.setTranslateX(330);
         vbox3.setTranslateY(600);
 
         // display all buttons
@@ -110,7 +110,7 @@ public class Main extends Application {
         openingStage.setTitle("Hello Asteroids");
 
         Text instructionsText = new Text(0, 350,
-                "UP key to accelerate \nDOWN key to decellerate \nLEFT and RIGHT to steer \nSPACEBAR to shoot \nH to jump into hyperspace");
+                "UP key to thrust \nLEFT and RIGHT keys to steer \nSPACEBAR to shoot \nH to jump into hyperspace");
         instructionsText.setFont(Font.font("Monospaced", 30));
         instructionsText.setFill(Color.WHITE);
         instructionsText.layoutXProperty()
@@ -124,7 +124,7 @@ public class Main extends Application {
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         Button backButton = new Button("MAIN MENU");
-        backButton.setId("button");
+        backButton.getStyleClass().add("button");
 
         backButton.setOnAction(event -> {
             try {
@@ -184,7 +184,7 @@ public class Main extends Application {
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         Button backButton = new Button("MAIN MENU");
-        backButton.setId("button");
+        backButton.getStyleClass().add("button");
 
         backButton.setOnAction(event -> {
             try {
@@ -207,7 +207,7 @@ public class Main extends Application {
         closingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
         closingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        openingStage.setTitle("Hello Asteroids");
+        openingStage.setTitle("Asteroids");
 
         Scene scene = new Scene(closingRoot);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
@@ -275,7 +275,7 @@ public class Main extends Application {
         openingStage.show();
 
         Button startButton = new Button("RESTART");
-        startButton.setId("button");
+        startButton.getStyleClass().add("button");
 
         startButton.setOnAction(event -> {
             try {
@@ -295,7 +295,7 @@ public class Main extends Application {
         closingRoot.getChildren().add(vbox);
 
         Button exitGame = new Button("EXIT");
-        exitGame.setId("button");
+        exitGame.getStyleClass().add("button");
 
         exitGame.setOnAction(event -> {
             try {
