@@ -1,5 +1,4 @@
 package hellofx;
-import java.util.List;
 import java.util.Random;
 
 import javafx.scene.paint.Color;
