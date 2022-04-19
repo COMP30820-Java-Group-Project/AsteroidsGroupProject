@@ -407,6 +407,7 @@ public class Main extends Application {
         root.getChildren().add(livesDisplay);
 
         Alien alien = new Alien();
+        alien.setFill(Color.rgb(160,4,152));
         List<PlayerShip> players = new ArrayList<>();
         PlayerShip player = new PlayerShip(GAMEDIMENSIONS.SCREENWIDTH.getVal() / 2, GAMEDIMENSIONS.SCREENHEIGHT.getVal() / 2);
         players.add(player);
