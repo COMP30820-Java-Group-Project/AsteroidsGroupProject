@@ -164,16 +164,54 @@ public class Main extends Application {
         scoresText.setFill(Color.WHITE);
 
         // read High Scores file and create string of the contents
+        // then analyse the score values to extract the top 5 only
         // code from W3Schools
         try {
             File scoresFile = new File("HighScores.txt");
             Scanner myReader = new Scanner(scoresFile);
             String displayScores = "";
+            String data = "";
+            int lineCount = 0;
+            // create a string of file contents separated by newlines
             while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                displayScores += data + "\n";
-                System.out.println(data);
+                data += (myReader.nextLine() + "\n");
+                lineCount += 1;
             }
+
+            // create string array of lines
+            String[] scoreLines = data.split("\n");
+            // repeat the following block 5 times (number of high scores we want to display)
+            for (int high = 0; high < 5; high++) {
+                int topScoreSoFar = 0;
+                String topLine = "";
+                int topScoreIndex = 0;
+
+                // iterate through line array
+                for (int line = 0; line < lineCount; line++) {
+                    // split up the current line
+                    String[] lineItems = scoreLines[line].split(" ");
+                    // extract score from line
+                    int thisScore = Integer.parseInt(lineItems[lineItems.length - 1]);
+                    System.out.println(thisScore);
+
+                    // compare and update topScore of iteration
+                    if (thisScore > topScoreSoFar) {
+                        topScoreSoFar = thisScore;
+                        topLine = scoreLines[line];
+                        // keep track of index of the highest score to remove later
+                        topScoreIndex = line;
+                    }
+                }
+                // add the line featuring the top score of iteration & username to the score
+                // display
+                displayScores += (topLine.trim() + "\n");
+                // alter line to a blank string (quicker than to convert to ArrayList then
+                // delete)
+                // so that the next highest score can be retrieved next iteration
+                scoreLines[topScoreIndex] = "deletedUser 0";
+            }
+
+            // System.out.println(data);
             myReader.close();
             // set the high scores scene text to the contents of the file
             scoresText.setText(displayScores);
@@ -246,12 +284,28 @@ public class Main extends Application {
         userInput.setTranslateX(380);
         userInput.setTranslateY(420);
         userInput.setStyle("-fx-background-color: rgb(150, 255, 168); -fx-font-size: 20;");
+
         userInput.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                String username = userInput.getText();
+
+                // validate username isn't an empty string or just spaces
+                boolean validUsername = false;
+                for (int i = 0; i < username.length(); i++) {
+                    // we want to check that there is at least one character that isn't a whitespace
+                    if (!Character.isWhitespace(username.charAt(i))) {
+                        validUsername = true;
+                        break;
+                    }
+                }
+                // if user leaves blank we assign anon
+                if (!validUsername) {
+                    username = "anon";
+                }
                 // formulate HighScores entry
                 System.out.println("text entered: " + userInput.getText());
-                String username = userInput.getText();
+
                 String scoreEntry = username + " " + points.get();
                 System.out.println(scoreEntry);
 
@@ -272,6 +326,7 @@ public class Main extends Application {
                 // replace input box with message
                 closingRoot.getChildren().remove(userInput);
                 closingRoot.getChildren().addAll(doneMessage);
+
             }
         });
 
@@ -296,9 +351,22 @@ public class Main extends Application {
 
         VBox vbox = new VBox(50, startButton);
         vbox.setTranslateX(395);
-        vbox.setTranslateY(600);
+        vbox.setTranslateY(500);
 
-        closingRoot.getChildren().add(vbox);
+        Button mainMenu = new Button("MAIN MENU");
+        mainMenu.setId("button");
+
+        mainMenu.setOnAction(event -> {
+            try {
+                start(openingStage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        VBox vbox2 = new VBox(50, mainMenu);
+        vbox2.setTranslateX(430);
+        vbox2.setTranslateY(600);
 
         Button exitGame = new Button("EXIT");
         exitGame.setId("button");
@@ -311,11 +379,11 @@ public class Main extends Application {
             }
         });
 
-        VBox vbox2 = new VBox(50, exitGame);
-        vbox2.setTranslateX(430);
-        vbox2.setTranslateY(700);
+        VBox vbox3 = new VBox(50, exitGame);
+        vbox3.setTranslateX(430);
+        vbox3.setTranslateY(700);
 
-        closingRoot.getChildren().add(vbox2);
+        closingRoot.getChildren().addAll(vbox, vbox2, vbox3);
     }
 
     public void gamePlay(Stage openingStage) throws Exception {
