@@ -38,7 +38,7 @@ public class Main extends Application {
 
     public void start(Stage openingStage) {
         Pane openingRoot = new Pane();
-        openingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
+        openingRoot.setPrefSize(GAMEDIMENSIONS.SCREENWIDTH.getVal(), GAMEDIMENSIONS.SCREENHEIGHT.getVal());
         openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
         Text titleText = new Text(0, 300, "Welcome to Asteroids");
@@ -105,7 +105,7 @@ public class Main extends Application {
 
     public void instructions(Stage openingStage) {
         Pane openingRoot = new Pane();
-        openingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
+        openingRoot.setPrefSize(GAMEDIMENSIONS.SCREENWIDTH.getVal(), GAMEDIMENSIONS.SCREENHEIGHT.getVal());
         openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
 
@@ -144,7 +144,7 @@ public class Main extends Application {
 
     public void highScores(Stage openingStage) {
         Pane openingRoot = new Pane();
-        openingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
+        openingRoot.setPrefSize(GAMEDIMENSIONS.SCREENWIDTH.getVal(), GAMEDIMENSIONS.SCREENHEIGHT.getVal());
         openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
 
@@ -242,7 +242,7 @@ public class Main extends Application {
 
     public void gameOver(Stage openingStage) {
         Pane closingRoot = new Pane();
-        closingRoot.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
+        closingRoot.setPrefSize(GAMEDIMENSIONS.SCREENWIDTH.getVal(), GAMEDIMENSIONS.SCREENHEIGHT.getVal());
         closingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         openingStage.setTitle("Asteroids");
@@ -382,7 +382,7 @@ public class Main extends Application {
 
     public void gamePlay(Stage openingStage) throws Exception {
         Pane root = new Pane();
-        root.setPrefSize(Controller.SCREENWIDTH, Controller.SCREENHEIGHT);
+        root.setPrefSize(GAMEDIMENSIONS.SCREENWIDTH.getVal(), GAMEDIMENSIONS.SCREENHEIGHT.getVal());
         root.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
         Scene scene = new Scene(root);
@@ -405,7 +405,7 @@ public class Main extends Application {
 
         Alien alien = new Alien();
         List<PlayerShip> players = new ArrayList<>();
-        PlayerShip player = new PlayerShip(Controller.SCREENWIDTH / 2, Controller.SCREENWIDTH / 2);
+        PlayerShip player = new PlayerShip(GAMEDIMENSIONS.SCREENWIDTH.getVal() / 2, GAMEDIMENSIONS.SCREENHEIGHT.getVal() / 2);
         players.add(player);
         List<Sprite> mediumAster = new ArrayList<>();
         List<Sprite> smallAster = new ArrayList<>();

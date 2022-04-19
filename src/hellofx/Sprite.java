@@ -23,16 +23,16 @@ public abstract class Sprite extends Polyline {
     public void setSpeed(double s) {
         this.speed = s;
     }
-
+   
     public void wrap() {
         //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
        if (this.getTranslateX() + this.getLayoutBounds().getWidth()/2<0)
-       this.setTranslateX(Controller.SCREENWIDTH+this.getLayoutBounds().getWidth()/2);
-       if (this.getTranslateX() > Controller.SCREENWIDTH + this.getLayoutBounds().getWidth()/2)
+       this.setTranslateX(GAMEDIMENSIONS.SCREENWIDTH.getVal()+this.getLayoutBounds().getWidth()/2);
+       if (this.getTranslateX() > GAMEDIMENSIONS.SCREENWIDTH.getVal() + this.getLayoutBounds().getWidth()/2)
        this.setTranslateX(-this.getLayoutBounds().getWidth()/2);
        if (this.getTranslateY() + this.getLayoutBounds().getHeight()/2<0)
-       this.setTranslateY(Controller.SCREENHEIGHT-100+this.getLayoutBounds().getHeight()/2);
-       if (this.getTranslateY() > Controller.SCREENHEIGHT-100 + this.getLayoutBounds().getHeight()/2)
+       this.setTranslateY(GAMEDIMENSIONS.SCREENHEIGHT.getVal()-100+this.getLayoutBounds().getHeight()/2);
+       if (this.getTranslateY() > GAMEDIMENSIONS.SCREENHEIGHT.getVal()-100 + this.getLayoutBounds().getHeight()/2)
        this.setTranslateY(-this.getLayoutBounds().getHeight()/2);
    }
 
