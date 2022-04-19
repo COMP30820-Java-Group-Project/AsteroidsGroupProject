@@ -148,7 +148,7 @@ public class Main extends Application {
         openingRoot.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         openingStage.setTitle("Hello Asteroids");
 
-        Text scoresTitle = new Text(0, 350, "HIGH SCORES");
+        Text scoresTitle = new Text(0, 200, "HIGH SCORES");
         scoresTitle.setFont(Font.font("Monospaced", 40));
         scoresTitle.setFill(Color.WHITE);
         scoresTitle.layoutXProperty()
@@ -215,7 +215,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        openingRoot.getChildren().addAll(scoresText);
+        openingRoot.getChildren().addAll(scoresText, scoresTitle);
         Scene scene = new Scene(openingRoot);
         openingStage.setScene(scene);
         openingStage.show();
